@@ -6,6 +6,8 @@ import * as bcrypt from 'bcryptjs';
 @Entity()
 @Unique(['username'])
 
+
+//holaaa
 export class User {
 
     @PrimaryGeneratedColumn()
