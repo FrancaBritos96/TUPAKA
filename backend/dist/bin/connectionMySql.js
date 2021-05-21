@@ -8,7 +8,7 @@ const connection = mysql_1.default.createConnection({
     host: "localhost",
     user: "root",
     password: "",
-    database: "reclamos_v2",
+    database: "tupaka",
     port: 3306
 });
 exports.default = connection;
