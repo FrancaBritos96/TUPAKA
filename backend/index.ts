@@ -3,6 +3,10 @@ import connection from './bin/connectionMySql';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/users';
 import productRoutes from './routes/products';
+import fileUpload from 'express-fileupload';
+import fs from 'fs';
+import path from 'path';
+import FileSystem from './clases/file-system';
 
 
 
@@ -15,6 +19,12 @@ server.start(() => {
 //Body parser
 server.app.use(bodyParser.urlencoded({extended:true}));
 server.app.use(bodyParser.json());
+
+
+//Upload
+const crearFolder = new FileSystem();
+crearFolder.createCarpetaUploads();
+server.app.use(fileUpload());
 
 
 //Rutas aplicación

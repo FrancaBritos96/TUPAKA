@@ -6,19 +6,19 @@ import { IfileUpload } from '../interfaces/file-upload';
 export default class FileSystem {
     constructor() { }
 
-    private crearCarpetaUsuario(userId: string): string {
-        const pathUser = path.resolve(__dirname, '../uploads', userId);
-        const pathUserTemp = pathUser + "/temp";
-        console.log("ruta pathUser", pathUser);
+    private crearCarpetaUsuario(productId: string): string {
+        const pathProduct = path.resolve(__dirname, '../uploads', productId);
+        const pathProducTemp = pathProduct + "/temp";
+        console.log("ruta pathProduct", pathProduct);
 
-        const existe: boolean = fs.existsSync(pathUser);
+        const existe: boolean = fs.existsSync(pathProduct);
 
         if (!existe) {
-            fs.mkdirSync(pathUser);
-            fs.mkdirSync(pathUserTemp);
+            fs.mkdirSync(pathProduct);
+            fs.mkdirSync(pathProducTemp);
         }
 
-        return pathUserTemp;
+        return pathProducTemp;
 
     }
 
@@ -31,9 +31,9 @@ export default class FileSystem {
 
     }
 
-    guardarImagenTemporal(userId: string, file: IfileUpload): Promise<any> {
+    guardarImagenTemporal(ProductId: string, file: IfileUpload): Promise<any> {
         return new Promise((resolve, reject) => {
-            const path: string = this.crearCarpetaUsuario(userId);
+            const path: string = this.crearCarpetaUsuario(ProductId);
             const nombreArchivo: string = this.generarNombreUnico(file.name);
 
             file.mv(`${path}/${nombreArchivo}`, (error: any) => {
@@ -49,39 +49,39 @@ export default class FileSystem {
 
     }
 
-    private obtenerImagenesTemp(userId: string): Array<string> {
-        const pathName = path.resolve(__dirname, '../uploads', userId, "temp");
+    private obtenerImagenesTemp(productId: string): Array<string> {
+        const pathName = path.resolve(__dirname, '../uploads', productId, "temp");
         return fs.readdirSync(pathName); //[nombre_archivo1, nombre_archivo2..]
     }
 
-    imagenesDeTempHaciaPost(userId: string): Array<string> {
-        const pathUserTemp = path.resolve(__dirname, '../uploads', userId, "temp"); //De donde: origen
-        const pathUserPost = path.resolve(__dirname, '../uploads', userId, "post"); //Hacia donde: destino
+    imagenesDeTempHaciaPost(productId: string): Array<string> {
+        const pathProductemp = path.resolve(__dirname, '../uploads', productId, "temp"); //De donde: origen
+        const pathProductPost = path.resolve(__dirname, '../uploads', productId, "post"); //Hacia donde: destino
 
-        if (!fs.existsSync(pathUserTemp)) {
+        if (!fs.existsSync(pathProductemp)) {
             return [];
         }
 
-        if (!fs.existsSync(pathUserPost)) {
-            fs.mkdirSync(pathUserPost);
+        if (!fs.existsSync(pathProductPost)) {
+            fs.mkdirSync(pathProductPost);
         }
 
-        const imagenesTemp: Array<string> = this.obtenerImagenesTemp(userId);
+        const imagenesTemp: Array<string> = this.obtenerImagenesTemp(productId);
         imagenesTemp.forEach(imagenes => {
-            fs.renameSync(`${pathUserTemp}/${imagenes}`, `${pathUserPost}/${imagenes}`)
+            fs.renameSync(`${pathProductemp}/${imagenes}`, `${pathProductPost}/${imagenes}`)
         })
 
         return imagenesTemp
     }
 
-    getFotoUrl(userId: string, img: string) {
-        const pathFoto: string = path.resolve(__dirname, '../uploads', userId, "post");
+    getFotoUrl(productId: string, img: string) {
+        const pathFoto: string = path.resolve(__dirname, '../uploads', productId, "post", img);
 
         if (fs.existsSync(pathFoto)) {
             return pathFoto;
         }
         else {
-            return path.resolve(__dirname, '../assets/default.jpg')
+            return path.resolve(__dirname, '../assets/default.png')
         }
 
     }
