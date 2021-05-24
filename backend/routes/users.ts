@@ -23,18 +23,6 @@ userRoutes.post('/login', async (req:Request, res:Response)=>{
 
 })
 
-userRoutes.get('/consultarUsuario', async (req, res)=>{
-    
-let documento = req.body.documento
-
-    let persona = await query("Select * from usuarios where documento = ?", [documento]);
-    res.json({
-        data:persona
-    })
-})
-
-
-
 userRoutes.post('/createUser', async (req: any, res: Response) => {
     try {
         const body = req.body;
@@ -72,10 +60,36 @@ userRoutes.post('/createUser', async (req: any, res: Response) => {
         await query("rollback", []);
         res.json({
             estado: "error",
+            mensaje: "No se pudo crear el usuario",
             data: error
         });
     }
 })
+
+userRoutes.get('/getUserByDni', verificarToken, async (req: any, res: Response)=>{
+    
+    let documento = req.body.documento
+    
+        let user = await query("Select * from usuarios where documento = ?", [documento]);
+        res.json({
+            estado: "success",
+            mensaje: "Se encontró el usuario",
+            data: user
+        })
+    })
+    
+    userRoutes.get('/', verificarToken, usuarios.token); // Sirve para obtener la info del usuario logueado
+    
+    userRoutes.get('/getAllUsers', verificarToken, async (req: any, res: Response)=>{
+        
+            let users = await query("Select * from usuarios where id_estado = 1", []);
+            res.json({
+                estado: "success",
+                mensaje: "Se encontraron los usuarios",
+                data: users
+            })
+        })
+        
 
 export default userRoutes;
 
