@@ -2,6 +2,7 @@ import Server from './clases/server';
 import connection from './bin/connectionMySql';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/users';
+import productRoutes from './routes/products';
 
 
 
@@ -19,6 +20,7 @@ server.app.use(bodyParser.json());
 //Rutas aplicación
 
 server.app.use('/users', userRoutes);
+server.app.use('/products', productRoutes);
 
 //Ejemplo: localhost:3000/users/createUser
 

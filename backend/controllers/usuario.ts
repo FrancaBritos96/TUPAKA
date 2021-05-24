@@ -6,7 +6,8 @@ export = {
 
         res.json({
             estado: "succes",
-            mensaje:usuario
+            mensaje: "Usuario logueado",
+            data: usuario
         })
       
     }
