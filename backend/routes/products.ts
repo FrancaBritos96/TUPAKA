@@ -13,7 +13,7 @@ const fileSystem = new FileSystem();
 const productRoutes = Router();
 
 
-productRoutes.get('/getProductById', async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+productRoutes.get('/getProductById', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
 
     let productId = req.body.id_producto
 
@@ -26,7 +26,7 @@ productRoutes.get('/getProductById', async (req: any, res: Response) => { //Agre
 })
 
 
-productRoutes.get('/getAllProducts', async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+productRoutes.get('/getAllProducts', verificarToken, async (req: any, res: Response) => {
 
     let products = await query("Select * from productos where id_estado = 1", []);
     res.json({
@@ -38,7 +38,7 @@ productRoutes.get('/getAllProducts', async (req: any, res: Response) => { //Agre
 
 
 
-productRoutes.post('/createProduct', async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+productRoutes.post('/createProduct', verificarToken, async (req: any, res: Response) => {
     try {
         const body = req.body;
         const id_categoria = body.id_categoria;
@@ -55,28 +55,6 @@ productRoutes.post('/createProduct', async (req: any, res: Response) => { //Agre
 
         await query(queryTransaction, []);
         let insertProduct: any = await query(queryProduct, [id_categoria, id_estado, id_tamaño, nombre, descripcion, precio, stock]);
-
-        // if(req.files.image){
-        //   const imag: IfileUpload = req.files.image;
-
-        // const validacionTipoImagen = imag.mimetype.includes('image');
-
-        //if (!validacionTipoImagen) {
-        //  return res.status(400).json({
-        //    estado: 'error',
-        //  mensaje: 'Formato incorrecto'
-        //})
-        //}
-
-        // await fileSystem.guardarImagenTemporal(insertProduct.insertId, imag);
-
-        // const imagenes: Array<string> = fileSystem.imagenesDeTempHaciaPost(insertProduct.insertId);
-        //let imagesProduct = "INSERT INTO IMAGENES (id_producto, nombre)  VALUES(?,?)";
-
-        //         imagenes.forEach(async item => {
-        //           await query(imagesProduct, [insertProduct.insetId, item]);
-        //     })
-        //}
 
         await query("commit", []);
         res.json({
@@ -95,7 +73,7 @@ productRoutes.post('/createProduct', async (req: any, res: Response) => { //Agre
     }
 })
 
-productRoutes.post("/upload/:productId", async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+productRoutes.post("/upload/:productId", verificarToken, async (req: any, res: Response) => {
 
     const { productId } = req.params;
     const imag: IfileUpload = req.files.image;
