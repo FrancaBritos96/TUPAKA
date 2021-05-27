@@ -11,7 +11,6 @@ const userRoutes = Router();
 
 //LOGIN
 userRoutes.post('/login', async (req: Request, res: Response) => {
-
     try {
         const email = req.body.email;
         const pass = req.body.pass;
@@ -67,20 +66,7 @@ userRoutes.post('/login', async (req: Request, res: Response) => {
     }
 });
 
-//Consultar un Usuario por DNI
-userRoutes.get('/consultarUsuario', async (req, res) => {
-
-    let documento = req.body.documento
-
-    let persona = await query("Select * from usuarios where documento = ?", [documento]);
-    res.json({
-        mensaje: 'Usuario encontrado',
-        data: persona
-    })
-})
-
-
-//Crear un Usuario. 
+//REGISTRAR
 userRoutes.post('/createUser', async (req: any, res: Response) => {
     try {
         const body = req.body;
@@ -97,14 +83,15 @@ userRoutes.post('/createUser', async (req: any, res: Response) => {
         const provincia = body.provincia;
         const localidad = body.localidad;
         const cod_postal = body.cod_postal;
-        let passEncriptado = await bcrypt.hash(password, 8)
 
+        let passEncriptado = await bcrypt.hash(password, 8)
 
         let queryTransaction = "START TRANSACTION"
         let queryUsuario = "INSERT INTO USUARIOS (id_rol, id_estado, email, password, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
      
         await query(queryTransaction, []);
-        let insertarUsuarios: any = await query(queryUsuario, [id_rol, id_estado, email, passEncriptado, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal]);
+
+        await query(queryUsuario, [id_rol, id_estado, email, passEncriptado, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal]);
 
         let commit = await query("commit", []);
         res.json({
@@ -117,10 +104,38 @@ userRoutes.post('/createUser', async (req: any, res: Response) => {
         await query("rollback", []);
         res.json({
             estado: "error",
+            mensaje: "No se pudo crear el usuario",
             data: error
         });
     }
 })
 
-export default userRoutes;
+//CONSULTAR USUARIO POR DNI
+userRoutes.get('/getUserByDni', verificarToken, async (req: any, res: Response) => {
 
+    let documento = req.body.documento
+
+    let user = await query("Select * from usuarios where documento = ?", [documento]);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontró el usuario",
+        data: user
+    })
+})
+
+//CONSULTAR USUARIO LOGUEADO
+userRoutes.get('/', verificarToken, usuarios.token); // Sirve para obtener la info del usuario logueado
+
+//CONSULTAR TODOS LOS USUARIOS
+userRoutes.get('/getAllUsers', verificarToken, async (req: any, res: Response) => {
+
+    let users = await query("Select * from usuarios where id_estado = 1", []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron los usuarios",
+        data: users
+    })
+})
+
+
+export default userRoutes;
