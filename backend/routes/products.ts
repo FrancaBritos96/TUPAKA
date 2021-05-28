@@ -77,7 +77,7 @@ productRoutes.post("/upload/:productId", verificarToken, async (req: any, res: R
 
     const { productId } = req.params;
     const imag: IfileUpload = req.files.image;
-    
+
 
     if (!req.files) {
         return res.status(400).json({
@@ -110,15 +110,17 @@ productRoutes.post("/upload/:productId", verificarToken, async (req: any, res: R
     })
 })
 
-productRoutes.get('/imagen/:productId/:img', (req: any, res: Response) => {
+productRoutes.get('/imagen/:productId/:img', verificarToken, async (req: any, res: Response) => {
 
-    const productId = req.params.userId;
+    const productId = req.params.productId;
     const img = req.params.img;
 
-
     const foto = fileSystem.getFotoUrl(productId, img);
-
     res.sendFile(foto);
+   // const fotos = fileSystem.getFotosUrls(productId);
+   // setTimeout(() => {
+      //      res.sendFile(fotos);
+   // }, 50);
 })
 
 
