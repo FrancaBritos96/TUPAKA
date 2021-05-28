@@ -86,6 +86,28 @@ export default class FileSystem {
 
     }
 
+    getFotosUrls(productId: string): any[] {
+        var klaw = require('klaw');
+
+        // an array to store the folder and files inside
+        var items: any[] = [];
+
+        var directoryToExplore = `./dist/uploads/${productId}/post`;
+
+        klaw(directoryToExplore)
+            .on('data', function (item: { path: any; }) {
+                items.push(item.path)
+            })
+            .on('end', function () {
+                console.log(items);
+            })
+            .on('error', function (err: { message: any; }, item: { path: any; }) {
+                console.log(err.message)
+                console.log(item.path) // the file the error occurred on
+            });
+            return items;
+    }
+
     createCarpetaUploads(): void {
         const pathUploads = path.resolve(__dirname, 'uploads');
 
