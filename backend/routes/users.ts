@@ -31,12 +31,12 @@ userRoutes.post('/login', async (req: Request, res: Response) => {
                 } else {
 
                     const TokenJwt = Token.getToken({
-                        id: results.id_usuario,
-                        nombre: results.nombre,
-                        apellido: results.apellido,
-                        dni: results.dni,
-                        email: results.email,
-                        idRol: results.id_rol,
+                        id: results[0].id_usuario,
+                        nombre: results[0].nombre,
+                        apellido: results[0].apellido,
+                        dni: results[0].dni,
+                        email: results[0].email,
+                        idRol: results[0].id_rol,
                     });
 
                     res.json({
@@ -44,6 +44,7 @@ userRoutes.post('/login', async (req: Request, res: Response) => {
                         mensaje: "¡LOGIN CORRECTO!",
                         data: results,
                         token: TokenJwt
+
 
                     })
 
@@ -86,20 +87,31 @@ userRoutes.post('/createUser', async (req: any, res: Response) => {
 
         let passEncriptado = await bcrypt.hash(password, 8)
 
-        let queryTransaction = "START TRANSACTION"
-        let queryUsuario = "INSERT INTO USUARIOS (id_rol, id_estado, email, password, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-     
-        await query(queryTransaction, []);
+        let validarEmail: any = await query(`Select * from usuarios where email = '${email}'`, []);
+       
+        if (validarEmail.length == 0) {
 
-        await query(queryUsuario, [id_rol, id_estado, email, passEncriptado, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal]);
+            let queryTransaction = "START TRANSACTION"
+            let queryUsuario = "INSERT INTO USUARIOS (id_rol, id_estado, email, password, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        let commit = await query("commit", []);
-        res.json({
-            estado: "Success",
-            mensaje: "Usuario creado con exito",
-            data: commit
-        })
+            await query(queryTransaction, []);
+
+            await query(queryUsuario, [id_rol, id_estado, email, passEncriptado, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal]);
+
+            let commit = await query("commit", []);
+            res.json({
+                estado: "Success",
+                mensaje: "Usuario creado con exito",
+                data: commit
+            })
+        } else {
+            res.json({
+                estado: "Error",
+                mensaje: "El correo ingresado ya existe",
+            })
+        }
     }
+
     catch (error) {
         await query("rollback", []);
         res.json({
@@ -108,6 +120,8 @@ userRoutes.post('/createUser', async (req: any, res: Response) => {
             data: error
         });
     }
+
+
 })
 
 //CONSULTAR USUARIO POR DNI
@@ -136,6 +150,56 @@ userRoutes.get('/getAllUsers', verificarToken, async (req: any, res: Response) =
         data: users
     })
 })
+
+
+
+
+//CARGAR TAMAÑOS
+
+userRoutes.post('/createSizes', verificarToken, async (req: any, res: Response) => {
+
+    const nombre = req.body.nombre;
+    const ancho = req.body.descripcion;
+    const profundida = req.body.profundida;
+    const alto = req.body.alto;
+    const datosToken = req.usuario
+
+    let queryTamaños = "INSERT INTO TAMAÑOS (nombre, ancho, profundidad, alto)  VALUES(?,?,?,?)";
+
+
+    if (datosToken == '1') {
+        if (nombre && ancho && profundida && alto != '') {
+
+            await query(queryTamaños, [nombre, ancho, profundida, alto]);
+
+            let commit = await query("commit", []);
+
+            res.json({
+                estado: "Success",
+                mensaje: "Tamaño cargado con Exito!",
+                data: commit
+            })
+
+        } else {
+            res.json({
+                estado: "Error",
+                mensaje: "Debe completar todos los campos para continuar!",
+
+            })
+
+        }
+
+    } else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tenes permisos de Administrador"
+        })
+    }
+
+
+
+})
+
 
 
 export default userRoutes;

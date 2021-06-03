@@ -112,7 +112,7 @@ productRoutes.post("/upload/:productId", verificarToken, async (req: any, res: R
 
 productRoutes.get('/imagen/:productId/:img', (req: any, res: Response) => {
 
-    const productId = req.params.userId;
+    const productId = req.params.productId;
     const img = req.params.img;
 
 

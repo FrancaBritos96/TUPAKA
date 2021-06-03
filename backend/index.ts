@@ -3,6 +3,8 @@ import connection from './bin/connectionMySql';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/users';
 import productRoutes from './routes/products';
+import categoriesRoutes from './routes/categories';
+import sizesRoutes from './routes/sizes';
 import fileUpload from 'express-fileupload';
 import fs from 'fs';
 import path from 'path';
@@ -31,6 +33,8 @@ server.app.use(fileUpload());
 
 server.app.use('/users', userRoutes);
 server.app.use('/products', productRoutes);
+server.app.use('/categories', categoriesRoutes);
+server.app.use('/sizes', sizesRoutes);
 
 //Ejemplo: localhost:3000/users/createUser
 
