@@ -5,12 +5,12 @@ import userRoutes from './routes/users';
 import productRoutes from './routes/products';
 import categoriesRoutes from './routes/categories';
 import sizesRoutes from './routes/sizes';
+import orderRoutes from './routes/orders';
+import orderDetailRoutes from './routes/orderDetails';
 import fileUpload from 'express-fileupload';
 import fs from 'fs';
 import path from 'path';
 import FileSystem from './clases/file-system';
-
-
 
 const server = new Server();
 
@@ -35,6 +35,9 @@ server.app.use('/users', userRoutes);
 server.app.use('/products', productRoutes);
 server.app.use('/categories', categoriesRoutes);
 server.app.use('/sizes', sizesRoutes);
+server.app.use('/orders', orderRoutes);
+server.app.use('/orderDetails', orderDetailRoutes);
+
 
 //Ejemplo: localhost:3000/users/createUser
 

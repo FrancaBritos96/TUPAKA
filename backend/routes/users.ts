@@ -137,6 +137,32 @@ userRoutes.get('/getUserByDni', verificarToken, async (req: any, res: Response) 
     })
 })
 
+//CONSULTAR USUARIO POR NOMBRE
+userRoutes.get('/getUserByName', verificarToken, async (req: any, res: Response) => {
+
+    let userName = req.body.nombre
+
+    let user = await query(`Select * from usuarios where name LIKE '%${userName}%'`, []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron los usuarios",
+        data: user
+    })
+})
+
+//CONSULTAR USUARIO POR ESTADO
+userRoutes.get('/getUserByStatus', verificarToken, async (req: any, res: Response) => {
+
+    let userStatus = req.body.id_estado
+
+    let user = await query(`Select * from usuarios where id_estado = ${userStatus}`, []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron los usuarios",
+        data: user
+    })
+})
+
 //CONSULTAR USUARIO LOGUEADO
 userRoutes.get('/', verificarToken, usuarios.token); // Sirve para obtener la info del usuario logueado
 
@@ -150,56 +176,5 @@ userRoutes.get('/getAllUsers', verificarToken, async (req: any, res: Response) =
         data: users
     })
 })
-
-
-
-
-//CARGAR TAMAÑOS
-
-userRoutes.post('/createSizes', verificarToken, async (req: any, res: Response) => {
-
-    const nombre = req.body.nombre;
-    const ancho = req.body.descripcion;
-    const profundida = req.body.profundida;
-    const alto = req.body.alto;
-    const datosToken = req.usuario
-
-    let queryTamaños = "INSERT INTO TAMAÑOS (nombre, ancho, profundidad, alto)  VALUES(?,?,?,?)";
-
-
-    if (datosToken == '1') {
-        if (nombre && ancho && profundida && alto != '') {
-
-            await query(queryTamaños, [nombre, ancho, profundida, alto]);
-
-            let commit = await query("commit", []);
-
-            res.json({
-                estado: "Success",
-                mensaje: "Tamaño cargado con Exito!",
-                data: commit
-            })
-
-        } else {
-            res.json({
-                estado: "Error",
-                mensaje: "Debe completar todos los campos para continuar!",
-
-            })
-
-        }
-
-    } else {
-        res.json({
-            estado: "Error",
-            mensaje: "No tenes permisos de Administrador"
-        })
-    }
-
-
-
-})
-
-
 
 export default userRoutes;
