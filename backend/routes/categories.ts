@@ -16,8 +16,8 @@ categoriesRoutes.post('/createCat', verificarToken, async (req: any, res: Respon
 
     const id_estado = '1';
     const nombre = req.body.nombre;
-    const descripcion = req.body.descripcion
-    const datosToken = req.usuario
+    const descripcion = req.body.descripcion;
+    const datosToken = req.usuario;
 
     let queryCategoria = "INSERT INTO CATEGORIAS (id_estado, nombre, descripcion)  VALUES(?,?,?)";
 
@@ -51,7 +51,7 @@ categoriesRoutes.post('/createCat', verificarToken, async (req: any, res: Respon
 categoriesRoutes.put('/editCat/:id', verificarToken, async (req: any, res: Response) => {
 
 
-    const datosToken = req.usuario
+    const datosToken = req.usuario;
     const { id } = req.params;
 
     const { nombre, descripcion } = req.body;
@@ -63,7 +63,7 @@ categoriesRoutes.put('/editCat/:id', verificarToken, async (req: any, res: Respo
     if (datosToken.idRol == '1') {
         if (nombre && descripcion != '') {
 
-            const categoria = await query('SELECT * FROM CATEGORIAS WHERE id_categoria = ?', [id]);
+            await query('SELECT * FROM CATEGORIAS WHERE id_categoria = ?', [id]);
             await query("UPDATE categorias set ? WHERE id_categoria = ?", [newCategorie, id]);
             let commit = await query("commit", []);
 
@@ -90,7 +90,7 @@ categoriesRoutes.put('/editCat/:id', verificarToken, async (req: any, res: Respo
 
 categoriesRoutes.put('/deleteCat/:id', verificarToken, async (req: any, res: Response) => {
 
-    const datosToken = req.usuario
+    const datosToken = req.usuario;
     const { id } = req.params;
 
     if (datosToken.idRol == '1') {
