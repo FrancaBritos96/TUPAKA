@@ -113,5 +113,57 @@ categoriesRoutes.put('/deleteCat/:id', verificarToken, async (req: any, res: Res
     }
 })
 
+//BUSCAR CATEGORIAS POR ID
+categoriesRoutes.get('/getCategoryId', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+
+    let categoryId = req.body.id_categoria
+    const datosToken = req.usuario
+
+    if (datosToken.idRol == 1) {
+        let category = await query("Select * from categorias where id_categoria = ?", [categoryId]);
+        res.json({
+            estado: "success",
+            mensaje: "Se encontró la categoria",
+            data: category
+        })
+    } else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tenes permisos de Administrador"
+        })
+    }
+})
+
+//BUSCAR TODAS LAS CATEGORIAS
+categoriesRoutes.get('/getAllCategories', verificarToken, async (req: any, res: Response) => {
+
+    let categories = await query("Select * from categorias where id_estado = 1", []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron todas las categorias",
+        data: categories
+    })
+})
+
+//BUSCAR CATEGORIAS POR NOMBRE
+categoriesRoutes.get('/getCategoryName', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+
+    let categoryName = req.body.nombre
+    const datosToken = req.usuario
+
+    if (datosToken.idRol == 1) {
+        let category = await query("Select * from categorias where nombre like ?", ['%'+categoryName+'%']);
+        res.json({
+            estado: "success",
+            mensaje: "Se encontró la categoria",
+            data: category
+        })
+    } else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tenes permisos de Administrador"
+        })
+    }
+})
 
 export default categoriesRoutes;
