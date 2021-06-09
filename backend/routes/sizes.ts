@@ -117,5 +117,57 @@ sizesRoutes.put('/deleteSizes/:id', verificarToken, async (req: any, res: Respon
     }
 })
 
+//BUSCAR TAMAÑO POR ID
+sizesRoutes.get('/getSizeId', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+
+    let sizeId = req.body.id_tamaño
+    const datosToken = req.usuario
+
+    if (datosToken.idRol == 1) {
+        let size = await query("Select * from tamaños where id_tamaño = ?", [sizeId]);
+        res.json({
+            estado: "success",
+            mensaje: "Se encontró el tamaño",
+            data: size
+        })
+    } else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tenes permisos de Administrador"
+        })
+    }
+})
+//BUSCAR TAMAÑO POR NOMBRE
+sizesRoutes.get('/getSizeName', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+
+    let sizeName = req.body.nombre
+    const datosToken = req.usuario
+
+    if (datosToken.idRol == 1) {
+        let size = await query("Select * from tamaños where nombre like ?", ['%'+sizeName+'%']);
+        res.json({
+            estado: "success",
+            mensaje: "Se encontró el tamaño",
+            data: size
+        })
+    } else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tenes permisos de Administrador"
+        })
+    }
+})
+
+//BUSCAR TODAS LOS TAMAÑOS
+sizesRoutes.get('/getAllSizes', verificarToken, async (req: any, res: Response) => {
+
+    let sizes = await query("Select * from tamaños where id_estado = 1", []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron todos los tamaños",
+        data: sizes
+    })
+})
+
 
 export default sizesRoutes;

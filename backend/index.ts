@@ -9,6 +9,8 @@ import fileUpload from 'express-fileupload';
 import fs from 'fs';
 import path from 'path';
 import FileSystem from './clases/file-system';
+import ventasRoutes from './routes/orderReports';
+import mercadoPagoRoutes from './routes/mercadoPago';
 
 
 
@@ -35,6 +37,8 @@ server.app.use('/users', userRoutes);
 server.app.use('/products', productRoutes);
 server.app.use('/categories', categoriesRoutes);
 server.app.use('/sizes', sizesRoutes);
+server.app.use('/ventas', ventasRoutes);
+server.app.use('/mercadoPago', mercadoPagoRoutes);
 
 //Ejemplo: localhost:3000/users/createUser
 
