@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "7a1e7049-eb2b-471c-8590-ef90041c169a"
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
@@ -30,7 +33,18 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/modernizr-2.6.2.min.js",
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/jquery.easing.1.3.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/jquery.waypoints.min.js",
+              "src/assets/js/jquery.stellar.min.js",
+              "src/assets/js/main.js",       
+              "src/assets/js/respond.min.js",
+              "src/assets/js/jquery.magnific-popup.min.js",
+              "src/assets/js/magnific-popup-options.js"
+            ]
           },
           "configurations": {
             "production": {
