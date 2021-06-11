@@ -1,0 +1,6 @@
+/Users/Gabi/Projects/inmoVir3/inmoVir3/bin/inmoVir3.dll
+/Users/Gabi/Projects/inmoVir3/inmoVir3/bin/inmoVir3.pdb
+/Users/Gabi/Projects/inmoVir3/inmoVir3/obj/Debug/inmoVir3.csprojAssemblyReference.cache
+/Users/Gabi/Projects/inmoVir3/inmoVir3/obj/Debug/inmoVir3.csproj.CoreCompileInputs.cache
+/Users/Gabi/Projects/inmoVir3/inmoVir3/obj/Debug/inmoVir3.dll
+/Users/Gabi/Projects/inmoVir3/inmoVir3/obj/Debug/inmoVir3.pdb
