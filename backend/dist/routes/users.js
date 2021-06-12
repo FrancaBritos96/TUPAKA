@@ -13,52 +13,50 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const token_1 = __importDefault(require("../clases/token"));
+const authentication_1 = require("../middlewares/authentication");
 const queryPromess_1 = __importDefault(require("./queryPromess"));
+const usuario_1 = __importDefault(require("../controllers/usuario"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const connectionMySql_1 = __importDefault(require("../bin/connectionMySql"));
 const userRoutes = express_1.Router();
+//LOGIN
 userRoutes.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = req.body.email;
-    const pass = req.body.password;
-    let passwordHaash = yield bcrypt_1.default.hashSync(pass, 10);
-    if (user && pass) {
-        queryPromess_1.default('SELECT * FROM usuarios where email = ?', [user]);
-    }
-}));
-userRoutes.get('/consultarUsuario', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    let documento = req.body.documento;
-    let persona = yield queryPromess_1.default("Select * from usuarios where documento = ?", [documento]);
-    res.json({
-        data: persona
-    });
-}));
-userRoutes.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const body = req.body;
-        const id_rol = body.id_rol;
-        const id_estado = body.id_estado;
-        const email = body.email;
-        const password = bcrypt_1.default.hashSync(req.body.password, 10);
-        const nombre = body.nombre;
-        const apellido = body.apellido;
-        const documento = body.numero_documento;
-        const direccion = body.direccion;
-        const telefono = body.telefono;
-        const nacionalidad = body.nacionalidad;
-        const provincia = body.provincia;
-        const localidad = body.localidad;
-        const cod_postal = body.cod_postal;
-        let queryTransaction = "START TRANSACTION";
-        let queryUsuario = "INSERT INTO USUARIOS (id_rol, id_estado, email, password, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        //let queryUsuario = "INSERT INTO USUARIOS(id_usuario, nombre_usuario, password) VALUES(?,?,?)";
-        yield queryPromess_1.default(queryTransaction, []);
-        let insertarUsuarios = yield queryPromess_1.default(queryUsuario, [id_rol, id_estado, email, password, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal]);
-        //await query(queryUsuario, [insertarPersona.insertId, nombre_usuario, password]);
-        let commit = yield queryPromess_1.default("commit", []);
-        res.json({
-            estado: "Success",
-            mensaje: "Usuario creado con exito",
-            data: commit
-        });
+        const email = req.body.email;
+        const pass = req.body.pass;
+        let passwordHaash = yield bcrypt_1.default.hash(pass, 8);
+        if (email && pass) {
+            connectionMySql_1.default.query('SELECT * FROM usuarios where email = ?', [email], (error, results) => __awaiter(void 0, void 0, void 0, function* () {
+                if (results.length == 0 || !(yield bcrypt_1.default.compare(pass, results[0].password))) {
+                    res.json({
+                        estado: "success",
+                        mensaje: "Usuario o Contraseña Incorrectos",
+                    });
+                }
+                else {
+                    const TokenJwt = token_1.default.getToken({
+                        id: results[0].id_usuario,
+                        nombre: results[0].nombre,
+                        apellido: results[0].apellido,
+                        dni: results[0].dni,
+                        email: results[0].email,
+                        idRol: results[0].id_rol,
+                    });
+                    res.json({
+                        estado: "success",
+                        mensaje: "¡LOGIN CORRECTO!",
+                        data: results,
+                        token: TokenJwt
+                    });
+                }
+                res.end();
+            }));
+        }
+        else {
+            res.send('Please enter user and Password!');
+            res.end();
+        }
     }
     catch (error) {
         yield queryPromess_1.default("rollback", []);
@@ -68,48 +66,92 @@ userRoutes.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, f
         });
     }
 }));
+//REGISTRAR
+userRoutes.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const body = req.body;
+        const id_rol = body.id_rol;
+        const id_estado = body.id_estado;
+        const email = body.email;
+        const password = body.password; //        bcrypt.hashSync(req.body.password, 10);
+        const nombre = body.nombre;
+        const apellido = body.apellido;
+        const documento = body.numero_documento;
+        const direccion = body.direccion;
+        const telefono = body.telefono;
+        const nacionalidad = body.nacionalidad;
+        const provincia = body.provincia;
+        const localidad = body.localidad;
+        const cod_postal = body.cod_postal;
+        let passEncriptado = yield bcrypt_1.default.hash(password, 8);
+        let validarEmail = yield queryPromess_1.default(`Select * from usuarios where email = '${email}'`, []);
+        if (validarEmail.length == 0) {
+            let queryTransaction = "START TRANSACTION";
+            let queryUsuario = "INSERT INTO USUARIOS (id_rol, id_estado, email, password, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            yield queryPromess_1.default(queryTransaction, []);
+            yield queryPromess_1.default(queryUsuario, [id_rol, id_estado, email, passEncriptado, nombre, apellido, documento, direccion, telefono, nacionalidad, provincia, localidad, cod_postal]);
+            let commit = yield queryPromess_1.default("commit", []);
+            res.json({
+                estado: "Success",
+                mensaje: "Usuario creado con exito",
+                data: commit
+            });
+        }
+        else {
+            res.json({
+                estado: "Error",
+                mensaje: "El correo ingresado ya existe",
+            });
+        }
+    }
+    catch (error) {
+        yield queryPromess_1.default("rollback", []);
+        res.json({
+            estado: "error",
+            mensaje: "No se pudo crear el usuario",
+            data: error
+        });
+    }
+}));
+//CONSULTAR USUARIO POR DNI
+userRoutes.get('/getUserByDni', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let documento = req.body.documento;
+    let user = yield queryPromess_1.default("Select * from usuarios where documento = ?", [documento]);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontró el usuario",
+        data: user
+    });
+}));
+//CONSULTAR USUARIO POR NOMBRE
+userRoutes.get('/getUserByName', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let userName = req.body.nombre;
+    let user = yield queryPromess_1.default(`Select * from usuarios where name LIKE '%${userName}%'`, []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron los usuarios",
+        data: user
+    });
+}));
+//CONSULTAR USUARIO POR ESTADO
+userRoutes.get('/getUserByStatus', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let userStatus = req.body.id_estado;
+    let user = yield queryPromess_1.default(`Select * from usuarios where id_estado = ${userStatus}`, []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron los usuarios",
+        data: user
+    });
+}));
+//CONSULTAR USUARIO LOGUEADO
+userRoutes.get('/', authentication_1.verificarToken, usuario_1.default.token); // Sirve para obtener la info del usuario logueado
+//CONSULTAR TODOS LOS USUARIOS
+userRoutes.get('/getAllUsers', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let users = yield queryPromess_1.default("Select * from usuarios where id_estado = 1", []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron los usuarios",
+        data: users
+    });
+}));
 exports.default = userRoutes;
-// id_usuario int(11) AI PK 
-// id_rol int(11) 
-// id_estado int(11) 
-// email varchar(60) 
-// password varchar(45) 
-// nombre varchar(45) 
-// apellido varchar(45) 
-// direccion varchar(150) 
-// telefono varchar(20) 
-// nacionalidad varchar(45) 
-// Provincia varchar(45) 
-// localidad varchar(45) 
-// cod_postal varchar(45) 
-// imagen varchar(150)
-// userRoutes.post('/createUser', async (req: any, res: Response) => {
-//     try {
-//         const body = req.body;
-//         const nombre = body.nombre;
-//         const apellido = body.apellido;
-//         const tipo_documento = body.tipo_documento;
-//         const numero_documento = body.numero_documento;
-//         const nombre_usuario = body.nombre_usuario;
-//         const password = body.password
-//         let queryTransaction = "START TRANSACTION"
-//         let queryPersona = "INSERT INTO PERSONAS(nombre, apellido, tipo_documento, numero_documento) VALUES(?,?,?,?)";
-//         let queryUsuario = "INSERT INTO USUARIOS(id_usuario, nombre_usuario, password) VALUES(?,?,?)";
-//         await query(queryTransaction, []);
-//         let insertarPersona:any = await query(queryPersona, [nombre, apellido, tipo_documento, numero_documento]);
-//         await query(queryUsuario, [insertarPersona.insertId, nombre_usuario, password]);
-//         let commit = await query("commit", []);
-//         res.json({
-//             estado: "Success",
-//             mensaje: "Persona y Usuario creados con exito",
-//             data: commit
-//         })
-//     }
-//     catch (error) {
-//         await query("rollback", []);
-//         res.json({
-//             estado: "error",
-//             data: error
-//         });
-//     }
-// })

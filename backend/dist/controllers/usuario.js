@@ -4,7 +4,8 @@ module.exports = {
         const usuario = req.usuario;
         res.json({
             estado: "succes",
-            mensaje: usuario
+            mensaje: "Usuario logueado",
+            data: usuario
         });
     }
 };

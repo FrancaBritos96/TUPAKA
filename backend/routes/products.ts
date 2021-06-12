@@ -105,40 +105,48 @@ productRoutes.post('/createProduct', verificarToken, async (req: any, res: Respo
 productRoutes.post("/upload/:productId", verificarToken, async (req: any, res: Response) => {
 
     const { productId } = req.params;
-    const imag: IfileUpload = req.files.image;
+
+    if (req.files) {
+        let arrayNuevo = Object.values(req.files);
+        console.log(arrayNuevo);
+
+        arrayNuevo.forEach(async imagen => {
+            let newImage: any = imagen;
+            const imag: IfileUpload = newImage;
+
+            const validacionTipoImagen = imag.mimetype.includes('image');
+
+            if (!validacionTipoImagen) {
+                return res.status(400).json({
+                    estado: 'error',
+                    mensaje: 'Formato incorrecto'
+                })
+            }
+            await fileSystem.guardarImagenTemporal(productId, imag);
+        });
 
 
-    if (!req.files) {
+        const imagenes: Array<string> = fileSystem.imagenesDeTempHaciaPost(productId);
+
+        let imagesProduct = "INSERT INTO IMAGENES (id_producto, nombre, id_estado)  VALUES(?,?,?)";
+
+        const id_estado = '1';
+
+        imagenes.forEach(async item => {
+            await query(imagesProduct, [productId, item, id_estado]);
+        })
+
+        res.json({
+            estado: 'success',
+            data: arrayNuevo
+        })
+    }
+    else {
         return res.status(400).json({
             estado: 'error',
             mensaje: 'No se subió el archivo'
         })
     }
-
-    const validacionTipoImagen = imag.mimetype.includes('image');
-
-    if (!validacionTipoImagen) {
-        return res.status(400).json({
-            estado: 'error',
-            mensaje: 'Formato incorrecto'
-        })
-    }
-
-    await fileSystem.guardarImagenTemporal(productId, imag);
-
-    const imagenes: Array<string> = fileSystem.imagenesDeTempHaciaPost(productId);
-    let imagesProduct = "INSERT INTO IMAGENES (id_producto, nombre, id_estado)  VALUES(?,?,?)";
-
-    const id_estado = '1';
-
-    imagenes.forEach(async item => {
-        await query(imagesProduct, [productId, item, id_estado]);
-    })
-
-    res.json({
-        estado: 'success',
-        data: imag
-    })
 })
 
 
@@ -153,14 +161,14 @@ productRoutes.put('/editImageStatus/:id', verificarToken, async (req: any, res: 
 
     if (datosToken.idRol == '1') {
 
-            await query(`UPDATE imagenes set id_estado= ${id_estado} WHERE id_imagen = ${id}`, []);
-            let commit = await query("commit", []);
+        await query(`UPDATE imagenes set id_estado= ${id_estado} WHERE id_imagen = ${id}`, []);
+        let commit = await query("commit", []);
 
-            res.json({
-                estado: "success",
-                mensaje: "Imagen editada con exito",
-                data: commit
-            })
+        res.json({
+            estado: "success",
+            mensaje: "Imagen editada con exito",
+            data: commit
+        })
     } else {
         res.json({
             estado: "Error",
@@ -177,10 +185,10 @@ productRoutes.get('/imagen/:productId/:img', verificarToken, async (req: any, re
 
     const foto = fileSystem.getFotoUrl(productId, img);
     res.sendFile(foto);
-   // const fotos = fileSystem.getFotosUrls(productId);
-   // setTimeout(() => {
-      //      res.sendFile(fotos);
-   // }, 50);
+    // const fotos = fileSystem.getFotosUrls(productId);
+    // setTimeout(() => {
+    //      res.sendFile(fotos);
+    // }, 50);
 })
 
 
