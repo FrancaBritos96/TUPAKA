@@ -1,0 +1,154 @@
+<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+   <s:Body>
+      <GetClientPortfolioForLossResponse xmlns="http://tempuri.org/">
+         <GetClientPortfolioForLossResult xmlns:a="http://schemas.datacontract.org/2004/07/Sancor.ServiceBus.CustomerSelfManagement.Contract.Data" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+            <ExecutionResult xmlns="http://schemas.datacontract.org/2004/07/Sancor.ServiceBus.CustomerSelfManagement.Contract.Services">
+               <ErrorCode>1</ErrorCode>
+               <ErrorMessage i:nil="true"/>
+               <Success>true</Success>
+            </ExecutionResult>
+            <a:Certificates>
+               <a:CertificateSearchResult>
+                  <a:AeroEmbaEnrollment>LVXLS</a:AeroEmbaEnrollment>
+                  <a:AeroEmbaModel>PA-11 C</a:AeroEmbaModel>
+                  <a:AeroEmbaType>Monomotor</a:AeroEmbaType>
+                  <a:AliasCertificate/>
+                  <a:AnullmentDate i:nil="true"/>
+                  <a:BranchId>1050</a:BranchId>
+                  <a:BranchName>Aeronavegación</a:BranchName>
+                  <a:CertificateId>
+                     <a:Value>80806746</a:Value>
+                  </a:CertificateId>
+                  <a:CertificateNumber>0</a:CertificateNumber>
+                  <a:CertificateStatusName>Pendiente de Impresión</a:CertificateStatusName>
+                  <a:Client i:nil="true"/>
+                  <a:ClientAddress i:nil="true"/>
+                  <a:CombinationList i:nil="true"/>
+                  <a:CombinationTypeName/>
+                  <a:Description i:nil="true"/>
+                  <a:DigitalDispatchOption>false</a:DigitalDispatchOption>
+                  <a:DigitalDispatchRecipientAddress>
+                     <a:AlternativePhones i:nil="true"/>
+                     <a:Apartment i:nil="true"/>
+                     <a:CentralPoint i:nil="true"/>
+                     <a:CityName i:nil="true"/>
+                     <a:CoordinateX i:nil="true"/>
+                     <a:CoordinateY i:nil="true"/>
+                     <a:CountryName i:nil="true"/>
+                     <a:Email></a:Email>
+                     <a:Floor i:nil="true"/>
+                     <a:MainPhone i:nil="true"/>
+                     <a:Neighborhood i:nil="true"/>
+                     <a:ProvinceName i:nil="true"/>
+                     <a:StreetAddress i:nil="true"/>
+                     <a:Type i:nil="true"/>
+                     <a:TypeName i:nil="true"/>
+                     <a:ZipCode i:nil="true"/>
+                     <a:Phones i:nil="true"/>
+                  </a:DigitalDispatchRecipientAddress>
+                  <a:ExpirationDate>2021-05-17T00:00:00</a:ExpirationDate>
+                  <a:InvoiceType>2</a:InvoiceType>
+                  <a:IsCertificateAutoPlan>false</a:IsCertificateAutoPlan>
+                  <a:PaymentFrequency i:nil="true"/>
+                  <a:PolicyAnullmentDate i:nil="true"/>
+                  <a:PolicyCompanyId>1</a:PolicyCompanyId>
+                  <a:PolicyOfficialNumber>15372</a:PolicyOfficialNumber>
+                  <a:PolicyReferenceNumber>8207</a:PolicyReferenceNumber>
+                  <a:PolicyTypeId>1</a:PolicyTypeId>
+                  <a:ProductName>Aeronavegación</a:ProductName>
+                  <a:ProductNumber>1</a:ProductNumber>
+                  <a:SendElectronicPolicy>true</a:SendElectronicPolicy>
+                  <a:ShowConstancia>true</a:ShowConstancia>
+                  <a:ShowCupon>true</a:ShowCupon>
+                  <a:ShowViajero>false</a:ShowViajero>
+                  <a:StartDate>2020-05-17T00:00:00</a:StartDate>
+                  <a:StatisticsCode i:nil="true"/>
+                  <a:Status>Vigente</a:Status>
+                  <a:VehicleDescription/>
+                  <a:VehicleModel i:nil="true"/>
+                  <a:VehicleRegist/>
+                  <a:civilLiabilityActivity/>
+                  <a:nCountry>1</a:nCountry>
+                  <a:nLocal>2090</a:nLocal>
+                  <a:nProvince>13</a:nProvince>
+                  <a:sDescription>PIPER</a:sDescription>
+                  <a:sDomLoc i:nil="true"/>
+                  <a:townProvince>Santa Fe Santa Fe</a:townProvince>
+               </a:CertificateSearchResult>
+               <a:CertificateSearchResult>
+                  <a:AeroEmbaEnrollment>LVU219</a:AeroEmbaEnrollment>
+                  <a:AeroEmbaModel>DP I d-93</a:AeroEmbaModel>
+                  <a:AeroEmbaType>Ultraliviano</a:AeroEmbaType>
+                  <a:AliasCertificate/>
+                  <a:AnullmentDate i:nil="true"/>
+                  <a:BranchId>1050</a:BranchId>
+                  <a:BranchName>Aeronavegación</a:BranchName>
+                  <a:CertificateId>
+                     <a:Value>82627983</a:Value>
+                  </a:CertificateId>
+                  <a:CertificateNumber>0</a:CertificateNumber>
+                  <a:CertificateStatusName>Pendiente de Impresión</a:CertificateStatusName>
+                  <a:Client i:nil="true"/>
+                  <a:ClientAddress i:nil="true"/>
+                  <a:CombinationList i:nil="true"/>
+                  <a:CombinationTypeName/>
+                  <a:Description i:nil="true"/>
+                  <a:DigitalDispatchOption>false</a:DigitalDispatchOption>
+                  <a:DigitalDispatchRecipientAddress>
+                     <a:AlternativePhones i:nil="true"/>
+                     <a:Apartment i:nil="true"/>
+                     <a:CentralPoint i:nil="true"/>
+                     <a:CityName i:nil="true"/>
+                     <a:CoordinateX i:nil="true"/>
+                     <a:CoordinateY i:nil="true"/>
+                     <a:CountryName i:nil="true"/>
+                     <a:Email></a:Email>
+                     <a:Floor i:nil="true"/>
+                     <a:MainPhone i:nil="true"/>
+                     <a:Neighborhood i:nil="true"/>
+                     <a:ProvinceName i:nil="true"/>
+                     <a:StreetAddress i:nil="true"/>
+                     <a:Type i:nil="true"/>
+                     <a:TypeName i:nil="true"/>
+                     <a:ZipCode i:nil="true"/>
+                     <a:Phones i:nil="true"/>
+                  </a:DigitalDispatchRecipientAddress>
+                  <a:ExpirationDate>2021-10-23T00:00:00</a:ExpirationDate>
+                  <a:InvoiceType>2</a:InvoiceType>
+                  <a:IsCertificateAutoPlan>false</a:IsCertificateAutoPlan>
+                  <a:PaymentFrequency i:nil="true"/>
+                  <a:PolicyAnullmentDate i:nil="true"/>
+                  <a:PolicyCompanyId>1</a:PolicyCompanyId>
+                  <a:PolicyOfficialNumber>15712</a:PolicyOfficialNumber>
+                  <a:PolicyReferenceNumber>8571</a:PolicyReferenceNumber>
+                  <a:PolicyTypeId>1</a:PolicyTypeId>
+                  <a:ProductName>Aeronavegación</a:ProductName>
+                  <a:ProductNumber>1</a:ProductNumber>
+                  <a:SendElectronicPolicy>true</a:SendElectronicPolicy>
+                  <a:ShowConstancia>true</a:ShowConstancia>
+                  <a:ShowCupon>true</a:ShowCupon>
+                  <a:ShowViajero>false</a:ShowViajero>
+                  <a:StartDate>2020-10-23T00:00:00</a:StartDate>
+                  <a:StatisticsCode i:nil="true"/>
+                  <a:Status>Vigente</a:Status>
+                  <a:VehicleDescription/>
+                  <a:VehicleModel i:nil="true"/>
+                  <a:VehicleRegist/>
+                  <a:civilLiabilityActivity/>
+                  <a:nCountry>1</a:nCountry>
+                  <a:nLocal>2090</a:nLocal>
+                  <a:nProvince>13</a:nProvince>
+                  <a:sDescription>DI PALMA</a:sDescription>
+                  <a:sDomLoc i:nil="true"/>
+                  <a:townProvince>Santa Fe Santa Fe</a:townProvince>
+               </a:CertificateSearchResult>
+            </a:Certificates>
+            <a:ClientId>
+               <a:artClientId i:nil="true"/>
+               <a:sancorClientId>8657270</a:sancorClientId>
+            </a:ClientId>
+            <a:PersonBupId>12264682</a:PersonBupId>
+         </GetClientPortfolioForLossResult>
+      </GetClientPortfolioForLossResponse>
+   </s:Body>
+</s:Envelope>
