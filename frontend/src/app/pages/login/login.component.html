@@ -1,1 +1,45 @@
-<p>login works!</p>
+<section id="gtco-contact" data-section="contact">
+    <div class="container">
+        <div class="row row-pb-md">
+            <div class="col-md-8 col-md-offset-2 heading animate-box" data-animate-effect="fadeIn">
+                <h1>¡Nos mantengamos en contacto!</h1>
+                <p class="subtle-text animate-box" data-animate-effect="fadeIn">CONTACTO</p>
+            </div>
+        </div>
+        <div class="row">
+            <h1>LOGIN</h1>
+            <form [formGroup]="this.formLogin">
+                <div class="form-group">
+                    <i class="fas fa-user icono_login"></i> <label for="username">Username</label>
+                    <!-- <label for="name" class="sr-only">Name</label> -->
+                    <input type="text" style="width:300px;height:40px" class="form-control"
+                        placeholder=" Ingrese su Email" formControlName="email">
+                    <div *ngIf="this.formLogin.get('email')?.errors && this.formLogin.get('email')?.dirty">
+                        <p class="campos_obligatorios" *ngIf="this.formLogin.get('email')?.hasError('required')">El
+                            campo es obligatorio</p>
+                        <p class="campos_obligatorios" *ngIf="this.formLogin.get('email')?.hasError('email')">Debe
+                            ingresar un Email verdadero</p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <i class="fas fa-lock icono_login"></i><label for="password"> Password</label>
+                    <!-- <label for="email" class="sr-only">Email</label> -->
+                    <input type="text" style="width:300px;height:40px" class="form-control"
+                        placeholder="Ingrese su contraseña" formControlName="password">
+                    <div *ngIf="this.formLogin.get('password')?.errors && this.formLogin.get('password')?.dirty">
+                        <p class="campos_obligatorios" *ngIf="this.formLogin.get('password')?.hasError('required')">El
+                            campo es obligatorio</p>
+                    </div>
+                    ¿Aún no tienes cuenta? <a href="/registro">Regístrate aquí</a> <br />
+                </div>
+
+                <div class="form-group">
+                    <input style="border-radius: 12px; font-size: 20px;" type="submit" value="Login"
+                        class="btn btn-primary" (click)="login()">
+                </div>
+            </form>
+
+        </div>
+    </div>
+</section>

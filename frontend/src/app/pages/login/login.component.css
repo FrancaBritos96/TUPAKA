@@ -1,0 +1,31 @@
+@import url("../../../assets/css/animate.css");
+@import url("../../../assets/css/icomoon.css");
+@import url("../../../assets/css/gallery.css");
+@import url("../../../assets/css/themify-icons.css");
+@import url("../../../assets/css/bootstrap.css");
+@import url("../../../assets/css/magnific-popup.css");
+@import url("../../../assets/css/owl.theme.default.min.css");
+@import url("../../../assets/css/style.css");
+
+.input-icono {
+    background-image: src="assets/images/facebook.png";
+    background-repeat: no-repeat;
+    background-position: 4px center;
+    background-size: 20px;
+    display: flex;
+    align-items: center;
+    width: 300px;
+    padding-left: 28px;
+    height: 30px;
+    border: 1px solid rgba(9, 113, 163, 1);
+    border-radius: 3px;
+}
+
+.icono_login {
+    margin-right: 2%;
+}
+
+.campos_obligatorios {
+    color: rgb(170, 0, 0);
+    font-size: 13px;
+}
