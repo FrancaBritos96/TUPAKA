@@ -13,6 +13,7 @@ import path from 'path';
 import FileSystem from './clases/file-system';
 import ventasRoutes from './routes/orderReports';
 import mercadoPagoRoutes from './routes/mercadoPago';
+import cors from 'cors';
 
 const server = new Server();
 
@@ -23,6 +24,7 @@ server.start(() => {
 //Body parser
 server.app.use(bodyParser.urlencoded({extended:true}));
 server.app.use(bodyParser.json());
+server.app.use(cors());
 
 
 //Upload

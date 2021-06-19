@@ -51,9 +51,11 @@
 		$(window).scroll(function(){
 			var st = $(window).scrollTop();
 			if (st > 50) {
-				$('.gtco-nav').addClass('scrolled');
-			} else {
-				$('.gtco-nav').removeClass('scrolled');
+				document.getElementById("navBar").className = "gtco-nav scrolled";
+			} 
+	
+			if (st < 50 && localStorage.getItem("scrolledNavBar") === "false") {
+				document.getElementById("navBar").className = "gtco-nav";
 			}
 		});
    

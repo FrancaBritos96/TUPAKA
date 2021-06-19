@@ -1,0 +1,26 @@
+@import url("../../../assets/css/animate.css");
+@import url("../../../assets/css/icomoon.css");
+@import url("../../../assets/css/gallery.css");
+@import url("../../../assets/css/themify-icons.css");
+@import url("../../../assets/css/bootstrap.css");
+@import url("../../../assets/css/magnific-popup.css");
+@import url("../../../assets/css/owl.theme.default.min.css");
+@import url("../../../assets/css/style.css");
+
+.container {
+    padding-top: 4% !important;
+}
+
+#gtco-contact .form-control {
+    height: 50px !important;
+}
+
+h1, .h1 {
+    font-size: 42px !important;
+    color: rgb(51, 51, 51) !important;
+}
+
+.errorForm {
+    font-size: 14px;
+    color: rgb(189, 38, 0);
+}

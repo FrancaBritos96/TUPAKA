@@ -1353,8 +1353,8 @@ form label {
   border: 2px solid rgb(204, 88, 42) !important;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-  background: #939393 !important;
-  border-color: #939393 !important;
+  background: rgb(216, 101, 52) !important;
+  border-color: rgb(216, 101, 52) !important;
 }
 .btn-primary.btn-outline {
   background: transparent;
