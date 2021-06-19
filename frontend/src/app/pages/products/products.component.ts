@@ -1,29 +1,23 @@
-
 import { Component, OnInit } from '@angular/core';
+
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../../pages/login/services/login.service';
+//import { LoginService } from './services/login.service';
 import { Router } from '@angular/router';
 import { User } from 'src/models/IUser';
 //import { ResetPasswordComponent } from 'src/app/components/reset-password/reset-password.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertsService } from 'src/utils/alerts.service';
 
-
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class ProductsComponent implements OnInit {
 
-   constructor(public router: Router, private loginService: LoginService, private alertsService: AlertsService) { }
+  constructor() { }
 
   ngOnInit(): void {
-  }
-
-  goToLogin() {
-    this.router.navigate(['/login']);
-    window.scrollTo(0, 0);
   }
 
 }
