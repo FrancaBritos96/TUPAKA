@@ -71,8 +71,8 @@ userRoutes.post('/login', async (req: Request, res: Response) => {
 userRoutes.post('/createUser', async (req: any, res: Response) => {
     try {
         const body = req.body;
-        const id_rol = body.id_rol;
-        const id_estado = body.id_estado;
+        const id_rol = 1;
+        const id_estado = 1;
         const email = body.email;
         const password = body.password //        bcrypt.hashSync(req.body.password, 10);
         const nombre = body.nombre;
@@ -116,7 +116,7 @@ userRoutes.post('/createUser', async (req: any, res: Response) => {
         await query("rollback", []);
         res.json({
             estado: "error",
-            mensaje: "No se pudo crear el usuario",
+            mensaje: "No se pudo crear el usuario, intenta más tarde",
             data: error
         });
     }

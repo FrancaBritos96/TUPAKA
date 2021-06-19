@@ -160,7 +160,7 @@ h1, h2, h3, h4, h5, h6, figure {
   transition: 0.2s;
 }
 .gtco-nav #gtco-logo a {
-  font-family: Avenir;
+  font-family: "Open Sans", Arial, sans-serif;
   padding: 0px 10px;
   color: #fff;
   font-weight: 700;
@@ -982,7 +982,7 @@ form label {
 }
 #gtco-header .display-tc h1,
 .gtco-cover .display-tc h1 {
-  font-family: Avenir;
+  font-family: "Open Sans", Arial, sans-serif;
   margin-bottom: 30px;
   font-size: 25px;
   margin-left: 150px;
@@ -996,7 +996,7 @@ form label {
 @media screen and (max-width: 768px) {
   #gtco-header .display-tc h1,
   .gtco-cover .display-tc h1 {
-    font-family: Avenir;
+    font-family: "Open Sans", Arial, sans-serif;
     font-size: 34px;
     line-height: 1.2;
     margin-bottom: 10px;
@@ -1336,8 +1336,8 @@ form label {
   border: 2px solid rgb(204, 88, 42) !important;
 }
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-  background: #939393 !important;
-  border-color: #939393 !important;
+  background: rgb(216, 101, 52) !important;
+  border-color: rgb(216, 101, 52) !important;
 }
 .btn-primary.btn-outline {
   background: transparent;
