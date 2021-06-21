@@ -35,7 +35,7 @@ export class SignUpComponent implements OnInit {
         debugger;
         if(data.mensaje == "Usuario creado con exito"){
           this.alertsService.confirmMessage("Cuenta creada exitosamente")
-          .then((result) => { window.location.href = '/' });
+          .then(() => { window.location.href = '/' });
         //  localStorage.setItem("token", resp.token);
          // this.authService.authenticate()
          // console.log("estado auth", this.authService.authState)
