@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { ProductsComponent } from './products.component';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 
 
@@ -24,7 +25,8 @@ import { ProductsComponent } from './products.component';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    ComponentsModule
   ],
 //   exports:[
 // ProductsComponent,
