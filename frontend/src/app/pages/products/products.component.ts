@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/models/IUser';
 //import { ResetPasswordComponent } from 'src/app/components/reset-password/reset-password.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertsService } from 'src/utils/alerts.service';
+import { AlertsService } from 'src/utils/alert.service';
 
 @Component({
   selector: 'app-products',
