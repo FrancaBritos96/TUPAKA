@@ -32,7 +32,8 @@ export class LoginService {
   constructor(private http:HttpClient) { }
 
   login(user: User): Observable<any> {
-    return this.http.post('http://localhost:3000/users/login', user)
+    debugger;
+    return this.http.post('http://localhost:3000/users/login', user);
     //.pipe(catchError(this.errorHandler.handleError));
   }
 
@@ -47,6 +48,7 @@ export class LoginService {
 //   }
 
   setToken(token: string) {
+    debugger;
     localStorage.setItem("accessToken", token);
   }
 

@@ -25,30 +25,24 @@ export class LoginComponent implements OnInit {
   })
 
   login() {
-
+    debugger;
     let user = new User;
     user.email = this.formLogin.value.email;
     user.password = this.formLogin.value.password;
     this.loginService.login(user).subscribe(data => {
+  
+        if(data.mensaje == "¡LOGIN CORRECTO!"){
+          debugger;
+          this.loginService.setToken(data.token);
+          debugger;
+          this.alertsService.confirmMessage("Inicio de sesión exitoso")
+          .then(() => { window.location.href = '/' });
 
-      //this.loginService.setUser(data.payload.user);
-
-      this.loginService.setToken(data.token);
-      this.alertsService.confirmMessage("Inicio de sesión exitoso")
-        .then(() => { window.location.href = '/' });
-    },
-      error => {
-        if (error.error.error.code == 400) {
-          this.alertsService.errorMessage("Email y/o contraseña incorrectos")
-
-          return;
         }
-        if (error.error.error.code == 401) {
-          this.alertsService.errorMessage("Usuario bloqueado, comuníquese con el administrador desde la sección contáctenos.")
-          return;
+        else{
+          this.alertsService.errorMessage(data.mensaje);
         }
-        this.alertsService.errorMessage("Email y/o contraseña incorrectos");
-      }
+    }
     );
   }
 

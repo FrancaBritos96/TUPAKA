@@ -1,0 +1,170 @@
+@import url("../../../assets/css/animate.css");
+@import url("../../../assets/css/icomoon.css");
+@import url("../../../assets/css/gallery.css");
+@import url("../../../assets/css/themify-icons.css");
+@import url("../../../assets/css/bootstrap.css");
+@import url("../../../assets/css/magnific-popup.css");
+@import url("../../../assets/css/owl.theme.default.min.css");
+@import url("../../../assets/css/style.css");
+
+.container {
+    padding-top: 4% !important;
+}
+
+#gtco-contact .form-control {
+    height: 50px !important;
+}
+
+h1, .h1 {
+    font-size: 42px !important;
+    color: rgb(51, 51, 51) !important;
+}
+
+.errorForm {
+    font-size: 14px;
+    color: rgb(189, 38, 0);
+}
+
+.parrafoCatalogo {
+    font-size: 15px !important;
+}
+
+.tituloCatalogo {
+    font-size: 25px !important;
+}
+
+.btnCarrito {
+    border-radius: 12px !important;
+    font-size: 15px !important;
+    background-color: rgb(109, 22, 0) !important;
+    border-color: rgb(109, 22, 0) !important;
+    margin-left: 3% !important;
+    height: 35px !important;
+    vertical-align: bottom !important;
+    padding-top: 1.1% !important;
+    width: 176px;
+}
+
+.container {
+    width: 90%;
+}
+
+.divArticulo {
+    background: rgba(119, 24, 0, 0.06);
+    padding: 3%;
+    border-radius: 4%;
+    margin-bottom: 3%;
+}
+
+.iconoCarrito {
+    margin-left: 1%;
+}
+
+.btnCarrito:hover {
+    background: rgb(192, 83, 36) !important;
+    border-color: rgb(192, 83, 36)!important;
+}
+
+.hrefCarrito {
+    color: white;
+    margin-left: -14%;
+}
+
+.hrefCarrito:hover {
+    color: white !important;
+}
+
+
+
+
+
+
+.imageLogo {
+	image-rendering: 50%;
+	transition: 1s ease;
+	margin-bottom: 3em;
+	transition: transform 1s;
+	max-width: 100%;
+	align-content: center;
+	vertical-align: middle;
+	text-align: center;
+	
+  }
+
+
+
+
+.contenedorArticulo{
+    position: relative;
+    display: inline-block;
+	text-align: center;
+	margin-bottom: 15px;
+}
+
+.contenedorArticulo:hover > .imageLogo{
+	transform: scale(1.06);
+	cursor: pointer;
+	filter: brightness(38%);
+	transition: filter 0.5s ease-in-out;
+	visibility: visible;
+
+}
+
+.contenedorArticulo:hover > .descripcionArticulo{
+	visibility: visible;
+
+
+
+}
+
+.descripcionArticulo{
+	position: absolute;
+	max-width: 100%;
+	width: 95%;
+	top: 50%;
+	left: 50%;
+
+	transform: translate(-50%, -50%);
+	color: #e6d9d9e3;
+	visibility: hidden;
+	transition-delay: 0.2s;
+
+}
+
+.descripcionArticulo > h5{
+font-size: 1.1em;
+color: #eeeeee;
+
+}
+
+.descripcionArticulo > h3{
+	text-align: left;
+	font-size: 0.95em;
+	
+	}
+
+	.descripcionArticulo > h6{
+		text-align: left;
+		font-size: 0.95em;
+		
+		}
+
+	.descripcionArticulo > a > h1{
+		text-align: center;
+		font-size: 1.8em;
+		cursor: pointer;
+		transition: transform 0.5s;
+		color: #ffffff;
+		}
+
+			.descripcionArticulo > a > h1:hover{
+				transform: scale(1.2);
+				}
+			
+
+	
+
+  .image {
+	max-width: 100%;
+
+	}

@@ -1,0 +1,114 @@
+<section id="gtco-contact" data-section="contact">
+    <div class="container">
+        <div class="row row-pb-md">
+            <div class="col-md-8 col-md-offset-2 heading animate-box" data-animate-effect="fadeIn">
+                <h1>CATÁLOGO</h1>
+                <p class="sub">Catálogo completo de instrumentos con fotos y descripción para cada modelo.
+                    Elegí
+                    el modelo y accedé al link de compra.</p>
+                <p class="subtle-text animate-box" data-animate-effect="fadeIn">CATÁLOGO</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-md-push-6 animate-box">
+                <!-- Cajon Estandar -->
+                <div *ngFor="let i of [0, 1, 2, 3]" class="divArticulo animate-box">
+                    <div class="row team-item gtco-team-reverse">
+                        <div class="col-md-6 col-md-push-7 animate-box padding-top-img"
+                            data-animate-effect="fadeInRight">
+                            <div class="img-shadow" style="border-radius: 10px;">
+                                <div class="contenedorArticulo">
+                                    <img src="assets/images/standar.png" class="img-responsive imageLogo" style="border-radius: 10px;">
+                                    <div class="descripcionArticulo">
+                                        <h5 style="cursor: pointer;">Ver más fotos</h5>
+                                    </div>
+                                    
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6  col-md-pull-6 animate-box" data-animate-effect="fadeInRight">
+                            <h2 class="tituloCatalogo">{{htmlLeftProducts[i].nombre}}</h2>
+                            <p class="fino parrafoCatalogo">{{htmlLeftProducts[i].descripcion}}
+                                <br /><br /><b class="negrita">Medidas: </b> 49cm de alto. 30cm de ancho y 31cm de
+                                profundidad
+                                <br /><b class="precio">${{htmlLeftProducts[i].precio}}</b> <button class="btnCarrito btn btn-primary">
+                                    <a href="https://www.mercadopago.com.ar/checkout/v1/redirect/21341bb6-42bd-4783-a6c8-567db0bd1b62/payment-option-form/?preference-id=119459782-f883caed-0181-4129-8b56-3d52d9b8e75d&p=a1cb0b147e886fae83f0f1e6064cff3e#/"
+                                        class="hrefCarrito">Agregar al carrito <img src="assets/images/carrito.png"
+                                            class="iconoCarrito"></a></button>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-md-6 col-md-pull-6 animate-box">
+                <!-- Cajon Mediano -->
+                <div *ngFor="let i of [0, 1, 2, 3]" class="divArticulo animate-box">
+                    <div class="row team-item gtco-team">
+                        <div class="col-md-6 col-md-pull-1 animate-box padding-top-img"
+                            data-animate-effect="fadeInLeft">
+                            <div class="img-shadow" style="border-radius: 10px;">
+                                <div class="contenedorArticulo">
+                                    <img src="assets/images/standar2.png" class="img-responsive imageLogo" style="border-radius: 10px;">
+                                    <div class="descripcionArticulo">
+                                        <h5 style="cursor: pointer;">Ver más fotos</h5>
+                                    </div>
+    
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+                            <h2 class="tituloCatalogo">{{htmlRightProducts[i].nombre}}</h2>
+                            <p class="fino parrafoCatalogo parrafoCatalogo">{{htmlRightProducts[i].descripcion}}
+                                <br /><br /><b class="negrita">Medidas: </b> 49cm de alto. 33cm de ancho y 31cm de
+                                profundidad
+                                <br /><b class="precio">${{htmlRightProducts[i].precio}}</b> <button class="btnCarrito btn btn-primary">
+                                    <a href="https://www.mercadopago.com.ar/checkout/v1/redirect/21341bb6-42bd-4783-a6c8-567db0bd1b62/payment-option-form/?preference-id=119459782-f883caed-0181-4129-8b56-3d52d9b8e75d&p=a1cb0b147e886fae83f0f1e6064cff3e#/"
+                                        class="hrefCarrito">Agregar al carrito <img src="assets/images/carrito.png"
+                                            class="iconoCarrito"></a></button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diseños personalizados-->
+                <div class="divArticulo animate-box">
+                    <div class="row team-item gtco-team">
+                        <div class="col-md-6 col-md-pull-1 animate-box padding-top-img"
+                            data-animate-effect="fadeInLeft">
+                            <div class="img-shadow" style="border-radius: 10px;">
+                                <div class="contenedorArticulo">
+                                    <img src="assets/images/diseno.png" class="img-responsive imageLogo" style="border-radius: 10px;">
+                                    <div class="descripcionArticulo">
+                                        <h5 style="cursor: pointer;">Ver más fotos</h5>
+                                    </div>
+    
+                                </div>
+
+                            </div>  
+                        </div>
+                        <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+                            <h2 class="tituloCatalogo">Diseños personalizados</h2>
+                            <p class="fino parrafoCatalogo">Te ofrecemos la posibilidad de <b
+                                class="negrita">personalizar tu
+                                intrumento</b>, haciendo que sea
+                            unico y original. Elaboramos tu diseño, frase o imagen que más te guste y podes elegir
+                            dentro de la gama de colores que trabajamos.
+                        <br /><b class="precio">$2200</b> <button class="btnCarrito btn btn-primary">
+                            <a href="https://www.mercadopago.com.ar/checkout/v1/redirect/21341bb6-42bd-4783-a6c8-567db0bd1b62/payment-option-form/?preference-id=119459782-f883caed-0181-4129-8b56-3d52d9b8e75d&p=a1cb0b147e886fae83f0f1e6064cff3e#/"
+                                class="hrefCarrito">Presupuestar diseño</a></button>
+                        </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
