@@ -69,8 +69,8 @@ productRoutes.post('/createProduct', verificarToken, async (req: any, res: Respo
     try {
         const body = req.body;
         const id_categoria = body.id_categoria;
-        const id_estado = body.id_estado;
-        const id_tamaño = body.id_tamaño;
+        const id_estado = 1;
+        const id_tamaño = body.id_tamano;
         const nombre = body.nombre;
         const descripcion = body.descripcion;
         const precio = body.precio;
@@ -78,7 +78,7 @@ productRoutes.post('/createProduct', verificarToken, async (req: any, res: Respo
 
 
         let queryTransaction = "START TRANSACTION"
-        let queryProduct = "INSERT INTO PRODUCTOS (id_categoria, id_estado, id_tamaño, nombre, descripcion, precio, stock)  VALUES(?,?,?,?,?,?,?)";
+        let queryProduct = "INSERT INTO PRODUCTOS (id_categoria, id_estado, id_tamano, nombre, descripcion, precio, stock)  VALUES(?,?,?,?,?,?,?)";
 
         await query(queryTransaction, []);
         let insertProduct: any = await query(queryProduct, [id_categoria, id_estado, id_tamaño, nombre, descripcion, precio, stock]);

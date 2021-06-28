@@ -31,30 +31,21 @@ export class LoginComponent implements OnInit {
     user.password = this.formLogin.value.password;
     this.loginService.login(user).subscribe(data => {
 
-      //this.loginService.setUser(data.payload.user);
-
-      this.loginService.setToken(data.token);
-      this.alertsService.confirmMessage("Inicio de sesión exitoso")
-        .then(() => { window.location.href = '/' });
-    },
-      error => {
-        if (error.error.error.code == 400) {
-          this.alertsService.errorMessage("Email y/o contraseña incorrectos")
-
-          return;
-        }
-        if (error.error.error.code == 401) {
-          this.alertsService.errorMessage("Usuario bloqueado, comuníquese con el administrador desde la sección contáctenos.")
-          return;
-        }
-        this.alertsService.errorMessage("Email y/o contraseña incorrectos");
+      if (data.mensaje == "¡LOGIN CORRECTO!") {
+        this.loginService.setToken(data.token);
+debugger;
+        this.alertsService.confirmMessage("Inicio de sesión exitoso")
+          .then(() => { window.location.href = '/' });
       }
-    );
+      else {
+        this.alertsService.errorMessage(data.mensaje);
+      }
+    }
+    )
   }
 
   ngOnInit(): void {
     localStorage.setItem("scrolledNavBar", "true");
   }
-
 }
 

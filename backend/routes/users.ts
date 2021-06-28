@@ -13,14 +13,14 @@ const userRoutes = Router();
 userRoutes.post('/login', async (req: Request, res: Response) => {
     try {
         const email = req.body.email;
-        const pass = req.body.pass;
+        const password = req.body.password;
 
-        let passwordHaash = await bcrypt.hash(pass, 8);
+        let passwordHaash = await bcrypt.hash(password, 8);
 
-        if (email && pass) {
+        if (email && password) {
 
             connection.query('SELECT * FROM usuarios where email = ?', [email], async (error, results) => {
-                if (results.length == 0 || !(await bcrypt.compare(pass, results[0].password))) {
+                if (results.length == 0 || !(await bcrypt.compare(password, results[0].password))) {
 
                     res.json({
                         estado: "success",

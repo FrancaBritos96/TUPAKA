@@ -118,13 +118,13 @@ sizesRoutes.put('/deleteSizes/:id', verificarToken, async (req: any, res: Respon
 })
 
 //BUSCAR TAMAÑO POR ID
-sizesRoutes.get('/getSizeId', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+sizesRoutes.get('/getSizeById/:id', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
 
-    let sizeId = req.body.id_tamaño
+    const { id } = req.params;
     const datosToken = req.usuario
 
     if (datosToken.idRol == 1) {
-        let size = await query("Select * from tamaños where id_tamaño = ?", [sizeId]);
+        let size = await query("Select * from tamaños where id_tamano = ?", [id]);
         res.json({
             estado: "success",
             mensaje: "Se encontró el tamaño",
