@@ -4,13 +4,15 @@ import {MatButtonModule} from '@angular/material/button';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavLateralComponent } from './nav-lateral/nav-lateral.component';
+import { MarketComponent } from './market/market.component';
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
-    NavLateralComponent
+    NavLateralComponent,
+    MarketComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { NavLateralComponent } from './nav-lateral/nav-lateral.component';
   exports:[
     HeaderComponent,
     FooterComponent,
-    NavLateralComponent
+    NavLateralComponent,
+    MarketComponent
   ]
 })
 export class ComponentsModule { }

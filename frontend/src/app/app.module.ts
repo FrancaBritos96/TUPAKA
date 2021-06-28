@@ -18,7 +18,6 @@ import { ProductsListComponent } from './pages/products-list/products-list.compo
     SizesComponent,
     //ProductsListComponent,
     //ProductsComponent
-    
   ],
   imports: [
     BrowserModule,

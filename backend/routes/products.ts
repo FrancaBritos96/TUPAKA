@@ -70,7 +70,7 @@ productRoutes.post('/createProduct', verificarToken, async (req: any, res: Respo
         const body = req.body;
         const id_categoria = body.id_categoria;
         const id_estado = 1;
-        const id_tamaño = body.id_tamano;
+        const id_tamano = body.id_tamano;
         const nombre = body.nombre;
         const descripcion = body.descripcion;
         const precio = body.precio;
@@ -81,7 +81,7 @@ productRoutes.post('/createProduct', verificarToken, async (req: any, res: Respo
         let queryProduct = "INSERT INTO PRODUCTOS (id_categoria, id_estado, id_tamano, nombre, descripcion, precio, stock)  VALUES(?,?,?,?,?,?,?)";
 
         await query(queryTransaction, []);
-        let insertProduct: any = await query(queryProduct, [id_categoria, id_estado, id_tamaño, nombre, descripcion, precio, stock]);
+        let insertProduct: any = await query(queryProduct, [id_categoria, id_estado, id_tamano, nombre, descripcion, precio, stock]);
 
         await query("commit", []);
         res.json({

@@ -15,11 +15,11 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   login(user: User): Observable<any> {
-    return this.http.post('http://localhost:3000/users/login', user)
-
+    return this.http.post('http://localhost:3000/users/login', user);
   }
 
   setToken(token: string) {
+    debugger;
     localStorage.setItem("accessToken", token);
   }
 
@@ -30,13 +30,5 @@ export class LoginService {
 
   logout() {
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("accounts");
-    localStorage.removeItem("RequestIdSelection");
-    localStorage.removeItem("isProffessional");
-    localStorage.removeItem("isProffessionalRol");
-    localStorage.removeItem("isAdminRol");
-    localStorage.removeItem("RequestResponseIdSelection")
   }
 }
-
