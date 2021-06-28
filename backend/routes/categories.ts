@@ -114,13 +114,13 @@ categoriesRoutes.put('/deleteCat/:id', verificarToken, async (req: any, res: Res
 })
 
 //BUSCAR CATEGORIAS POR ID
-categoriesRoutes.get('/getCategoryId', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+categoriesRoutes.get('/getCategoryById/:id', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
 
-    let categoryId = req.body.id_categoria
+    const { id } = req.params;
     const datosToken = req.usuario
 
     if (datosToken.idRol == 1) {
-        let category = await query("Select * from categorias where id_categoria = ?", [categoryId]);
+        let category = await query("Select * from categorias where id_categoria = ?", [id]);
         res.json({
             estado: "success",
             mensaje: "Se encontró la categoria",

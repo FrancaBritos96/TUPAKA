@@ -4,6 +4,7 @@ import { SignUpModule } from 'src/app/pages/sign-up/sign-up.module';
 import { HomeAdminModule } from './pages/home-admin/home-admin.module';
 import { HomeModule } from './pages/home/home.module';
 import { LoginModule } from './pages/login/login.module';
+import { ProductsListModule } from './pages/products-list/products-list.module';
 import { ProductsModule } from './pages/products/products.module';
 
 
@@ -28,6 +29,10 @@ const routes: Routes = [
     {
       path: 'products',
       loadChildren: () => import('./pages/products/products.module').then(m=>ProductsModule)
+    },
+    {
+      path: 'productsList',
+      loadChildren: () => import('./pages/products-list/products-list.module').then(m=>ProductsListModule)
     }
 ];
 

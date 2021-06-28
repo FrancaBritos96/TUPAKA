@@ -1,11 +1,12 @@
-@import url("../../../assets/css/animate.css");
-@import url("../../../assets/css/icomoon.css");
-@import url("../../../assets/css/gallery.css");
-@import url("../../../assets/css/themify-icons.css");
-@import url("../../../assets/css/bootstrap.css");
-@import url("../../../assets/css/magnific-popup.css");
-@import url("../../../assets/css/owl.theme.default.min.css");
+@import url("../../../assets/css/all.css");
+@import url("../../../assets/css/bootstrap.min.css");
+@import url("../../../assets/css/jquery.mCustomScrollbar.css");
+@import url("../../../assets/css/bootstrap-material-design.min.css");
+@import url("../../../assets/css/normalize.css");
 @import url("../../../assets/css/style.css");
+
+
+
 
 @font-face {
     font-family: 'roboto_medium_regular';
@@ -45,6 +46,51 @@
 	--accent-color: #253556;
 	/*--accent-color: #455A64;*/
     --border-color: #D8D8D8;
+}
+
+.mat-icon {
+    margin-left: 3% !important;
+}
+
+.mat-icon:hover {
+    cursor: pointer;
+    color: rgb(0, 35, 233);
+    transform:scale(1.2);
+}
+
+.tamaño-tabla{
+	
+    width: 100%;
+    height: 500px;
+    overflow: auto;
+    border-collapse: collapse;
+}
+
+.table-td{
+	border: 1px solid #D5D5D5 !important;
+    font-size: 13px;
+    padding: 7px 5px;
+}
+
+.table-th {
+    height: 30px !important;
+    /* background-color: #FF9933; */
+    border-right: 1px solid #D5D5D5;
+    font-size: 13.5px;
+    line-height: 120%;
+    font-weight: bold;
+    padding: 8px 5px;
+    text-align: left;
+}
+
+.tamaño-celda{
+	position:absolute; 
+	overflow:scroll; 
+	float:left; 
+	top:10px;
+left:10px; 
+width:150px; 
+height:100px
 }
 
 .field-titles{
@@ -171,11 +217,20 @@ body,html{
 }
 .table-dark thead tr{
 	background-color: var(--accent-color);
+	height: 30px !important;
+    /* background-color: #FF9933; */
+    border-right: 1px solid #D5D5D5;
+    font-size: 13.5px;
+    line-height: 120%;
+    font-weight: bold;
+    padding: 8px 5px;
+    text-align: left;
+	
 }
 .table-dark td,
 .table-dark thead th,
 .table-dark th{
-	border: none;
+	border:1mm ;
 }
 .table-dark tr:hover{
 	color: var(--color-three);
@@ -250,7 +305,7 @@ table form{
 /*----------  Page layout Styles  ----------*/
 .main-container{
 	height: 100%;
-	position: fixed;
+	position: absolute;
 	top: 9%;
 	left: 0;
 	overflow: hidden;
@@ -525,3 +580,4 @@ table form{
 }
 
 /*----------  Keyframes  ----------*/
+

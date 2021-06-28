@@ -59,6 +59,20 @@
 	font-size: 15px;
     color: gray;
 }
+.text-box{
+	font-size: 15px;
+    color:#24292E;
+}
+.btn-size{
+	font-size: 15px !important;
+	width: 130px;
+    height: 40px;
+}
+.text-box-size{
+	margin-top: 0px;
+    margin-bottom: 0px;
+    height: 100px !important;
+	}
 
 
 body,html{
@@ -86,7 +100,7 @@ body,html{
 
 /*----------  Page headers styles  ----------*/
 .page-header{
-	padding: 30px 20px 60px 20px;
+	padding: 30px 20px 30px 20px;
 }
 .page-header > :nth-child(1){
 	padding-bottom: 7px;
@@ -245,7 +259,7 @@ table form{
 .main-container{
 	height: 100%;
 	position: absolute;
-	top: 0;
+	top: 9%;
 	left: 0;
 	overflow: hidden;
 }
