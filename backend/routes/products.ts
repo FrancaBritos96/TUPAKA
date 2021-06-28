@@ -69,7 +69,7 @@ productRoutes.post('/createProduct', verificarToken, async (req: any, res: Respo
     try {
         const body = req.body;
         const id_categoria = body.id_categoria;
-        const id_estado = body.id_estado;
+        const id_estado = 1;
         const id_tamano = body.id_tamano;
         const nombre = body.nombre;
         const descripcion = body.descripcion;

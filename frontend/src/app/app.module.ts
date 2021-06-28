@@ -6,11 +6,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentsModule } from './components/components.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ProductsComponent } from './pages/products/products.component';
+import { CategoryComponent } from './pages/category/category.component';
+import { SizesComponent } from './pages/sizes/sizes.component';
+import { ProductsListComponent } from './pages/products-list/products-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    CategoryComponent,
+    SizesComponent,
+    //ProductsListComponent,
     //ProductsComponent
   ],
   imports: [

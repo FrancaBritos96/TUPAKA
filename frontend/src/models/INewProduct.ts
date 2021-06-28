@@ -11,7 +11,6 @@ export interface INewProducts {
     imagen?: string;
 }
 
-
 export class NewProduct implements INewProducts {
     id_producto?: number;
     id_categoria?: number;

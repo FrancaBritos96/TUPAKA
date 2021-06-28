@@ -1,39 +1,34 @@
-//import { ResetPasswordComponent } from 'src/app/components/reset-password/reset-password.component';
-import {MatDialogModule} from '@angular/material/dialog';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
 
 import {ReactiveFormsModule, FormsModule} from '@angular/forms'
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import { AdminRoutingModule } from './home-admin-routing.module';
-import { HomeAdminComponent } from './home-admin.component';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ProductsListRoutingModule } from './products-list-routing.module';
+import { ProductsListComponent } from './products-list.component';
+
 
 
 @NgModule({
-  declarations: [HomeAdminComponent], //ResetPasswordComponent],
+  declarations: [ProductsListComponent],
   imports: [
+    CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    AdminRoutingModule,
-    CommonModule,
+    
+    ProductsListRoutingModule,
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    ComponentsModule
-  ],
-  entryComponents: [
-    //ResetPasswordComponent
-  ],
-  exports: [
-    HomeAdminComponent,
-    MatDialogModule
-  ],
-  providers: []
+    ComponentsModule,
+    MatTableModule
+  ]
 })
-export class HomeAdminModule { }
+export class ProductsListModule { }
