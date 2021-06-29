@@ -30,8 +30,9 @@ export class ProductsComponent implements OnInit {
   public selectedSizeId: number = 0;
   public sizes: Size[] = [];
 
-  public fileName=""
-  public file:any
+  public fileName: string[] = [];
+  public files: any[] = [];
+  public filesFormData: any;
 
   public createProductForm!: FormGroup;
   
@@ -46,6 +47,7 @@ export class ProductsComponent implements OnInit {
     localStorage.setItem("scrolledNavBar", "true");
     this.getCategorias();
     this.getSizes();
+
     
     this.createProductForm = new FormGroup({
       id_categoria: new FormControl('', [Validators.required]),
@@ -64,28 +66,33 @@ export class ProductsComponent implements OnInit {
 
 
   private validar(event:any):Boolean{
+    debugger;
     const maxSize = 500000;
-    this.file = event.target.files
-    this.fileName = event.target.files[0].name
+    this.files = event.target.files
+    this.fileName = [];
+    for (let file of this.files) {
+      debugger;
+      this.fileName.push(file.name);
+    }
 
-    if(this.file.length < 0){
+    if(this.files.length < 0){
       console.log("No se adjunto ningun archivo")
-      this.file = "";
-      this.fileName = "Error en validacion"
+      this.files = [];
+      this.fileName = [];
       return false
     }
 
-    if(this.file[0].size > maxSize){
+    if(this.files[0].size > maxSize){
       console.log("ha superado el tamaño permitido")
-      this.file = ""
-      this.fileName = "Error en validacion"
+      this.files = [];
+      this.fileName = [];
       return false
     }
 
-    if(this.file[0].type != 'image/png' ){
+    if(this.files[0].type != 'image/png' ){
       console.log("El formato no es el permitido")
-      this.file = ""
-      this.fileName = "Error en validacion"
+      this.files = [];
+      this.fileName = [];
       return false
     }
 
@@ -94,16 +101,15 @@ export class ProductsComponent implements OnInit {
   }
 
   onFileChange(event:any){
-
+ debugger;
     const validacion = this.validar(event)
 
     if(validacion){
-      let file = new FormData()
-      file.append('imag', this.file[0], this.fileName);
+      this.filesFormData = new FormData();
 
-      this.fileUploadService.sendFile(file).subscribe(resp=>{
-        console.log(resp)
-      })
+      for (let i = 0; i < this.files.length; i++){
+        this.filesFormData.append('image', this.files[i], this.fileName[i]);
+      }
     }
 
   }
@@ -140,6 +146,7 @@ export class ProductsComponent implements OnInit {
   
 
   async createProduct(){
+    debugger;
     console.log(this.createProductForm.valid)
     if(this.createProductForm.valid){
       
@@ -147,6 +154,14 @@ export class ProductsComponent implements OnInit {
         debugger;
         if(data.mensaje == "Producto creado con exito"){
           debugger;
+
+          this.fileUploadService.sendFile(this.filesFormData, data.data, this.loginService.getToken()).subscribe(resp=>{
+            debugger;
+            console.log(resp)
+          });
+          debugger;
+
+
           this.alertsService.confirmMessage("Producto creada exitosamente")
           //.then(() => { window.location.href = '/' });
 

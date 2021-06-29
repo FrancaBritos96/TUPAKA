@@ -2,7 +2,7 @@
     <!-- Main container -->
     <main class="full-box main-container">
         <app-nav-lateral></app-nav-lateral>
-        
+
         <section class="full-box page-content">
             <nav class="full-box navbar-info">
                 <a href="#" class="float-left show-nav-lateral">
@@ -128,10 +128,13 @@
 
                                 <div class="text-center" style="margin-top:auto;">
 
-                                    <button type="button" class="btn btn-raised btn-info btn-sm btn-size" (click)="fileInput.click() ">Adjuntar</button>
+                                    <button type="button" class="btn btn-raised btn-info btn-sm btn-size"
+                                        (click)="fileInput.click() ">Adjuntar</button>
                                     <input hidden #fileInput type="file" id="file" (change)="onFileChange($event)"
                                         multiple>
-                                    <p>{{this.fileName}}</p>
+
+                                    <p *ngFor="let name of fileName">{{name}}</p>
+
 
                                     <!-- <input type="file" name="adjunto" value="Subir imagen"
                                         accept="image/png, .jpeg, .jpg, image/gif" multiple /> -->

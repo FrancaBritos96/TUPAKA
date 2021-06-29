@@ -87,7 +87,7 @@ productRoutes.post('/createProduct', verificarToken, async (req: any, res: Respo
         res.json({
             estado: "Success",
             mensaje: "Producto creado con exito",
-            data: insertProduct
+            data: insertProduct.insertId
         })
     }
     catch (error) {
@@ -107,23 +107,25 @@ productRoutes.post("/upload/:productId", verificarToken, async (req: any, res: R
     const { productId } = req.params;
 
     if (req.files) {
-        let arrayNuevo = Object.values(req.files);
+        let arrayNuevo: any = Object.values(req.files);
         console.log(arrayNuevo);
 
-        arrayNuevo.forEach(async imagen => {
-            let newImage: any = imagen;
+        if (Array.isArray(arrayNuevo[0])) {
+            arrayNuevo[0].forEach(async (imagen: any) => {
+                let newImage: any = imagen;
+                const imag: IfileUpload = newImage;
+
+                console.log(imag);
+                await fileSystem.guardarImagenTemporal(productId, imag);
+            });
+
+        }
+        else {
+            let newImage: any = arrayNuevo[0];
             const imag: IfileUpload = newImage;
-
-            const validacionTipoImagen = imag.mimetype.includes('image');
-
-            if (!validacionTipoImagen) {
-                return res.status(400).json({
-                    estado: 'error',
-                    mensaje: 'Formato incorrecto'
-                })
-            }
+            console.log(imag);
             await fileSystem.guardarImagenTemporal(productId, imag);
-        });
+        }
 
 
         const imagenes: Array<string> = fileSystem.imagenesDeTempHaciaPost(productId);
