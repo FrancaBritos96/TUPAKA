@@ -49,7 +49,7 @@ productRoutes.get('/getProductByName', authentication_1.verificarToken, (req, re
     });
 }));
 //OBTENER TODOS LOS PRODUCTOS
-productRoutes.get('/getAllProducts', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+productRoutes.get('/getAllProducts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let products = yield queryPromess_1.default("Select * from productos where id_estado = 1", []);
     res.json({
         estado: "success",
@@ -62,21 +62,21 @@ productRoutes.post('/createProduct', authentication_1.verificarToken, (req, res)
     try {
         const body = req.body;
         const id_categoria = body.id_categoria;
-        const id_estado = body.id_estado;
-        const id_tamaño = body.id_tamaño;
+        const id_estado = 1;
+        const id_tamano = body.id_tamano;
         const nombre = body.nombre;
         const descripcion = body.descripcion;
         const precio = body.precio;
         const stock = body.stock;
         let queryTransaction = "START TRANSACTION";
-        let queryProduct = "INSERT INTO PRODUCTOS (id_categoria, id_estado, id_tamaño, nombre, descripcion, precio, stock)  VALUES(?,?,?,?,?,?,?)";
+        let queryProduct = "INSERT INTO PRODUCTOS (id_categoria, id_estado, id_tamano, nombre, descripcion, precio, stock)  VALUES(?,?,?,?,?,?,?)";
         yield queryPromess_1.default(queryTransaction, []);
-        let insertProduct = yield queryPromess_1.default(queryProduct, [id_categoria, id_estado, id_tamaño, nombre, descripcion, precio, stock]);
+        let insertProduct = yield queryPromess_1.default(queryProduct, [id_categoria, id_estado, id_tamano, nombre, descripcion, precio, stock]);
         yield queryPromess_1.default("commit", []);
         res.json({
             estado: "Success",
             mensaje: "Producto creado con exito",
-            data: insertProduct
+            data: insertProduct.insertId
         });
     }
     catch (error) {
@@ -91,31 +91,40 @@ productRoutes.post('/createProduct', authentication_1.verificarToken, (req, res)
 //SUBIR IMAGEN A PRODUCTO
 productRoutes.post("/upload/:productId", authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { productId } = req.params;
-    const imag = req.files.image;
-    if (!req.files) {
+    if (req.files) {
+        let arrayNuevo = Object.values(req.files);
+        console.log(arrayNuevo);
+        if (Array.isArray(arrayNuevo[0])) {
+            arrayNuevo[0].forEach((imagen) => __awaiter(void 0, void 0, void 0, function* () {
+                let newImage = imagen;
+                const imag = newImage;
+                console.log(imag);
+                yield fileSystem.guardarImagenTemporal(productId, imag);
+            }));
+        }
+        else {
+            let newImage = arrayNuevo[0];
+            const imag = newImage;
+            console.log(imag);
+            yield fileSystem.guardarImagenTemporal(productId, imag);
+        }
+        const imagenes = fileSystem.imagenesDeTempHaciaPost(productId);
+        let imagesProduct = "INSERT INTO IMAGENES (id_producto, nombre, id_estado)  VALUES(?,?,?)";
+        const id_estado = '1';
+        imagenes.forEach((item) => __awaiter(void 0, void 0, void 0, function* () {
+            yield queryPromess_1.default(imagesProduct, [productId, item, id_estado]);
+        }));
+        res.json({
+            estado: 'success',
+            data: arrayNuevo
+        });
+    }
+    else {
         return res.status(400).json({
             estado: 'error',
             mensaje: 'No se subió el archivo'
         });
     }
-    const validacionTipoImagen = imag.mimetype.includes('image');
-    if (!validacionTipoImagen) {
-        return res.status(400).json({
-            estado: 'error',
-            mensaje: 'Formato incorrecto'
-        });
-    }
-    yield fileSystem.guardarImagenTemporal(productId, imag);
-    const imagenes = fileSystem.imagenesDeTempHaciaPost(productId);
-    let imagesProduct = "INSERT INTO IMAGENES (id_producto, nombre, id_estado)  VALUES(?,?,?)";
-    const id_estado = '1';
-    imagenes.forEach((item) => __awaiter(void 0, void 0, void 0, function* () {
-        yield queryPromess_1.default(imagesProduct, [productId, item, id_estado]);
-    }));
-    res.json({
-        estado: 'success',
-        data: imag
-    });
 }));
 //EDITAR IMAGEN
 productRoutes.put('/editImageStatus/:id', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -139,7 +148,7 @@ productRoutes.put('/editImageStatus/:id', authentication_1.verificarToken, (req,
     }
 }));
 //OBTENER IMAGEN (FISICA PARA VISUALIZAR EN FRONT)
-productRoutes.get('/imagen/:productId/:img', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+productRoutes.get('/imagen/:productId/:img', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const productId = req.params.productId;
     const img = req.params.img;
     const foto = fileSystem.getFotoUrl(productId, img);
@@ -150,13 +159,71 @@ productRoutes.get('/imagen/:productId/:img', authentication_1.verificarToken, (r
     // }, 50);
 }));
 //OBTENER IMAGEN (REGISTROS DE LA TABLA PARA OBTENER EL ID)
-productRoutes.get('/getImagesByOrderId/:idProducto', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+productRoutes.get('/getImagesByProductId/:idProducto', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { idProducto } = req.params;
-    let products = yield queryPromess_1.default("Select * from imagenes where id_estado = 1 and id_producto = ?", [idProducto]);
+    let images = yield queryPromess_1.default("Select * from imagenes where id_estado = 1 and id_producto = ?", [idProducto]);
     res.json({
         estado: "success",
         mensaje: "Se encontraron las imagenes para el producto",
-        data: products
+        data: images
     });
+}));
+//DELET/ Update PRODUCTO
+productRoutes.put('/deleteProduct/:id', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const datosToken = req.usuario;
+    const { id } = req.params;
+    try {
+        const product = yield queryPromess_1.default('SELECT * FROM PRODUCTOS WHERE id_producto = ?', [id]);
+        yield queryPromess_1.default("UPDATE PRODUCTOS set id_estado='2' WHERE id_producto = ?", [id]);
+        let commit = yield queryPromess_1.default("commit", []);
+        res.json({
+            estado: "success",
+            mensaje: "Producto eliminado con exito",
+            data: commit
+        });
+    }
+    catch (_a) {
+        res.json({
+            estado: "Error",
+            mensaje: "No tienes permisos de Administrador",
+        });
+    }
+}));
+productRoutes.put('/updateProduct/:id', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const datosToken = req.usuario;
+    const { id } = req.params;
+    const { id_categoria, id_tamano, nombre, descripcion, precio, stock, } = req.body;
+    const newSizes = {
+        id_categoria,
+        id_tamano,
+        nombre,
+        descripcion,
+        precio,
+        stock
+    };
+    if (datosToken.idRol == '1') {
+        if (id_categoria && id_tamano && nombre && descripcion && precio && stock != '') {
+            const product = yield queryPromess_1.default('SELECT * FROM PRODUCTOS WHERE id_producto = ?', [id]);
+            yield queryPromess_1.default("UPDATE PRODUCTOS set ? WHERE id_producto = ?", [newSizes, id]);
+            let commit = yield queryPromess_1.default("commit", []);
+            res.json({
+                estado: "success",
+                mensaje: "Producto editado con exito",
+                data: commit
+            });
+        }
+        else {
+            res.json({
+                estado: "success",
+                mensaje: "Debe completar todos los campos para poder editar un producto",
+            });
+        }
+    }
+    else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tienes permisos de Administrador",
+        });
+    }
 }));
 exports.default = productRoutes;

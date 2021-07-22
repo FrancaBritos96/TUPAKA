@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SignUpModule } from 'src/app/pages/sign-up/sign-up.module';
+import { CreateOrderModule } from './pages/create-order/create-order.module';
 import { HomeAdminModule } from './pages/home-admin/home-admin.module';
 import { HomeModule } from './pages/home/home.module';
 import { LoginModule } from './pages/login/login.module';
@@ -33,6 +34,10 @@ const routes: Routes = [
     {
       path: 'productsList',
       loadChildren: () => import('./pages/products-list/products-list.module').then(m=>ProductsListModule)
+    },
+    {
+      path: 'createOrder',
+      loadChildren: () => import('./pages/create-order/create-order.module').then(m=>CreateOrderModule)
     }
 ];
 

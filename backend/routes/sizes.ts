@@ -13,7 +13,7 @@ const sizesRoutes = Router();
 //CARGAR CATEGORIAS Administrador
 
 sizesRoutes.post('/createSizes', verificarToken, async (req: any, res: Response) => {
-  
+
     const id_estado = '1';
     const nombre = req.body.nombre;
     const ancho = req.body.ancho;
@@ -56,11 +56,11 @@ sizesRoutes.put('/editSizes/:id', verificarToken, async (req: any, res: Response
     const datosToken = req.usuario
     const { id } = req.params;
 
-    const { nombre, ancho, profundidad, alto,  } = req.body;
+    const { nombre, ancho, profundidad, alto, } = req.body;
     const newSizes = {
         nombre,
-        ancho, 
-        profundidad, 
+        ancho,
+        profundidad,
         alto
     };
 
@@ -118,24 +118,24 @@ sizesRoutes.put('/deleteSizes/:id', verificarToken, async (req: any, res: Respon
 })
 
 //BUSCAR TAMAÑO POR ID
-sizesRoutes.get('/getSizeById/:id', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+sizesRoutes.get('/getSizeById/:id', async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
 
     const { id } = req.params;
     const datosToken = req.usuario
 
-    if (datosToken.idRol == 1) {
-        let size = await query("Select * from tamaños where id_tamano = ?", [id]);
-        res.json({
-            estado: "success",
-            mensaje: "Se encontró el tamaño",
-            data: size
-        })
-    } else {
-        res.json({
-            estado: "Error",
-            mensaje: "No tenes permisos de Administrador"
-        })
-    }
+    // if (datosToken.idRol == 1) {
+    let size = await query("Select * from tamaños where id_tamano = ?", [id]);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontró el tamaño",
+        data: size
+    })
+    // } else {
+    // res.json({
+    //     estado: "Error",
+    //    mensaje: "No tenes permisos de Administrador"
+    // })
+    // }
 })
 //BUSCAR TAMAÑO POR NOMBRE
 sizesRoutes.get('/getSizeName', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
@@ -144,7 +144,7 @@ sizesRoutes.get('/getSizeName', verificarToken, async (req: any, res: Response) 
     const datosToken = req.usuario
 
     if (datosToken.idRol == 1) {
-        let size = await query("Select * from tamaños where nombre like ?", ['%'+sizeName+'%']);
+        let size = await query("Select * from tamaños where nombre like ?", ['%' + sizeName + '%']);
         res.json({
             estado: "success",
             mensaje: "Se encontró el tamaño",

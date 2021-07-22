@@ -44,7 +44,7 @@
           </div>
 
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="* Repetir contraseña" id="password">
+            <input type="password" class="form-control" placeholder="* Repetir contraseña" id="password">
           </div>
 
         </div>
@@ -56,7 +56,7 @@
               <p class="errorForm" *ngIf="this.createUserForm.get('nombre')?.hasError('required')">El nombre es obligatorio</p>
             </div>
             <div *ngIf="this.createUserForm.get('nombre')?.errors && this.createUserForm.get('nombre')?.dirty">
-              <p class="errorForm" *ngIf="this.createUserForm.get('nombre')?.hasError('pattern')">El nombre debe contner sólo letras</p>
+              <p class="errorForm" *ngIf="this.createUserForm.get('nombre')?.hasError('pattern')">El nombre debe contener sólo letras</p>
             </div>
           </div>
 
@@ -83,7 +83,7 @@
           </div>
 
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="* Contraseña" id="password" formControlName="password">
+            <input type="password" class="form-control" placeholder="* Contraseña" id="password" formControlName="password">
             <div *ngIf="this.createUserForm.get('password')?.errors && this.createUserForm.get('password')?.dirty">
               <p class="errorForm" *ngIf="this.createUserForm.get('password')?.hasError('required')">El contraseña es obligatoria</p>
             </div>

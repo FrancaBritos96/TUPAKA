@@ -1,0 +1,108 @@
+<section id="gtco-contact" data-section="contact">
+    <div class="container">
+        <div class="row row-pb-md">
+            <div class="col-md-8 col-md-offset-2 heading animate-box" data-animate-effect="fadeIn">
+                <h1>CREAR PEDIDO</h1>
+                <p class="sub">Modifica lo que veas necesario para terminar de confirmar tu pedido</p>
+                <p class="subtle-text animate-box" data-animate-effect="fadeIn">PEDIDO</p>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 10%;">
+            <form action="#" [formGroup]="this.formUser">
+                <div class="animate-box">
+                    <div class="form-group">
+                        <div class="centerDiv" style="margin-top: -5%">
+                            <span>Cliente: </span> <input type="text" style="width:300px;height:40px"
+                                class="form-control" formControlName="user"
+                                [placeholder]="this.currentUser.nombre + ' ' + this.currentUser.apellido">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="centerDiv">
+                            <span>Correo: </span><input type="text" style="width:300px;height:40px" class="form-control"
+                                formControlName="email">
+                            <div style="margin-top: 1%;">
+                                <a style="font-size: 15px;">* Luego de realizada la compra recibirás el detalle de la
+                                    misma, al correo ingresado</a><br /><br />
+                            </div>
+
+                            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="position">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> NUMERO</th>
+                                    <td [ngClass]="{'inactiveRow': orderDetail.incluir === 0}" mat-cell
+                                        *matCellDef="let orderDetail"> {{orderDetail.position}} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="producto">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PRODUCTO </th>
+                                    <td [ngClass]="{'inactiveRow': orderDetail.incluir === 0}" mat-cell
+                                        *matCellDef="let orderDetail"> <img
+                                            [ngClass]="{'inactiveImg': orderDetail.incluir === 0}"
+                                            [src]="orderDetail.imagenSrc" alt="">{{orderDetail.producto}} </td>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="precio">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PRECIO </th>
+                                    <td [ngClass]="{'inactiveRow': orderDetail.incluir === 0}" mat-cell
+                                        *matCellDef="let orderDetail"> ${{orderDetail.precio}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="cantidad">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> CANTIDAD </th>
+                                    <td [ngClass]="{'inactiveRow': orderDetail.incluir === 0}" mat-cell
+                                        *matCellDef="let orderDetail; let i = index">
+                                        <select (change)="changeSubTotal($event.target, i)">
+                                            <option #option *ngFor="let number of orderDetail.stock"
+                                                [value]="number" [selected]="number == orderDetail.cantidad">
+                                                {{number}}
+                                            </option>
+                                        </select>
+
+    
+
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="subtotal">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> SUB TOTAL </th>
+                                    <td [ngClass]="{'inactiveRow': orderDetail.incluir === 0}" mat-cell
+                                        *matCellDef="let orderDetail"> ${{orderDetail.subtotal}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="incluir">
+                                    <th mat-header-cell *matHeaderCellDef style="text-align: center;">
+                                        INCLUIR
+                                    </th>
+                                    <td [ngClass]="{'inactiveRow': orderDetail.incluir === 0}" mat-cell
+                                        *matCellDef="let orderDetail; let i = index">
+                                        <mat-checkbox #checkbox (change)='enableOrderDetail(checkbox.checked, i)'
+                                            style="margin-left: 35%; transform: scale(1.2); color: darkgray;"
+                                            [checked]="orderDetail.incluir">
+                                        </mat-checkbox>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+
+
+                            <div class="buyContainer">
+                                <a class="total">Total: ${{currentPrice}}</a>
+                                <input style="border-radius: 8px; font-size: 18px;
+                            padding-top: 1%;" type="submit" value="Ir a pagar" class="btn btn-primary">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

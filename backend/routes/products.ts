@@ -53,7 +53,7 @@ productRoutes.get('/getProductByName', verificarToken, async (req: any, res: Res
 
 
 //OBTENER TODOS LOS PRODUCTOS
-productRoutes.get('/getAllProducts', verificarToken, async (req: any, res: Response) => {
+productRoutes.get('/getAllProducts', async (req: any, res: Response) => {
 
     let products = await query("Select * from productos where id_estado = 1", []);
     res.json({
@@ -180,7 +180,7 @@ productRoutes.put('/editImageStatus/:id', verificarToken, async (req: any, res: 
 })
 
 //OBTENER IMAGEN (FISICA PARA VISUALIZAR EN FRONT)
-productRoutes.get('/imagen/:productId/:img', verificarToken, async (req: any, res: Response) => {
+productRoutes.get('/imagen/:productId/:img', async (req: any, res: Response) => {
 
     const productId = req.params.productId;
     const img = req.params.img;
@@ -196,16 +196,83 @@ productRoutes.get('/imagen/:productId/:img', verificarToken, async (req: any, re
 
 //OBTENER IMAGEN (REGISTROS DE LA TABLA PARA OBTENER EL ID)
 
-productRoutes.get('/getImagesByOrderId/:idProducto', verificarToken, async (req: any, res: Response) => {
+productRoutes.get('/getImagesByProductId/:idProducto', async (req: any, res: Response) => {
 
     const { idProducto } = req.params;
 
-    let products = await query("Select * from imagenes where id_estado = 1 and id_producto = ?", [idProducto]);
+    let images = await query("Select * from imagenes where id_estado = 1 and id_producto = ?", [idProducto]);
     res.json({
         estado: "success",
         mensaje: "Se encontraron las imagenes para el producto",
-        data: products
+        data: images
     })
 })
 
+//DELET/ Update PRODUCTO
+productRoutes.put('/deleteProduct/:id', verificarToken, async (req: any, res: Response) => {
+
+    const datosToken = req.usuario
+    const { id } = req.params;
+
+    try {
+
+        const product = await query('SELECT * FROM PRODUCTOS WHERE id_producto = ?', [id]);
+        await query("UPDATE PRODUCTOS set id_estado='2' WHERE id_producto = ?", [id]);
+        let commit = await query("commit", []);
+
+        res.json({
+            estado: "success",
+            mensaje: "Producto eliminado con exito",
+            data: commit
+        })
+
+    } catch {
+        res.json({
+            estado: "Error",
+            mensaje: "No tienes permisos de Administrador",
+        })
+    }
+})
+
+productRoutes.put('/updateProduct/:id', verificarToken, async (req: any, res: Response) => {
+
+    const datosToken = req.usuario
+    const { id } = req.params;
+
+    const {id_categoria, id_tamano, nombre, descripcion, precio, stock,  } = req.body;
+    const newSizes = {
+        id_categoria,
+        id_tamano,
+        nombre,
+        descripcion, 
+        precio, 
+        stock
+    };
+
+
+    if (datosToken.idRol == '1') {
+        if (id_categoria && id_tamano && nombre && descripcion && precio && stock != '') {
+
+            const product = await query('SELECT * FROM PRODUCTOS WHERE id_producto = ?', [id]);
+            await query("UPDATE PRODUCTOS set ? WHERE id_producto = ?", [newSizes, id]);
+            let commit = await query("commit", []);
+
+            res.json({
+                estado: "success",
+                mensaje: "Producto editado con exito",
+                data: commit
+            })
+        } else {
+            res.json({
+                estado: "success",
+                mensaje: "Debe completar todos los campos para poder editar un producto",
+            })
+        }
+    } else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tienes permisos de Administrador",
+        })
+    }
+})
 export default productRoutes;

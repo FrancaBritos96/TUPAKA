@@ -15,7 +15,7 @@ import { ProductsListComponent } from './pages/products-list/products-list.compo
   declarations: [
     AppComponent,
     CategoryComponent,
-    SizesComponent,
+    SizesComponent
     //ProductsListComponent,
     //ProductsComponent
   ],

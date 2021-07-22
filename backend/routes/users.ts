@@ -71,7 +71,7 @@ userRoutes.post('/login', async (req: Request, res: Response) => {
 userRoutes.post('/createUser', async (req: any, res: Response) => {
     try {
         const body = req.body;
-        const id_rol = 1;
+        const id_rol = 2;
         const id_estado = 1;
         const email = body.email;
         const password = body.password //        bcrypt.hashSync(req.body.password, 10);
