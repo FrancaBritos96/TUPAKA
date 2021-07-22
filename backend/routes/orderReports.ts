@@ -12,10 +12,10 @@ import { IfileUpload } from '../interfaces/file-upload';
 const ventasRoutes = Router();
 //BUSCAR VENTAS POR ESTADO
 
-const queryOrders = "SELECT U.nombre as 'NOMBRE CLIENTE', U.apellido as 'APELLIDO CLIENTE'," +
-" U.documento as 'NRO_DOC', PR.nombre as 'NOMBRE PRODUCTO', DP.cantidad as 'CANTIDAD', DP.precio_unitario as 'PRECIO PRODUCTO',"+
-" DP.precio_total as 'PRECIO TOTAL POR CANTIDAD', DP.descuento as 'DESCUENTO',E.nombre as 'ESTADO', "+
-"P.fecha as 'FECHA PEDIDO' FROM DETALLES_PEDIDOS AS DP   "+
+const queryOrders = "SELECT U.nombre as 'NOMBRE_CLIENTE', U.apellido as 'APELLIDO_CLIENTE'," +
+" U.documento as 'NRO_DOC', PR.nombre as 'NOMBRE_PRODUCTO', DP.cantidad as 'CANTIDAD', DP.precio_unitario as 'PRECIO_PRODUCTO',"+
+" DP.precio_total as 'PRECIO_TOTAL_POR_CANTIDAD', DP.descuento as 'DESCUENTO',E.nombre as 'ESTADO', "+
+"P.fecha as 'FECHA_PEDIDO' FROM DETALLES_PEDIDOS AS DP   "+
 "INNER JOIN PEDIDOS AS P ON P.id_pedido = DP.id_pedido    "+
 "INNER JOIN USUARIOS as U ON U.id_usuario = P.id_usuario    "+
 "INNER JOIN PRODUCTOS as PR ON PR.id_producto = DP.id_producto    "+

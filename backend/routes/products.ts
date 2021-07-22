@@ -13,9 +13,9 @@ const productRoutes = Router();
 
 
 //OBTENER PRODUCTO POR ID
-productRoutes.get('/getProductById', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+productRoutes.get('/getProductById/:productId', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
 
-    let productId = req.body.id_producto
+    const { productId } = req.params;
 
     let product = await query("Select * from productos where id_producto = ?", [productId]);
     res.json({
@@ -39,11 +39,15 @@ productRoutes.get('/getProductByStatus', verificarToken, async (req: any, res: R
 })
 
 //OBTENER PRODUCTO POR NOMBRE
-productRoutes.get('/getProductByName', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
+productRoutes.get('/getProductByName/:name', verificarToken, async (req: any, res: Response) => { //Agregar el middleware del token cuando este hecho el login
 
-    let productName = req.body.nombre
+    //let productName = req.body.nombre
+    const { name } = req.params;
+    console.log(req.params);
+    console.log(name)
+    let product = await query("Select * from productos where nombre like ?", ['%'+name+'%']);
 
-    let product = await query(`Select * from productos where name LIKE '%${productName}%'`, []);
+    
     res.json({
         estado: "success",
         mensaje: "Se encontró el producto",
@@ -62,7 +66,6 @@ productRoutes.get('/getAllProducts', async (req: any, res: Response) => {
         data: products
     })
 })
-
 
 //CREAR PRODUCTO
 productRoutes.post('/createProduct', verificarToken, async (req: any, res: Response) => {
@@ -197,7 +200,6 @@ productRoutes.get('/imagen/:productId/:img', async (req: any, res: Response) => 
 //OBTENER IMAGEN (REGISTROS DE LA TABLA PARA OBTENER EL ID)
 
 productRoutes.get('/getImagesByProductId/:idProducto', async (req: any, res: Response) => {
-
     const { idProducto } = req.params;
 
     let images = await query("Select * from imagenes where id_estado = 1 and id_producto = ?", [idProducto]);
@@ -239,8 +241,9 @@ productRoutes.put('/updateProduct/:id', verificarToken, async (req: any, res: Re
     const datosToken = req.usuario
     const { id } = req.params;
 
-    const {id_categoria, id_tamano, nombre, descripcion, precio, stock,  } = req.body;
-    const newSizes = {
+    const {id_categoria, id_tamano, nombre, descripcion, precio, stock} = req.body;
+    console.log(req.body);
+    const newProduct = {
         id_categoria,
         id_tamano,
         nombre,
@@ -251,10 +254,10 @@ productRoutes.put('/updateProduct/:id', verificarToken, async (req: any, res: Re
 
 
     if (datosToken.idRol == '1') {
-        if (id_categoria && id_tamano && nombre && descripcion && precio && stock != '') {
-
+        if (nombre!= '' && descripcion!= '' && precio!= '' && stock != '' && id_categoria != '' && id_tamano != '') {
+            console.log(newProduct)
             const product = await query('SELECT * FROM PRODUCTOS WHERE id_producto = ?', [id]);
-            await query("UPDATE PRODUCTOS set ? WHERE id_producto = ?", [newSizes, id]);
+            await query("UPDATE PRODUCTOS set ? WHERE id_producto = ?", [newProduct, id]);
             let commit = await query("commit", []);
 
             res.json({
@@ -262,6 +265,7 @@ productRoutes.put('/updateProduct/:id', verificarToken, async (req: any, res: Re
                 mensaje: "Producto editado con exito",
                 data: commit
             })
+
         } else {
             res.json({
                 estado: "success",

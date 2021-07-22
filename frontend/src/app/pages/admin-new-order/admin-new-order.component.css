@@ -1,9 +1,9 @@
 @import url("../../../assets/css/all.css");
 @import url("../../../assets/css/bootstrap.min.css");
-@import url("../../../assets/css/jquery.mCustomScrollbar.css");
 @import url("../../../assets/css/bootstrap-material-design.min.css");
+@import url("../../../assets/css/jquery.mCustomScrollbar.css");
 @import url("../../../assets/css/normalize.css");
-@import url("../../../assets/css/style.css");
+ /* @import url("../../../assets/css/style.css");  */
 
 
 
@@ -35,47 +35,6 @@
 
 }
 
-.btn-success {
-	background: #5cb85c;
-	color: #fff;
-	border: 2px solid #5cb85c;
-  }
-  .btn-success:hover, .btn-success:focus, .btn-success:active {
-	background: #4cae4c !important;
-	border-color: #4cae4c !important;
-	color: white !important;
-  }
-  .btn-success.btn-outline {
-	background: transparent;
-	color: #5cb85c;
-	border: 2px solid #5cb85c;
-  }
-  .btn-success.btn-outline:hover, .btn-success.btn-outline:focus, .btn-success.btn-outline:active {
-	background: #5cb85c;
-	color: #fff;
-  }
-
-  
-.btn-warning {
-	background: #f0ad4e;
-	color: #fff;
-	border: 2px solid #f0ad4e;
-  }
-  .btn-warning:hover, .btn-warning:focus, .btn-warning:active {
-	background: #eea236 !important;
-	border-color: #eea236 !important;
-	color: white !important;
-  }
-  .btn-warning.btn-outline {
-	background: transparent;
-	color: #f0ad4e;
-	border: 2px solid #f0ad4e;
-  }
-  .btn-warning.btn-outline:hover, .btn-warning.btn-outline:focus, .btn-warning.btn-outline:active {
-	background: #f0ad4e;
-	color: #fff;
-  }
-
 :root{
 	--color-one: #F5F5F5;
 	--color-two: #24292E;
@@ -89,14 +48,46 @@
     --border-color: #D8D8D8;
 }
 
-.mat-icon {
-    margin-left: 3% !important;
+input{
+    
+    color: #24292E!important;
+    font-size: 18px!important;
+    padding: 10px 10px 10px 5px!important;
+    display: block!important;
+    width: 100%!important;
+    border: none!important;
+	margin-bottom: 3rem!important;
+    border-bottom: 1px solid var(--colorTextos);
 }
 
-.mat-icon:hover {
-    cursor: pointer;
-    color: rgb(0, 35, 233);
-    transform:scale(1.2);
+label{
+    color: gray!important;
+    font-size: 16px!important;
+    position: absolute!important;
+     /* left: 5px!important;  */
+    top: 10px!important;
+    transition: 0.5s ease all!important;
+    pointer-events: none!important;
+}
+
+input:focus~label,
+input:valid~label{
+    top: -14px!important;
+    font-size: 12px!important;
+    color:#009688!important;
+}
+
+select:focus~label,
+select:valid~label{
+    top: -14px!important;
+    font-size: 12px!important;
+    color:#009688!important;
+}
+textarea:focus~label,
+textarea:valid~label{
+    top: -14px!important;
+    font-size: 12px!important;
+    color:#009688!important;
 }
 
 .tamaño-tabla{
@@ -145,6 +136,11 @@ width:150px;
 height:100px
 }
 
+.errorForm {
+    font-size: 14px;
+    color: rgb(189, 38, 0);
+}
+
 .field-titles{
 	font-size: 15px;
     color: gray;
@@ -152,6 +148,7 @@ height:100px
 .text-box{
 	font-size: 15px;
     color:#24292E;
+	margin-bottom: 3rem;
 }
 .btn-size{
 	font-size: 15px !important;
@@ -162,6 +159,7 @@ height:100px
 	margin-top: 0px;
     margin-bottom: 0px;
     height: 100px !important;
+	margin-bottom: 3rem!important;
 	}
 
 
@@ -169,8 +167,8 @@ body,html{
 	font-family: 'roboto_condensed_light';
 	width: 100vw;
 	height: 100vh;
-	background-color: var(--color-one) !important;
-	color: #333 !important;
+	background-color: var(--color-one)!important;
+	color: #333!important;
 	font-size: 16px;
 }
 
@@ -269,20 +267,11 @@ body,html{
 }
 .table-dark thead tr{
 	background-color: var(--accent-color);
-	height: 30px !important;
-    /* background-color: #FF9933; */
-    border-right: 1px solid #D5D5D5;
-    font-size: 13.5px;
-    line-height: 120%;
-    font-weight: bold;
-    padding: 8px 5px;
-    text-align: left;
-	
 }
 .table-dark td,
 .table-dark thead th,
 .table-dark th{
-	border:1mm ;
+	border: none;
 }
 .table-dark tr:hover{
 	color: var(--color-three);
@@ -356,7 +345,8 @@ table form{
 
 /*----------  Page layout Styles  ----------*/
 .main-container{
-	height: 80em;
+	/* MODIFICADO PARA PROBAR EL ZOOM DE LA PAGINA.  */
+	height: 80em; 
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -632,4 +622,3 @@ table form{
 }
 
 /*----------  Keyframes  ----------*/
-
