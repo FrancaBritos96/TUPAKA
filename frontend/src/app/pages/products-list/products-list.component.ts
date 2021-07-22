@@ -20,15 +20,18 @@ import { MatTableDataSource } from '@angular/material/table';
 export class ProductsListComponent implements OnInit {
 
 
+
   categories: ICategory[] = [];
   size: ISizes[]=[];
   ELEMENT_DATA: any[] = [];
-  displayedColumns: string[] = ['id_producto', 'id_categoria', 'id_estado', 'id_tamano', 'nombre', 'descripcion', 'precio', 'stock'];
+  displayedColumns: string[] = ['id_producto', 'id_categoria', 'id_estado', 'id_tamano', 'nombre', 'descripcion', 'precio', 'stock',  'editar', 'eliminar'];
   dataSource = new MatTableDataSource<any>(this.ELEMENT_DATA);
   products: any[] = [];
   // data: any[] = [];
   // userToUpdate: any;
    //showSpinner = false;
+   public isAuthenticated!: boolean;
+   public isAdminRol!: boolean;
 
   public createProductListForm!: FormGroup;
 
@@ -44,6 +47,19 @@ export class ProductsListComponent implements OnInit {
 
   }
 
+  logout() {
+    this.alertsService.questionMessage("¿Deseas cerrar sesión? Se perderán los pedidos si hubiese en carrito de compras sin confirmar", "Atención", "Si", "No")
+    .then((result) => {
+      if (result.value) {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("orderDetails");
+        this.isAuthenticated = false;
+        this.isAdminRol = false;
+        window.location.href = '';    
+      }
+    });
+  }
+
   async setElementData() {
     debugger;
     for (let product of this.products) {
@@ -55,11 +71,6 @@ export class ProductsListComponent implements OnInit {
       let size :any = (Object.values(sizeResponse))[2];
       let sizeName = size[0].nombre;
 
-      // let categoryResponse = await this.categorySvc.getCategoryById(this.loginService.getToken(), product.id_categoria).toPromise();
-      // let category :any = (Object.values(categoryResponse))[2];
-      // let categoryName = category[0].nombre;
-
-
       let productToPush = {
         id_producto: product.id_producto, id_categoria: categoryName, id_estado: product.id_estado, id_tamano: sizeName, nombre: product.nombre, descripcion: product.descripcion,
         precio: product.precio, stock: product.stock
@@ -70,7 +81,6 @@ export class ProductsListComponent implements OnInit {
       debugger;
     }
   }
-
 
   async getProductsList() {
   debugger;
@@ -86,5 +96,41 @@ export class ProductsListComponent implements OnInit {
        this.dataSource = new MatTableDataSource<any>(this.ELEMENT_DATA);
        debugger;
   }
+
+  async deleteProduct(id_producto:number){
+
+    
+    this.alertsService.questionMessage("¿Desea eliminar el producto seleccionado?", "Atención", 'Sí', 'Cancelar')
+    
+    .then(async (result) => {
+      
+      if (result.value) {
+        
+
+        let productResult = await this.productSvc.deleteProduct(id_producto, this.loginService.getToken()).toPromise();
+        debugger;
+        let resultMessage:any = (Object.values(productResult)[1]);
+debugger;
+        if(resultMessage == "Producto eliminado con exito"){
+          this.alertsService.confirmMessage("Producto eliminado con exito")
+          .then((result) => { window.location.href = '/productsList' });
+        
+        }else {
+          debugger;
+            this.alertsService.errorMessage(resultMessage);
+          }
+        }
+        
+    });
+  }
+
+  goToUpdateProduct(id_producto:number){
+
+    window.location.href = `/productsUpdate/${id_producto}`;
+
+  }
+
+
+
   
 }

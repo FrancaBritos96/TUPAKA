@@ -249,9 +249,11 @@ table form{
 
 /*----------  Page layout Styles  ----------*/
 .main-container{
-	height: 100%;
+		/* MODIFICADO PARA PROBAR EL ZOOM DE LA PAGINA.  */
+
+	height: 80em;
 	position: fixed;
-	top: 9%;
+	top: 0;
 	left: 0;
 	overflow: hidden;
 }

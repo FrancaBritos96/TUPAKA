@@ -35,6 +35,49 @@
 
 }
 
+
+input{
+    
+    color: #24292E!important;
+    font-size: 18px!important;
+    padding: 10px 10px 10px 5px!important;
+    display: block!important;
+    width: 100%!important;
+    border: none!important;
+	margin-bottom: 3rem!important;
+    border-bottom: 1px solid var(--colorTextos);
+}
+
+label{
+    color: gray!important;
+    font-size: 16px!important;
+    position: absolute!important;
+     /* left: 5px!important;  */
+    top: 10px!important;
+    transition: 0.5s ease all!important;
+    pointer-events: none!important;
+}
+
+input:focus~label,
+input:valid~label{
+    top: -14px!important;
+    font-size: 12px!important;
+    color:#009688!important;
+}
+
+select:focus~label,
+select:valid~label{
+    top: -14px!important;
+    font-size: 12px!important;
+    color:#009688!important;
+}
+textarea:focus~label,
+textarea:valid~label{
+    top: -14px!important;
+    font-size: 12px!important;
+    color:#009688!important;
+}
+
 .btn-success {
 	background: #5cb85c;
 	color: #fff;
@@ -356,7 +399,7 @@ table form{
 
 /*----------  Page layout Styles  ----------*/
 .main-container{
-	height: 80em;
+	height: 95em;
 	position: absolute;
 	top: 0;
 	left: 0;
