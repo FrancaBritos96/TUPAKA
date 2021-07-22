@@ -38,7 +38,7 @@
 .btn-success {
 	background: #5cb85c;
 	color: #fff;
-	border: 2px solid #5cb85c;
+	border: #ccc0;
   }
   .btn-success:hover, .btn-success:focus, .btn-success:active {
 	background: #4cae4c !important;
@@ -59,7 +59,7 @@
 .btn-warning {
 	background: #f0ad4e;
 	color: #fff;
-	border: 2px solid #f0ad4e;
+	border: #ccc0;
   }
   .btn-warning:hover, .btn-warning:focus, .btn-warning:active {
 	background: #eea236 !important;
@@ -73,6 +73,26 @@
   }
   .btn-warning.btn-outline:hover, .btn-warning.btn-outline:focus, .btn-warning.btn-outline:active {
 	background: #f0ad4e;
+	color: #fff;
+  }
+
+  .btn-info {
+	background: #5bc0de;
+	color: #fff;
+	border: #ccc0;
+  }
+  .btn-info:hover, .btn-info:focus, .btn-info:active {
+	background: #46b8da !important;
+	border-color: #46b8da !important;
+	color: white !important;
+  }
+  .btn-info.btn-outline {
+	background: transparent;
+	color: #5bc0de;
+	border: 2px solid #5bc0de;
+  }
+  .btn-info.btn-outline:hover, .btn-info.btn-outline:focus, .btn-info.btn-outline:active {
+	background: #5bc0de;
 	color: #fff;
   }
 

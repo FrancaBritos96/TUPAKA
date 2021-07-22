@@ -11,25 +11,18 @@
                 <a href="user-update.html">
                     <i class="fas fa-user-cog"></i>
                 </a>
-                <a >
+                <a>
                     <i (click)="logout()" class="fas fa-power-off"></i>
                 </a>
             </nav>
             <!-- Page header -->
             <div class="full-box page-header">
                 <h3 class="text-left">
-                    <i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR PRODUCTO
+                    <i class="fas fa-sync-alt fa-fw"></i> &nbsp; ACTUALIZAR ITEM
                 </h3>
                 <p class="text-justify">
-                    Las descripciones de los productos son los contenidos del ecommerce que informan, educan y convencen
-                    a los clientes a comprar.
-                    Representan tu empresa cuando el usuario ingresa a la página para realizar una compra y, por eso,
-                    deben responder a preguntas simples, como:
-                    ¿qué es el producto?
-                    ¿de qué se hace y de dónde viene?
-                    ¿qué hace que sea diferente de otros productos?
-                    ¿cómo se utiliza el producto ?
-                    ¿qué problemas resuelve ?
+                   En la siguiente pantalla vas a poder EDITAR el producto seleccionado previamente. Los cambios se aplican solamente al producto 
+                   seleccionado. Es necesario que todos los campos del producto estén completos para poder ACTUALIZAR los cambios. 
                 </p>
             </div>
             <div class="container-fluid">
@@ -49,9 +42,9 @@
             </div>
 
             <!--CONTENT-->
-            <div class="container-fluid">
+            <div *ngIf="updateProductForm" class="container-fluid">
 
-                <form method="post" class="form-neon" [formGroup]="createProductForm">
+                <form method="post" class="form-neon" [formGroup]="updateProductForm">
                     <fieldset>
                         <legend><i class="far fa-plus-square text"></i> &nbsp; Información del PRODUCTO</legend>
                         <div class="container-fluid">
@@ -62,9 +55,9 @@
                                             class="form-control text-box" name="nombre" id="nombre">
                                         <label for="item_nombre" class="bmd-label-floating field-titles ">Nombre</label>
                                         <div
-                                            *ngIf="this.createProductForm.get('nombre')?.errors && this.createProductForm.get('nombre')?.dirty">
+                                            *ngIf="this.updateProductForm.get('nombre')?.errors && this.updateProductForm.get('nombre')?.dirty">
                                             <p class="errorForm"
-                                                *ngIf="this.createProductForm.get('nombre')?.hasError('required')">El
+                                                *ngIf="this.updateProductForm.get('nombre')?.hasError('required')">El
                                                 nombre es obligatorio</p>
                                         </div>
                                     </div>
@@ -75,15 +68,15 @@
                                             name="stock" required id="stock">
                                         <label for="item_stock" class="bmd-label-floating field-titles">Stock</label>
                                         <div
-                                            *ngIf="this.createProductForm.get('stock')?.errors && this.createProductForm.get('stock')?.dirty">
+                                            *ngIf="this.updateProductForm.get('stock')?.errors && this.updateProductForm.get('stock')?.dirty">
                                             <p class="errorForm"
-                                                *ngIf="this.createProductForm.get('stock')?.hasError('required')">El
+                                                *ngIf="this.updateProductForm.get('stock')?.hasError('required')">El
                                                 stock es obligatorio</p>
                                         </div>
                                         <div
-                                            *ngIf="this.createProductForm.get('stock')?.errors && this.createProductForm.get('stock')?.dirty">
+                                            *ngIf="this.updateProductForm.get('stock')?.errors && this.updateProductForm.get('stock')?.dirty">
                                             <p class="errorForm"
-                                                *ngIf="this.createProductForm.get('stock')?.hasError('pattern')">El
+                                                *ngIf="this.updateProductForm.get('stock')?.hasError('pattern')">El
                                                 stock debe contener sólo numeros</p>
                                         </div>
                                     </div>
@@ -95,15 +88,15 @@
                                             class="form-control text-box" name="precio" id="precio">
                                         <label for="item_stock" class="bmd-label-floating field-titles">Precio</label>
                                         <div
-                                            *ngIf="this.createProductForm.get('precio')?.errors && this.createProductForm.get('precio')?.dirty">
+                                            *ngIf="this.updateProductForm.get('precio')?.errors && this.updateProductForm.get('precio')?.dirty">
                                             <p class="errorForm"
-                                                *ngIf="this.createProductForm.get('precio')?.hasError('required')">El
+                                                *ngIf="this.updateProductForm.get('precio')?.hasError('required')">El
                                                 precio es obligatorio</p>
                                         </div>
                                         <div
-                                            *ngIf="this.createProductForm.get('precio')?.errors && this.createProductForm.get('precio')?.dirty">
+                                            *ngIf="this.updateProductForm.get('precio')?.errors && this.updateProductForm.get('precio')?.dirty">
                                             <p class="errorForm"
-                                                *ngIf="this.createProductForm.get('precio')?.hasError('pattern')">El
+                                                *ngIf="this.updateProductForm.get('precio')?.hasError('pattern')">El
                                                 precio debe contener sólo numeros</p>
                                         </div>
                                     </div>
@@ -122,9 +115,9 @@
                                             class="bmd-label-floating field-titles">Categoria</label>
 
                                         <div
-                                            *ngIf="this.createProductForm.get('id_categoria')?.errors && this.createProductForm.get('id_categoria')?.dirty">
+                                            *ngIf="this.updateProductForm.get('id_categoria')?.errors && this.updateProductForm.get('id_categoria')?.dirty">
                                             <p class="errorForm"
-                                                *ngIf="this.createProductForm.get('id_categoria')?.hasError('required')">
+                                                *ngIf="this.updateProductForm.get('id_categoria')?.hasError('required')">
                                                 El precio es obligatorio</p>
                                         </div>
                                     </div>
@@ -146,7 +139,6 @@
                                 </div>
                                 <div class="col-12 col-md-8">
                                     <div class="form-group">
-
                                         <textarea type="text" formControlName="descripcion"
                                             class="form-control text-box text-box-size" required name="descripcion"
                                             id="descripcion"></textarea>
@@ -155,24 +147,14 @@
                                             producto</label>
                                     </div>
                                 </div>
-
                                 <div class="text-center" style="margin: auto;margin-top: inherit;">
-
                                     <button type="button" class="btn btn-raised btn-info btn-sm btn-size "
                                         (click)="fileInput.click() "><i class="far fa-save"></i> &nbsp;
                                         ADJUNTAR</button>
                                     <input hidden #fileInput type="file" id="file" (change)="onFileChange($event)"
                                         multiple>
-
                                     <p *ngFor="let name of fileName">{{name}}</p>
-
-
-                                    <!-- <input type="file" name="adjunto" value="Subir imagen"
-                                        accept="image/png, .jpeg, .jpg, image/gif" multiple /> -->
-
-                                    <!-- <input hidden #fileInput type="file" id="file" (change)="onFileChange($event)"> -->
                                 </div>
-
                             </div>
                         </div>
                     </fieldset>
@@ -181,9 +163,13 @@
                         <button type="reset" class="btn btn-raised btn-secondary btn-sm btn-size"><i
                                 class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
                         &nbsp; &nbsp;
-                        <button type="submit" class="btn btn-raised btn-info btn-sm btn-size"
-                            (click)="createProduct()"><i class="far fa-save"></i> &nbsp;
-                            GUARDAR</button>
+                        <!-- <button type="submit" class="btn btn-raised btn-info btn-sm btn-size"
+                            (click)="updateProduct()"><i class="far fa-save"></i> &nbsp;
+                            GUARDAR</button> -->
+                            
+                        <button type="submit" class="btn btn-raised btn-success btn-sm btn-size" 
+                        (click)="updateProduct()"><i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR</button>
+                            
                     </p>
                 </form>
             </div>

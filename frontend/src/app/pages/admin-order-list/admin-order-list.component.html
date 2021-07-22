@@ -1,0 +1,324 @@
+<body>
+	<!-- Main container -->
+	<main class="full-box main-container">
+		<!-- Nav lateral -->
+		<app-nav-lateral></app-nav-lateral>
+
+		<section class="full-box page-content">
+			<nav class="full-box navbar-info">
+				<a href="#" class="float-left show-nav-lateral">
+					<i class="fas fa-exchange-alt"></i>
+				</a>
+				<a href="user-update.html">
+					<i class="fas fa-user-cog"></i>
+				</a>
+				<a >
+					<i (click)="logout()" class="fas fa-power-off"></i>
+				</a>
+			</nav>
+			<!-- Page header -->
+			<div class="full-box page-header">
+				<h3 class="text-left">
+					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE PEDIDOS
+				</h3>
+				<p class="text-justify">
+					A continuacion se listaran todos los PEDIDOS con sus respectivos ESTADOS. Tambien se podran EDITAR,
+					ELIMINAR, cambiar el ESTADO y generar FACTURA de los PEDIDOS de la lista.
+				</p>
+			</div>
+			<div class="container-fluid">
+				<ul class="full-box list-unstyled page-nav-tabs">
+					<li>
+						<a href="newOrder"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO PEDIDO</a>
+					</li>
+					<li>
+						<a class="active" href="orderList"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE
+							PEDIDOS</a>
+					</li>
+					<li>
+						<a href="reservation-search.html"><i class="fas fa-search-dollar fa-fw"></i> &nbsp; BUSCAR
+							PEDIDOS</a>
+					</li>
+					<li>
+						<a href="reservation-pending.html"><i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; PEDIDOS
+							PENDIENTES</a>
+					</li>
+				</ul>
+			</div>
+
+			<!--CONTENT-->
+
+			<div class="container-fluid">
+				<div class="table-responsive tamaño-tabla">
+					<table mat-table [dataSource]="dataSource" class="table table-dark table-sm">
+
+						<ng-container matColumnDef="U.nombre">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th">
+								NOMBRE
+							</th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td"> {{order.NOMBRE_CLIENTE}}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="U.apellido">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th"> APELLIDO
+							</th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td">
+								{{order.APELLIDO_CLIENTE}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="U.documento">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th"> DNI
+							</th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td"> {{order.NRO_DOC}}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="PR.nombre">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th"> NOMBRE
+								PROD
+							</th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td"> {{order.NOMBRE_PRODUCTO}}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="DP.cantidad">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th"> CANTIDAD
+							</th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td"> {{order.CANTIDAD}}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="DP.precio_unitario">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th">
+								PRECIO PRODUCTO </th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td"> {{order.PRECIO_PRODUCTO}}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="DP.precio_total">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th"> PRECIO
+								CANT
+							</th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td">
+								{{order.PRECIO_TOTAL_POR_CANTIDAD}}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="DP.descuento">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th"> DESCUENTO
+							</th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td"> {{order.DESCUENTO}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="E.nombre">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th"> ESTADO
+							</th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td"> {{order.ESTADO}} </td>
+						</ng-container>
+
+						<ng-container matColumnDef="P.fecha">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th"> FECHA
+								PEDIDO
+							</th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td"> {{order.FECHA_PEDIDO}}
+							</td>
+						</ng-container>
+
+						<ng-container matColumnDef="factura">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th">
+								FACTURA </th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td">
+								<button type="button" class="btn btn-info">
+									<i class="fas fa-file-pdf"></i>
+								</button>
+							</td>
+						</ng-container>
+						<ng-container matColumnDef="editar">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th">
+								ACTUALIZAR </th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td">
+								<button type="button" class="btn btn-success">
+									<i class="fas fa-sync-alt"></i>
+								</button>
+							</td>
+						</ng-container>
+						<ng-container matColumnDef="pagos">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th">
+								PAGOS </th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td">
+								<button type="button" class="btn btn-info">
+									<i class="fas fa-dollar-sign"></i>
+								</button>
+							</td>
+						</ng-container>
+						<ng-container matColumnDef="eliminar">
+							<th mat-header-cell *matHeaderCellDef class="text-center roboto-medium table-th">
+								ELIMINAR </th>
+							<td mat-cell *matCellDef="let order" class="text-center table-td">
+								<button type="button" class="btn btn-warning">
+									<i class="far fa-trash-alt"></i>
+								</button>
+							</td>
+						</ng-container>
+
+						<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+						<tr mat-row *matRowDef="let row; columns: displayedColumns;">
+						</tr>
+
+					</table>
+					<!-- <table class="table table-dark table-sm">
+						<thead>
+							<tr class="text-center roboto-medium">
+								<th>#</th>
+								<th>CLIENTE</th>
+								<th>FECHA DE PRÉSTAMO</th>
+								<th>FECHA DE ENTREGA</th>
+								<th>ESTADO</th>
+								<th>FACTURA</th>
+								<th>ACTUALIZAR</th>
+								<th>PAGOS</th>
+								<th>ELIMINAR</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="text-center" >
+								<td>1</td>
+								<td>NOMBRE CLIENTE</td>
+								<td>2017/10/8</td>
+								<td>2017/10/10</td>
+								<td>Pendiente</td>
+								<td>
+									<a href="#" class="btn btn-info">
+	  									<i class="fas fa-file-pdf"></i>	
+									</a>
+								</td>
+								<td>
+									<a href="reservation-update.html" class="btn btn-success">
+	  									<i class="fas fa-sync-alt"></i>	
+									</a>
+								</td>
+								<td>
+									<a href="payment.html" class="btn btn-info">
+	  									<i class="fas fa-dollar-sign"></i>	
+									</a>
+								</td>
+								<td>
+									<form action="">
+										<button type="button" class="btn btn-warning">
+		  									<i class="far fa-trash-alt"></i>
+										</button>
+									</form>
+								</td>
+							</tr>
+							<tr class="text-center" >
+								<td>2</td>
+								<td>NOMBRE CLIENTE</td>
+								<td>2017/10/8</td>
+								<td>2017/10/10</td>
+								<td>Finalizado</td>
+								<td>
+									<a href="#" class="btn btn-info">
+	  									<i class="fas fa-file-pdf"></i>	
+									</a>
+								</td>
+								<td>
+									<a href="reservation-update.html" class="btn btn-success">
+	  									<i class="fas fa-sync-alt"></i>	
+									</a>
+								</td>
+								<td>
+									<a href="payment.html" class="btn btn-info">
+	  									<i class="fas fa-dollar-sign"></i>	
+									</a>
+								</td>
+								<td>
+									<form action="">
+										<button type="button" class="btn btn-warning">
+		  									<i class="far fa-trash-alt"></i>
+										</button>
+									</form>
+								</td>
+							</tr>
+							<tr class="text-center" >
+								<td>3</td>
+								<td>NOMBRE CLIENTE</td>
+								<td>2017/10/8</td>
+								<td>2017/10/10</td>
+								<td>Finalizado</td>
+								<td>
+									<a href="#" class="btn btn-info">
+	  									<i class="fas fa-file-pdf"></i>	
+									</a>
+								</td>
+								<td>
+									<a href="reservation-update.html" class="btn btn-success">
+	  									<i class="fas fa-sync-alt"></i>	
+									</a>
+								</td>
+								<td>
+									<a href="payment.html" class="btn btn-info">
+	  									<i class="fas fa-dollar-sign"></i>	
+									</a>
+								</td>
+								<td>
+									<form action="">
+										<button type="button" class="btn btn-warning">
+		  									<i class="far fa-trash-alt"></i>
+										</button>
+									</form>
+								</td>
+							</tr>
+							<tr class="text-center" >
+								<td>4</td>
+								<td>NOMBRE CLIENTE</td>
+								<td>2017/10/8</td>
+								<td>2017/10/10</td>
+								<td>Pendiente</td>
+								<td>
+									<a href="#" class="btn btn-info">
+	  									<i class="fas fa-file-pdf"></i>	
+									</a>
+								</td>
+								<td>
+									<a href="reservation-update.html" class="btn btn-success">
+	  									<i class="fas fa-sync-alt"></i>	
+									</a>
+								</td>
+								<td>
+									<a href="payment.html" class="btn btn-info">
+	  									<i class="fas fa-dollar-sign"></i>	
+									</a>
+								</td>
+								<td>
+									<form action="">
+										<button type="button" class="btn btn-warning">
+		  									<i class="far fa-trash-alt"></i>
+										</button>
+									</form>
+								</td>
+							</tr>
+						</tbody>
+					</table> -->
+				</div>
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li class="page-item disabled">
+							<a class="page-link" href="#" tabindex="-1">Previous</a>
+						</li>
+						<li class="page-item"><a class="page-link" href="#">1</a></li>
+						<li class="page-item"><a class="page-link" href="#">2</a></li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item">
+							<a class="page-link" href="#">Next</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</section>
+	</main>
+
+	<script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
+
+
+</body>
