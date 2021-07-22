@@ -57,7 +57,7 @@ productRoutes.get('/getProductByName/:name', verificarToken, async (req: any, re
 
 
 //OBTENER TODOS LOS PRODUCTOS
-productRoutes.get('/getAllProducts', verificarToken, async (req: any, res: Response) => {
+productRoutes.get('/getAllProducts', async (req: any, res: Response) => {
 
     let products = await query("Select * from productos where id_estado = 1", []);
     res.json({
@@ -183,7 +183,7 @@ productRoutes.put('/editImageStatus/:id', verificarToken, async (req: any, res: 
 })
 
 //OBTENER IMAGEN (FISICA PARA VISUALIZAR EN FRONT)
-productRoutes.get('/imagen/:productId/:img', verificarToken, async (req: any, res: Response) => {
+productRoutes.get('/imagen/:productId/:img', async (req: any, res: Response) => {
 
     const productId = req.params.productId;
     const img = req.params.img;
@@ -199,8 +199,7 @@ productRoutes.get('/imagen/:productId/:img', verificarToken, async (req: any, re
 
 //OBTENER IMAGEN (REGISTROS DE LA TABLA PARA OBTENER EL ID)
 
-productRoutes.get('/getImagesByProductId/:idProducto', verificarToken, async (req: any, res: Response) => {
-
+productRoutes.get('/getImagesByProductId/:idProducto', async (req: any, res: Response) => {
     const { idProducto } = req.params;
 
     let images = await query("Select * from imagenes where id_estado = 1 and id_producto = ?", [idProducto]);
@@ -243,7 +242,7 @@ productRoutes.put('/updateProduct/:id', verificarToken, async (req: any, res: Re
     const { id } = req.params;
 
     const {id_categoria, id_tamano, nombre, descripcion, precio, stock} = req.body;
-    console.log(req.body)
+    console.log(req.body);
     const newProduct = {
         id_categoria,
         id_tamano,
@@ -255,7 +254,6 @@ productRoutes.put('/updateProduct/:id', verificarToken, async (req: any, res: Re
 
 
     if (datosToken.idRol == '1') {
-        debugger;
         if (nombre!= '' && descripcion!= '' && precio!= '' && stock != '' && id_categoria != '' && id_tamano != '') {
             console.log(newProduct)
             const product = await query('SELECT * FROM PRODUCTOS WHERE id_producto = ?', [id]);
@@ -267,7 +265,7 @@ productRoutes.put('/updateProduct/:id', verificarToken, async (req: any, res: Re
                 mensaje: "Producto editado con exito",
                 data: commit
             })
-            debugger;
+
         } else {
             res.json({
                 estado: "success",

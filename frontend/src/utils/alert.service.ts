@@ -34,7 +34,7 @@ export class AlertsService {
             title: '<h2 style="color: #333333 !important; font-size: 20px !important;">'+alertTitle+'</h2>',
             html: '<h3 style="color: #333333 !important; font-size: 16px !important;">' + message + '</h3>',
             icon: 'error',
-            confirmButtonText: 'Volver',
+            confirmButtonText: 'Aceptar',
             confirmButtonColor: '#c95527',
             backdrop: 'rgba(0,0,0,0.4)',
             width: 350,
@@ -45,8 +45,8 @@ export class AlertsService {
         let alertTitle = titleMessage;
 
         return Swal.fire({
-            title: '<h2 style="color: #333333 !important">'+alertTitle+'</h2>',
-            html: '<h3 style="color: #333333 !important">' + message + '</h3>',
+            title: '<h2 style="color: #333333 !important; font-size: 20px !important;">'+alertTitle+'</h2>',
+            html: '<h3 style="color: #333333 !important; font-size: 16px !important;">' + message + '</h3>',
             icon: 'warning',
             showCancelButton: true,
             cancelButtonColor: '#d33',

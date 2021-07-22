@@ -5,6 +5,10 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavLateralComponent } from './nav-lateral/nav-lateral.component';
 import { MarketComponent } from './market/market.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatIconModule} from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -16,7 +20,10 @@ import { MarketComponent } from './market/market.component';
   ],
   imports: [
     CommonModule,
-    MatButtonModule
+    MatButtonModule,
+    MatBadgeModule,
+    MatMenuModule,
+    MatIconModule
   ],
   exports:[
     HeaderComponent,

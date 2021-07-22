@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SignUpModule } from 'src/app/pages/sign-up/sign-up.module';
+import { CreateOrderModule } from './pages/create-order/create-order.module';
 import { AdminNewOrderModule } from './pages/admin-new-order/admin-new-order.module';
 import { AdminOrderListModule } from './pages/admin-order-list/admin-order-list.module';
 import { ComingSoonModule } from './pages/coming-soon/coming-soon.module';
@@ -40,6 +41,10 @@ const routes: Routes = [
       loadChildren: () => import('./pages/products-list/products-list.module').then(m=>ProductsListModule)
     },
     {
+      path: 'createOrder',
+      loadChildren: () => import('./pages/create-order/create-order.module').then(m=>CreateOrderModule)
+    },
+    {
       path: 'productsUpdate/:id_producto',
       loadChildren: () => import('./pages/product-update/product-update.module').then(m=>ProductUpdateModule)
     },
@@ -58,7 +63,7 @@ const routes: Routes = [
     {
       path: 'comingSoon',
       loadChildren: () => import('./pages/coming-soon/coming-soon.module').then(m=>ComingSoonModule)
-    },
+    }
 ];
 
 @NgModule({

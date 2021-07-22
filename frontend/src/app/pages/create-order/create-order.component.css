@@ -1,0 +1,133 @@
+@import url("../../../assets/css/animate.css");
+@import url("../../../assets/css/icomoon.css");
+@import url("../../../assets/css/gallery.css");
+@import url("../../../assets/css/themify-icons.css");
+@import url("../../../assets/css/bootstrap.css");
+@import url("../../../assets/css/magnific-popup.css");
+@import url("../../../assets/css/owl.theme.default.min.css");
+@import url("../../../assets/css/style.css");
+
+.input-icono {
+    background-image: src="assets/images/facebook.png";
+    background-repeat: no-repeat;
+    background-position: 4px center;
+    background-size: 20px;
+    display: flex;
+    align-items: center;
+    width: 300px;
+    padding-left: 28px;
+    height: 30px;
+    border: 1px solid rgba(9, 113, 163, 1);
+    border-radius: 3px;
+}
+
+.icono_login {
+    margin-right: 2%;
+}
+
+.container {
+    padding-top: 4% !important;
+}
+
+#gtco-contact .form-control {
+    height: 35px !important;
+    font-size: 15px !important;
+}
+
+h1, .h1 {
+    font-size: 42px !important;
+    color: rgb(51, 51, 51) !important;
+}
+
+.errorForm {
+    font-size: 14px;
+    color: rgb(189, 38, 0);
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 1.5% !important;
+}
+
+.form-control {
+    display: unset;
+}
+
+.centerDiv {
+    display: inline-block;
+    text-align: left;
+}
+
+#gtco-contact {
+    height: 900px;
+}
+
+.heading {
+    margin-bottom: 15px !important;
+}
+
+table {
+    width: 150%;
+}
+
+th {
+    color: rgb(51, 51, 51);
+    font-size: 15px;
+}
+
+.total {
+    font-size: 18px;
+    color: black;
+    margin-right: 1%;
+    font-weight: bolder;
+    color: rgb(51, 51, 51);
+}
+
+.buyContainer {
+    width: 150%;
+    text-align: end;
+    padding-top: 1.5%;
+}
+
+img {
+    border-radius: 5px;
+    filter: contrast(1.2);
+    height: 55px;
+    margin: 1%;
+}
+
+.mat-checkbox .mat-checkbox-frame {
+    border-color: black;
+    background-color: #dddddd
+}
+
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    margin-top: 1px;
+    margin-left: 1px;
+    width: 18px;
+    height: 18px;
+}
+
+select {
+    width: 35%;
+}
+
+.inactiveRow{
+    color: rgba(121, 121, 121, 0.568) !important;
+}
+
+.inactiveImg {
+    opacity: 0.7;
+    filter: brightness(1.2);
+}
+
+#seguirComprando {
+    text-align: initial;
+    width: 25%;
+}
+
+#seguirComprandoInput {
+    font-size: 14px !important;
+    padding-top: 1.5% !important;
+    height: 30px;
+}

@@ -1,22 +1,29 @@
 <nav id="navBar" class="gtco-nav scrolled" role="navigation">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-2 col-xs-12">
-          <div id="gtco-logo"><a href="#"><img src="assets/images/logo.png" alt=""></a></div>
-        </div>
-        <div class="col-xs-10 text-right menu-1 main-nav">
-          <ul>
-            <li class="active"><a href="#" data-nav-section="home">Inicio</a></li>
-            <li><a href="#" data-nav-section="about">¿Cómo funciona?</a></li>
-            <li><a href="#" data-nav-section="practice-areas">Instrumentos</a></li>
-            <li><a href="#" data-nav-section="our-team">Galería</a></li>
-            <li> <a href="#" data-nav-section="contact"><span>Contacto</span></a> </li>
-            <li class="btn-cta"><a href="#" (click)="goToLogin()" ><span>Ingresar</span></a></li>
-
-            
-          </ul>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2 col-xs-12">
+        <div id="gtco-logo"><a href="#"><img src="assets/images/logo.png" alt=""></a></div>
       </div>
-
+      <div class="col-xs-10 text-right menu-1 main-nav">
+        <ul>
+          <li class="active"><a href="#" data-nav-section="home">Inicio</a></li>
+          <li><a href="#" data-nav-section="about">¿Cómo funciona?</a></li>
+          <li><a href="#" data-nav-section="practice-areas">Catálogo de Instrumentos</a></li>
+          <li> <a href="#" data-nav-section="our-team"><span>Contacto</span></a> </li>
+          <li *ngIf="!isAuthenticated" class="btn-cta"><a href="#" (click)="goToLogin()"><span>Ingresar</span></a></li>
+          <li *ngIf="isAuthenticated && !isAdminRol" class="btn-cta"><a><span>{{userName}}</span></a>
+          </li>
+          <li *ngIf="isAuthenticated && !isAdminRol" class="btn-cta"><a matBadge="-" href="#" (click)="goToShoppingCart()"><span style="border: white !important;
+              border-style: dashed !important;
+              border-width: thin !important;
+              background: rgba(0, 0, 0, 0.486);">Ver Carrito</span></a></li>
+          <li *ngIf="isAuthenticated && isAdminRol" class="btn-cta"><a href="#" (click)="goToAdminHome()"><span style="border: white !important;
+                border-style: dashed !important;
+                border-width: thin !important;
+                background: rgba(0, 0, 0, 0.486);">Home administrador</span></a></li>
+          <img *ngIf="isAuthenticated"src="assets/images/logout.png" alt="" class="logOut" (click)="logOut()">
+        </ul>
+      </div>
     </div>
-  </nav>
+  </div>
+</nav>

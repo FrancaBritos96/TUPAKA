@@ -13,11 +13,11 @@ export class SignUpComponent implements OnInit {
   constructor(public fb:FormBuilder, private signUpService: SignUpService, private alertsService: AlertsService) { }
 
   createUserForm= this.fb.group({
-    nombre:["Gustavo",[Validators.required, Validators.pattern(/^([A-Z]|[a-z])+$/)]],
+    nombre:["",[Validators.required, Validators.pattern(/^([A-Z]|[a-z])+$/)]],
     apellido:["", Validators.required],
     numero_documento:["", [Validators.required, Validators.maxLength(8), Validators.minLength(6)]],
     email:["", [Validators.required, Validators.email]],
-    telefono:["", Validators.pattern(/^(15|11|\+5411|\+5415|5415|5411)?[2-9]\d{7}$/)],
+    telefono:[""],
     password:["", Validators.required],
     nacionalidad:[""],
     provincia:[""],

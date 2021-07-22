@@ -75,10 +75,6 @@ h1, .h1 {
 }
 
 
-
-
-
-
 .imageLogo {
 	image-rendering: 50%;
 	transition: 1s ease;
@@ -89,6 +85,14 @@ h1, .h1 {
 	vertical-align: middle;
 	text-align: center;
 	
+  }
+
+  .stockProduct {
+	margin-top: 5%;
+    font-size: 15px;
+    font-weight: bold;
+    color: firebrick;
+    margin-left: 1%;
   }
 
 
@@ -167,4 +171,131 @@ color: #eeeeee;
   .image {
 	max-width: 100%;
 
+	}
+
+
+	.modalmask1 {
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		background: rgba(0,0,0,0.8);
+		z-index: 99999;
+		opacity:0;
+		-webkit-transition: opacity 400ms ease-in;
+		-moz-transition: opacity 400ms ease-in;
+		transition: opacity 400ms ease-in;
+		pointer-events: none;
+	}
+	.modalmask1:target {
+		opacity:1;
+		pointer-events: auto;
+	}
+	.modalbox1{
+		max-width: 45%;
+		position: relative;
+		background-position: center center;
+		background: rgb(255, 255, 255);
+		border-radius:25px;
+		visibility: hidden;
+		top: -80%;
+		left: -80%;
+		transform: rotate(90deg) translate(-150%, 230%);
+		transition: all 600ms;
+	}
+	
+	
+	@media screen and (max-width: 480px) {
+	  .modalbox1{
+		max-height: 85%;
+		overflow-x: hidden
+	
+	}
+	}
+	.modalbox1 > h6{
+		font-size: 0.4em;
+	}
+	
+	.modalmask1:target .modalbox1{		
+		top: 53%;
+		left: 50%;
+		transform: rotate(0deg) translate(-50%, -50%);
+		visibility: visible;
+		background-color: rgba(0, 0, 0, 0.301);
+	}   
+	
+	.close1 {
+		width: 35px;
+		height: 35px;
+		position: absolute;
+		right: -18px;
+		top: -18px;
+		padding: 13px;
+		opacity: 1 !important;
+		background: rgb(102, 15, 0); 
+		color: rgb(255, 228, 228);
+		border-radius: 50%;
+		line-height: 10px;
+		font-size: 15px;
+	}
+	
+	.close1:hover { 
+		background: rgb(230, 156, 87); 
+		color:#222;
+	}
+
+	a {
+		color: white !important;
+		transition: 0.0s !important;
+	}
+
+
+	  
+	  img {
+		max-width: 100%;
+		vertical-align: top;
+	  }
+	  
+	  .gallery {
+		display: flex;
+		margin: 10px auto;
+		max-width: 600px;
+		position: relative;
+		padding-top: 66.6666666667%;
+	  }
+	  @media screen and (min-width: 600px) {
+		.gallery {
+		  padding-top: 400px;
+		}
+	  }
+	  .gallery__img {
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: 0;
+		transition: opacity 0.3s ease-in-out;
+		height: 580px;
+		width: auto;
+	  }
+	  .gallery__thumb {
+		padding-top: 180%;
+		margin: 6px;
+		display: block;
+	  }
+	  .gallery__selector {
+		position: absolute;
+		opacity: 0;
+		visibility: hidden;
+	  }
+	  .gallery__selector:checked + .gallery__img {
+		opacity: 1;
+	  }
+	  .gallery__selector:checked ~ .gallery__thumb > img {
+		box-shadow: 0 0 0 3px #0be2f6;
+	  }
+
+	  .quitarCarrito {
+	  background-color: rgb(46, 197, 0) !important;
+	  border-color: rgb(46, 197, 0)!important;
 	}

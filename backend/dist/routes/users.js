@@ -24,11 +24,11 @@ const userRoutes = express_1.Router();
 userRoutes.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const email = req.body.email;
-        const pass = req.body.pass;
-        let passwordHaash = yield bcrypt_1.default.hash(pass, 8);
-        if (email && pass) {
+        const password = req.body.password;
+        let passwordHaash = yield bcrypt_1.default.hash(password, 8);
+        if (email && password) {
             connectionMySql_1.default.query('SELECT * FROM usuarios where email = ?', [email], (error, results) => __awaiter(void 0, void 0, void 0, function* () {
-                if (results.length == 0 || !(yield bcrypt_1.default.compare(pass, results[0].password))) {
+                if (results.length == 0 || !(yield bcrypt_1.default.compare(password, results[0].password))) {
                     res.json({
                         estado: "success",
                         mensaje: "Usuario o Contraseña Incorrectos",
@@ -70,8 +70,8 @@ userRoutes.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, functi
 userRoutes.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const body = req.body;
-        const id_rol = body.id_rol;
-        const id_estado = body.id_estado;
+        const id_rol = 2;
+        const id_estado = 1;
         const email = body.email;
         const password = body.password; //        bcrypt.hashSync(req.body.password, 10);
         const nombre = body.nombre;
@@ -108,7 +108,7 @@ userRoutes.post('/createUser', (req, res) => __awaiter(void 0, void 0, void 0, f
         yield queryPromess_1.default("rollback", []);
         res.json({
             estado: "error",
-            mensaje: "No se pudo crear el usuario",
+            mensaje: "No se pudo crear el usuario, intenta más tarde",
             data: error
         });
     }

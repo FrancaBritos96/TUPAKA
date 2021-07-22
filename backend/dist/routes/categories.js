@@ -102,4 +102,51 @@ categoriesRoutes.put('/deleteCat/:id', authentication_1.verificarToken, (req, re
         });
     }
 }));
+//BUSCAR CATEGORIAS POR ID
+categoriesRoutes.get('/getCategoryById/:id', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const datosToken = req.usuario;
+    if (datosToken.idRol == 1) {
+        let category = yield queryPromess_1.default("Select * from categorias where id_categoria = ?", [id]);
+        res.json({
+            estado: "success",
+            mensaje: "Se encontró la categoria",
+            data: category
+        });
+    }
+    else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tenes permisos de Administrador"
+        });
+    }
+}));
+//BUSCAR TODAS LAS CATEGORIAS
+categoriesRoutes.get('/getAllCategories', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let categories = yield queryPromess_1.default("Select * from categorias where id_estado = 1", []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron todas las categorias",
+        data: categories
+    });
+}));
+//BUSCAR CATEGORIAS POR NOMBRE
+categoriesRoutes.get('/getCategoryName', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let categoryName = req.body.nombre;
+    const datosToken = req.usuario;
+    if (datosToken.idRol == 1) {
+        let category = yield queryPromess_1.default("Select * from categorias where nombre like ?", ['%' + categoryName + '%']);
+        res.json({
+            estado: "success",
+            mensaje: "Se encontró la categoria",
+            data: category
+        });
+    }
+    else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tenes permisos de Administrador"
+        });
+    }
+}));
 exports.default = categoriesRoutes;

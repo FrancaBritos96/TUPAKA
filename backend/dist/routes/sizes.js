@@ -106,4 +106,50 @@ sizesRoutes.put('/deleteSizes/:id', authentication_1.verificarToken, (req, res) 
         });
     }
 }));
+//BUSCAR TAMAÑO POR ID
+sizesRoutes.get('/getSizeById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const datosToken = req.usuario;
+    // if (datosToken.idRol == 1) {
+    let size = yield queryPromess_1.default("Select * from tamaños where id_tamano = ?", [id]);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontró el tamaño",
+        data: size
+    });
+    // } else {
+    // res.json({
+    //     estado: "Error",
+    //    mensaje: "No tenes permisos de Administrador"
+    // })
+    // }
+}));
+//BUSCAR TAMAÑO POR NOMBRE
+sizesRoutes.get('/getSizeName', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let sizeName = req.body.nombre;
+    const datosToken = req.usuario;
+    if (datosToken.idRol == 1) {
+        let size = yield queryPromess_1.default("Select * from tamaños where nombre like ?", ['%' + sizeName + '%']);
+        res.json({
+            estado: "success",
+            mensaje: "Se encontró el tamaño",
+            data: size
+        });
+    }
+    else {
+        res.json({
+            estado: "Error",
+            mensaje: "No tenes permisos de Administrador"
+        });
+    }
+}));
+//BUSCAR TODAS LOS TAMAÑOS
+sizesRoutes.get('/getAllSizes', authentication_1.verificarToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let sizes = yield queryPromess_1.default("Select * from tamaños where id_estado = 1", []);
+    res.json({
+        estado: "success",
+        mensaje: "Se encontraron todos los tamaños",
+        data: sizes
+    });
+}));
 exports.default = sizesRoutes;

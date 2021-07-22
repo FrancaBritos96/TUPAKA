@@ -17,4 +17,7 @@ export class FileUploadService {
 //   }
 
 }
+
+getFile(productId: number, imgName: string){
+}
 }
