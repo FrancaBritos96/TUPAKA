@@ -6,9 +6,6 @@ import Swal from 'sweetalert2';
 })
 export class AddOrderService {
 
-  // Creamos la persona
-  // Creamos la persona
-
   @Output()
   orderEmitter = new EventEmitter<any>();
 
@@ -17,7 +14,6 @@ export class AddOrderService {
   }
 
   async addOrderDetail(newOrderDetail: any) {
-    debugger;
     if (localStorage.getItem("orderDetails")) {
       let currentOrderDetails: any[] = await this.getOrderDetails();
       currentOrderDetails.push(newOrderDetail);
@@ -33,7 +29,6 @@ export class AddOrderService {
   }
 
   async removeOrderDetail(newOrderDetail: any) {
-    debugger;
     let currentOrderDetails: any[] = await this.getOrderDetails();
     for (let ordetDetail of currentOrderDetails) {
       if (ordetDetail.id_producto == newOrderDetail.id_producto) {
@@ -45,10 +40,7 @@ export class AddOrderService {
   }
 
   async getOrderDetails(): Promise<any[]> {
-    debugger;
     let orderDetailsString = localStorage.getItem("orderDetails")!;
     return JSON.parse(orderDetailsString);
   }
-
-
 }

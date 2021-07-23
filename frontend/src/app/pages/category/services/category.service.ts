@@ -21,11 +21,7 @@ getCategories(token: any): Observable<any[]> {
   }
 
   getCategoryById(token: any, categoryId: number): Observable<any> {
-    debugger;
-    debugger;
     return this.http.get<any>(`http://localhost:3000/categories/getCategoryById/${categoryId}`, { headers: new HttpHeaders().set('x-token', `${token}`) });
-    debugger;
   }
-
 
 }

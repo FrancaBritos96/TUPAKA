@@ -19,7 +19,6 @@ export class LoginService {
   }
 
   setToken(token: string) {
-    debugger;
     localStorage.setItem("accessToken", token);
   }
 
@@ -33,8 +32,6 @@ export class LoginService {
   }
 
   getCurrentUser(token: any) {
-    debugger;
     return this.http.get<any>('http://localhost:3000/users', { headers: new HttpHeaders().set('x-token', `${token}`) })
-    debugger;
   }
 }

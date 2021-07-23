@@ -66,15 +66,15 @@ export class ProductsComponent implements OnInit {
 
   logout() {
     this.alertsService.questionMessage("¿Deseas cerrar sesión? Se perderán los pedidos si hubiese en carrito de compras sin confirmar", "Atención", "Si", "No")
-    .then((result) => {
-      if (result.value) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("orderDetails");
-        this.isAuthenticated = false;
-        this.isAdminRol = false;
-        window.location.href = '';    
-      }
-    });
+      .then((result) => {
+        if (result.value) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("orderDetails");
+          this.isAuthenticated = false;
+          this.isAdminRol = false;
+          window.location.href = '';
+        }
+      });
   }
 
 
@@ -82,12 +82,10 @@ export class ProductsComponent implements OnInit {
 
 
   private validar(event: any): Boolean {
-    debugger;
-    const maxSize = 500000;
+    const maxSize = 500000000;
     this.files = event.target.files
     this.fileName = [];
     for (let file of this.files) {
-      debugger;
       this.fileName.push(file.name);
     }
 
@@ -105,7 +103,7 @@ export class ProductsComponent implements OnInit {
       return false
     }
 
-    if (this.files[0].type != 'image/png') {
+    if (this.files[0].type != 'image/png' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/jpeg') {
       console.log("El formato no es el permitido")
       this.files = [];
       this.fileName = [];
@@ -117,7 +115,6 @@ export class ProductsComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    debugger;
     const validacion = this.validar(event)
 
     if (validacion) {
@@ -146,7 +143,7 @@ export class ProductsComponent implements OnInit {
   }
 
   getSizes() {
-    this.sizeSvc.getSize(this.loginService.getToken()).subscribe
+    this.sizeSvc.getAllSize(this.loginService.getToken()).subscribe
       (
         //data => console.log((Object.values(data))[2]
         data => this.sizes = (Object.values(data))[2]
@@ -162,31 +159,19 @@ export class ProductsComponent implements OnInit {
 
 
   async createProduct() {
-    debugger;
-
     if (this.createProductForm.valid) {
       if (this.files.length == 0) {
-
         this.alertsService.questionMessage("¿Desea crear el producto sin imagen?", "Atención", 'Sí', 'Cancelar')
-
           .then(async (result) => {
             if (result.value) {
-              debugger;
-
               this.productSvc.newProduct(this.createProductForm.value, this.loginService.getToken()).subscribe(data => {
-                debugger;
                 if (data.mensaje == "Producto creado con exito") {
-                  debugger;
-
                   this.fileUploadService.sendFile(this.filesFormData, data.data, this.loginService.getToken()).subscribe(resp => {
-                    debugger;
                     console.log(resp)
                   });
-                  debugger;
-
 
                   this.alertsService.confirmMessage("Producto creada exitosamente")
-                  .then(() => { window.location.href = '/products' });
+                    .then(() => { window.location.href = '/products' });
 
                   //  localStorage.setItem("token", resp.token);
                   // this.authService.authenticate()
@@ -198,41 +183,30 @@ export class ProductsComponent implements OnInit {
                   // console.log("estado auth", this.authService.authState)
                 }
               })
-
             }
-            debugger;
           })
-          }else {
-            this.productSvc.newProduct(this.createProductForm.value, this.loginService.getToken()).subscribe(data => {
-              debugger;
-              if (data.mensaje == "Producto creado con exito") {
-                debugger;
+      } else {
+        this.productSvc.newProduct(this.createProductForm.value, this.loginService.getToken()).subscribe(data => {
+          if (data.mensaje == "Producto creado con exito") {
+            this.fileUploadService.sendFile(this.filesFormData, data.data, this.loginService.getToken()).subscribe(resp => {
+              console.log(resp)
+            });
+            this.alertsService.confirmMessage("Producto creada exitosamente")
+              .then(() => { window.location.href = '/products' });
 
-                this.fileUploadService.sendFile(this.filesFormData, data.data, this.loginService.getToken()).subscribe(resp => {
-                  debugger;
-                  console.log(resp)
-                });
-                debugger;
+            //.then(() => { window.location.href = '/' });
 
+            //  localStorage.setItem("token", resp.token);
+            // this.authService.authenticate()
+            // console.log("estado auth", this.authService.authState)
 
-                this.alertsService.confirmMessage("Producto creada exitosamente")
-                .then(() => { window.location.href = '/products' });
-
-                //.then(() => { window.location.href = '/' });
-
-                //  localStorage.setItem("token", resp.token);
-                // this.authService.authenticate()
-                // console.log("estado auth", this.authService.authState)
-
-              }
-              else {
-                this.alertsService.errorMessage(data.mensaje);
-                // console.log("estado auth", this.authService.authState)
-              }
-            })
-
-            
           }
+          else {
+            this.alertsService.errorMessage(data.mensaje);
+            // console.log("estado auth", this.authService.authState)
+          }
+        })
+      }
 
 
     } else {
@@ -240,5 +214,9 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-
+  goToHome() {
+    // this.router.navigate(['/signUp']);
+    window.location.href = '';
+    window.scrollTo(0, 0);
+  }
 }
