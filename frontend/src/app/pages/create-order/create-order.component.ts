@@ -40,35 +40,25 @@ export class CreateOrderComponent implements OnInit {
     private productService: NewProductService, private sanitizer: DomSanitizer) { }
 
   async ngOnInit(): Promise<void> {
-    debugger;
     localStorage.setItem("scrolledNavBar", "true");
     let currentUser = await this.loginService.getCurrentUser(this.loginService.getToken()).toPromise();
     this.currentUser = (Object.values(currentUser))[2];
     let nombre = `${this.currentUser.nombre} ${this.currentUser.apellido}`;
-    debugger;
     this.formUser = new FormGroup({
       user: new FormControl(''),
       email: new FormControl(`${this.currentUser.email}`)
     });
     this.formUser.controls.user.disable();
-    debugger;
     await this.setOrderDetails();
-    debugger;
     await this.setElementData();
     await this.setDataSoruce();
-
-
-
   }
 
   async setOrderDetails() {
-    debugger;
     this.orderDetails = await this.addOrderService.getOrderDetails();
-    debugger;
   }
 
   async setElementData() {
-    debugger;
     for (let i = 0; i < this.orderDetails.length; i++) {
       let imagenSrc: any = "assets/images/unnamed.jpg";
       let stock = Array(this.orderDetails[i].stock).fill(1).map((x, i) => i + 1);
@@ -86,23 +76,17 @@ export class CreateOrderComponent implements OnInit {
         position: i + 1, producto: this.orderDetails[i].nombre, precio: this.orderDetails[i].precio, cantidad: 1, stock: stock, subtotal: this.orderDetails[i].precio, 
         incluir: 1, imagenSrc: imagenSrc
       }
-      debugger;
 
       this.ELEMENT_DATA.push(orderDetailToPush);
-      debugger;
       this.currentPrice += this.orderDetails[i].precio;
     }
   }
 
   async setDataSoruce() {
-    debugger;
-    debugger;
     this.dataSource = new MatTableDataSource<orderDetail>(this.ELEMENT_DATA);
-    debugger;
   }
 
   async enableOrderDetail(checked: boolean, orderDetailIndex: number) {
-    debugger;
     this.ELEMENT_DATA[orderDetailIndex].incluir = Number(checked);
     await this.setDataSoruce();
     if (checked) {
@@ -114,8 +98,6 @@ export class CreateOrderComponent implements OnInit {
   }
 
   async changeSubTotal(event: any, orderDetailIndex: number) {
-    debugger;
-    debugger;
     let subTotalCache = this.ELEMENT_DATA[orderDetailIndex].subtotal;
     this.ELEMENT_DATA[orderDetailIndex].subtotal = this.ELEMENT_DATA[orderDetailIndex].precio * Number(event.value);
     await this.setDataSoruce();

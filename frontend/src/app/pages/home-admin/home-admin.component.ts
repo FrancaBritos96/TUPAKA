@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertsService } from 'src/utils/alert.service';
 
 @Component({
@@ -6,13 +6,14 @@ import { AlertsService } from 'src/utils/alert.service';
   templateUrl: './home-admin.component.html',
   styleUrls: ['./home-admin.component.css']
 })
-export class HomeAdminComponent implements OnInit {
+export class HomeAdminComponent implements OnInit,OnDestroy {
   public isAuthenticated!: boolean;
   public isAdminRol!: boolean;
 
   constructor(private alertsService: AlertsService) { }
 
   ngOnInit(): void {
+    localStorage.setItem("idAdminPage", "true");
   }
 
   logout() {
@@ -26,5 +27,15 @@ export class HomeAdminComponent implements OnInit {
         window.location.href = '';    
       }
     });
+  }
+
+  ngOnDestroy() {
+    localStorage.setItem("idAdminPage", "false");
+  }
+
+  goToHome() {
+    // this.router.navigate(['/signUp']);
+    window.location.href = '';
+    window.scrollTo(0, 0);
   }
 }

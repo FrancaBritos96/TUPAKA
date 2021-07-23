@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../../pages/login/services/login.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { User } from 'src/models/IUser';
 //import { ResetPasswordComponent } from 'src/app/components/reset-password/reset-password.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertsService } from 'src/utils/alert.service';
+import { of } from 'rxjs';
 
 
 @Component({
@@ -19,23 +20,35 @@ export class HeaderComponent implements OnInit {
   public userName: string = "";
   public isAuthenticated!: boolean;
   public isAdminRol!: boolean;
+  public isAdminPage!: boolean
 
   constructor(public router: Router, private loginService: LoginService, private alertsService: AlertsService) { }
 
   async ngOnInit()  {
-    debugger;
+    await this.setAdminRol();
+    this.isAdminPage = JSON.parse(localStorage.getItem("isAdminPage")!); 
     if (localStorage.getItem("accessToken")) {
       this.isAuthenticated = true;
       let currentUser = await this.loginService.getCurrentUser(this.loginService.getToken()).toPromise();
       this.currentUser = (Object.values(currentUser))[2];
       this.userName = `${this.currentUser.nombre} ${this.currentUser.apellido}`;
-      debugger;
       if (this.currentUser.idRol == 1) {
         this.isAdminRol = true;
       }
       else{
         this.isAdminRol = false;
       }
+    }
+  }
+
+  async setAdminRol(){
+    let currentUrl = window.location.href.slice(21);
+    if (currentUrl === '/' || currentUrl === '' || currentUrl === '/login' || currentUrl === '/signUp' 
+    || currentUrl === '/createOrder' || currentUrl === '/comingSoon' || currentUrl === '/#close'){
+      localStorage.setItem("isAdminPage", "false");
+    }
+    else {
+      localStorage.setItem("isAdminPage", "true");
     }
   }
 
@@ -70,4 +83,9 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  goToHome() {
+    // this.router.navigate(['/signUp']);
+    window.location.href = '';
+    window.scrollTo(0, 0);
+  }
 }

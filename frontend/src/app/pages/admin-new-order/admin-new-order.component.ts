@@ -26,4 +26,11 @@ export class AdminNewOrderComponent implements OnInit {
       }
     });
   }
+
+  goToHome() {
+    // this.router.navigate(['/signUp']);
+    window.location.href = '';
+    window.scrollTo(0, 0);
+  }
+  
 }

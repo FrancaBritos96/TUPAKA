@@ -50,32 +50,28 @@ export class AdminOrderListComponent implements OnInit {
   }
 
   async setElementData() {
-    debugger;
     for (let order of this.orders) {
-    
-          debugger;
         let fecha = order.FECHA_PEDIDO.slice(0, 10);
         order.FECHA_PEDIDO = fecha;
 
       this.ELEMENT_DATA.push(order);
-      debugger;
     }
   }
 
   async getOrderList() {
-    debugger;
      let orders = await this.orderListSvc.getOrderList(this.loginService.getToken()).toPromise();
-     debugger;
      this.orders = (Object.values(orders))[2];
-      debugger;
     }
   
    async setDataSoruce() {
-    debugger;
          // this.ELEMENT_DATA=this.products.data;
          this.dataSource = new MatTableDataSource<any>(this.ELEMENT_DATA);
-         debugger;
     }
   
+    goToHome() {
+      // this.router.navigate(['/signUp']);
+      window.location.href = '';
+      window.scrollTo(0, 0);
+    }
 
 }

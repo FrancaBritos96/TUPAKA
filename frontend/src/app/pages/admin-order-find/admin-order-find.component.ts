@@ -12,4 +12,9 @@ export class AdminOrderFindComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  goToHome() {
+    // this.router.navigate(['/signUp']);
+    window.location.href = '';
+    window.scrollTo(0, 0);
+  }
 }

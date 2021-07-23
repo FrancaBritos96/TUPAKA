@@ -10,48 +10,45 @@ import { SignUpService } from './service/sign-up.service';
 })
 export class SignUpComponent implements OnInit {
 
-  constructor(public fb:FormBuilder, private signUpService: SignUpService, private alertsService: AlertsService) { }
+  constructor(public fb: FormBuilder, private signUpService: SignUpService, private alertsService: AlertsService) { }
 
-  createUserForm= this.fb.group({
-    nombre:["",[Validators.required, Validators.pattern(/^([A-Z]|[a-z])+$/)]],
-    apellido:["", Validators.required],
-    numero_documento:["", [Validators.required, Validators.maxLength(8), Validators.minLength(6)]],
-    email:["", [Validators.required, Validators.email]],
-    telefono:[""],
-    password:["", Validators.required],
-    nacionalidad:[""],
-    provincia:[""],
-    localidad:[""],
-    direccion:[""],
-    cod_postal:[""]
+  createUserForm = this.fb.group({
+    nombre: ["", [Validators.required, Validators.pattern(/^([A-Z]|[a-z])+$/)]],
+    apellido: ["", Validators.required],
+    numero_documento: ["", [Validators.required, Validators.maxLength(8), Validators.minLength(6)]],
+    email: ["", [Validators.required, Validators.email]],
+    telefono: [""],
+    password: ["", Validators.required],
+    nacionalidad: [""],
+    provincia: [""],
+    localidad: [""],
+    direccion: [""],
+    cod_postal: [""]
   })
 
-  createUser(){
+  createUser() {
     console.log(this.createUserForm.valid)
-    if(this.createUserForm.valid){
+    if (this.createUserForm.valid) {
       let t = 3;
 
-      this.signUpService.createUser(this.createUserForm.value).subscribe(data =>{
-        debugger;
-        if(data.mensaje == "Usuario creado con exito"){
+      this.signUpService.createUser(this.createUserForm.value).subscribe(data => {
+        if (data.mensaje == "Usuario creado con exito") {
           this.alertsService.confirmMessage("Cuenta creada exitosamente")
-          .then(() => { window.location.href = '/' });
-        //  localStorage.setItem("token", resp.token);
-         // this.authService.authenticate()
-         // console.log("estado auth", this.authService.authState)
+            .then(() => { window.location.href = '/' });
+          //  localStorage.setItem("token", resp.token);
+          // this.authService.authenticate()
+          // console.log("estado auth", this.authService.authState)
 
         }
-        else{
+        else {
           this.alertsService.errorMessage(data.mensaje);
-         // console.log("estado auth", this.authService.authState)
+          // console.log("estado auth", this.authService.authState)
         }
       })
     }
   }
 
-
   ngOnInit(): void {
     localStorage.setItem("scrolledNavBar", "true");
   }
-
 }

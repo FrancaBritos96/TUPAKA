@@ -31,27 +31,18 @@ export class ProductUpdateComponent implements AfterViewInit {
   public fileName: string[] = [];
   public files: any[] = [];
   public filesFormData: any;
-  public id_product:number = 0;
-  public currentProduct:any;
+  public id_product: number = 0;
+  public currentProduct: any;
 
-  constructor(public fb: FormBuilder,public router: Router, private productSvc: NewProductService, private categorySvc: CategoryService, private sizeSvc: SizeService, private fileUploadService: FileUploadService, private loginService: LoginService, private alertsService: AlertsService) { 
+  constructor(public fb: FormBuilder, public router: Router, private productSvc: NewProductService, private categorySvc: CategoryService, private sizeSvc: SizeService, private fileUploadService: FileUploadService, private loginService: LoginService, private alertsService: AlertsService) {
 
     localStorage.setItem("scrolledNavBar", "true");
-
-    
-         this.getCategorias();
-          this.getSizes();
-
-          debugger;
-
+    this.getCategorias();
+    this.getSizes();
   }
 
-  
-
-  async ngAfterViewInit(): Promise<void>{
-debugger;
+  async ngAfterViewInit(): Promise<void> {
     await this.getIdProduct();
-    debugger;
     this.updateProductForm = new FormGroup({
       id_categoria: new FormControl('', [Validators.required]),
       id_tamano: new FormControl('', [Validators.required]),
@@ -61,31 +52,21 @@ debugger;
       stock: new FormControl(`${this.currentProduct[0].stock}`, [Validators.required, Validators.pattern("^[0-9]*$")]),
 
     });
-
   }
 
-  async getIdProduct(){
-
-    this.id_product=Number((this.router.url).substr(16, (this.router.url).length));
-    debugger;
-
+  async getIdProduct() {
+    this.id_product = Number((this.router.url).substr(16, (this.router.url).length));
     let currentProduct = await this.productSvc.getProductsById(this.loginService.getToken(), this.id_product).toPromise();
-    debugger;
     this.currentProduct = (Object.values(currentProduct))[2];
-
-
   }
 
   //////////////////Imagenes/////////////
 
-
   private validar(event: any): Boolean {
-    debugger;
-    const maxSize = 500000;
+    const maxSize = 500000000;
     this.files = event.target.files
     this.fileName = [];
     for (let file of this.files) {
-      debugger;
       this.fileName.push(file.name);
     }
 
@@ -103,21 +84,17 @@ debugger;
       return false
     }
 
-    if (this.files[0].type != 'image/png') {
+    if (this.files[0].type != 'image/png' && this.files[0].type != 'image/jpg' && this.files[0].type != 'image/jpeg') {
       console.log("El formato no es el permitido")
       this.files = [];
       this.fileName = [];
       return false
     }
-
     return true
-
   }
 
   onFileChange(event: any) {
-    debugger;
     const validacion = this.validar(event)
-
     if (validacion) {
       this.filesFormData = new FormData();
 
@@ -137,65 +114,56 @@ debugger;
       )
   };
   onSelect(categoryId: any): void {
-
     this.selectedCategoryId = categoryId.value;
-
-
   }
 
   getSizes() {
-    this.sizeSvc.getSize(this.loginService.getToken()).subscribe
+    this.sizeSvc.getAllSize(this.loginService.getToken()).subscribe
       (
         //data => console.log((Object.values(data))[2]
         data => this.sizes = (Object.values(data))[2]
       )
-  };
-  onSelectSize(sizeId: any): void {
-    this.selectedSizeId = sizeId.value;
-
-
   }
 
+  onSelectSize(sizeId: any): void {
+    this.selectedSizeId = sizeId.value;
+  }
 
-  async updateProduct(){
-
-    
+  async updateProduct() {
     this.alertsService.questionMessage("¿Desea editar el producto seleccionado?", "Atención", 'Sí', 'Cancelar')
-    
-    .then(async (result) => {
-      
-      if (result.value) {
-        
-
-        let productResult = await this.productSvc.updateProduct(this.id_product, this.updateProductForm.value, this.loginService.getToken()).toPromise();
-        debugger;
-        let resultMessage:any = (Object.values(productResult)[1]);
-debugger;
-        if(resultMessage == "Producto editado con exito"){
-          this.alertsService.confirmMessage("Producto editado con exito")
-          .then((result) => { window.location.href = '/productsList' });
-       
-        }else {
-          debugger;
+      .then(async (result) => {
+        if (result.value) {
+          let productResult = await this.productSvc.updateProduct(this.id_product, this.updateProductForm.value, this.loginService.getToken()).toPromise();
+          let resultMessage: any = (Object.values(productResult)[1]);
+          if (resultMessage == "Producto editado con exito") {
+            this.alertsService.confirmMessage("Producto editado con exito")
+              .then((result) => { window.location.href = '/productsList' });
+          } else {
             this.alertsService.errorMessage(resultMessage);
           }
         }
-        
-    });
-  }
-  logout() {
-    this.alertsService.questionMessage("¿Deseas cerrar sesión? Se perderán los pedidos si hubiese en carrito de compras sin confirmar", "Atención", "Si", "No")
-    .then((result) => {
-      if (result.value) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("orderDetails");
-        this.isAuthenticated = false;
-        this.isAdminRol = false;
-        window.location.href = '';    
-      }
-    });
+
+      });
   }
 
+  logout() {
+    this.alertsService.questionMessage("¿Deseas cerrar sesión? Se perderán los pedidos si hubiese en carrito de compras sin confirmar", "Atención", "Si", "No")
+      .then((result) => {
+        if (result.value) {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("orderDetails");
+          this.isAuthenticated = false;
+          this.isAdminRol = false;
+          window.location.href = '';
+        }
+      });
   }
+
+  goToHome() {
+    // this.router.navigate(['/signUp']);
+    window.location.href = '';
+    window.scrollTo(0, 0);
+  }
+}
 
 

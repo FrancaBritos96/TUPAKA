@@ -25,28 +25,22 @@ export class MarketComponent implements OnInit {
     private sanitizer: DomSanitizer, private alertsService: AlertsService, private addOrderService: AddOrderService) { }
 
   async ngOnInit(): Promise<void> {
-    debugger;
     await this.getProductsList();
     await this.getProductSizes();
     await this.setProductsSubList();
-    debugger;
   }
 
   async getProductsList() {
-    debugger;
     let products = await this.productService.getAllProducts().toPromise();
     this.products = (Object.values(products))[2];
   }
 
   async setProductsSubList() {
-    debugger;
     this.htmlLeftProducts = this.products.filter(product => (this.products.indexOf(product) % 2 == 0));
     this.htmlRightProducts = this.products.filter(product => (this.products.indexOf(product) % 2 != 0));
-    debugger;
   }
 
   async getProductSizes() {
-    debugger;
     let finalProductsList: any[] = [];
     for (let product of this.products) {
       let isInMarket: number = 0;
@@ -65,9 +59,7 @@ export class MarketComponent implements OnInit {
         let unsafeImageUrl = URL.createObjectURL(mainImageProductPhoto);
         imagenSrc = this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
       }
-      debugger;
       let currentOrdenDetails = await this.addOrderService.getOrderDetails();
-      debugger;
       if (currentOrdenDetails) {
         for (let orderDetail of currentOrdenDetails) {
           if (orderDetail.id_producto == product.id_producto) {
@@ -85,23 +77,19 @@ export class MarketComponent implements OnInit {
       finalProductsList.push(productToPush);
     }
     this.products = finalProductsList;
-    debugger;
   }
 
   async selectProductPictures(id_product: number) {
-    debugger;
     if (id_product != 0) {
       this.productPicturesSrc = [];
       let imagesResponse = await this.productService.getImagesByProductId(id_product).toPromise();
       let imagesProductList = ((Object.values(imagesResponse))[2]);
       if (imagesProductList.length > 0) {
-        debugger;
         for (let i = 0; i < imagesProductList.length; i++) {
           let currentPicture = await this.productService.getImage(id_product, imagesProductList[i].nombre).toPromise();
           let unsafeImageUrl = URL.createObjectURL(currentPicture);
           this.productPicturesSrc[i] = this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
         }
-        debugger;
         window.location.href = '/#morePicturesModal';
       }
     }
@@ -111,7 +99,6 @@ export class MarketComponent implements OnInit {
   }
 
   async addToOder(product: any, arrayType: string, i: number) {
-    debugger;
     let btnText = document.getElementById(`btn-${product.id_producto}`)!.innerText;
     if (btnText == "Agregar al carrito ") {
       if (this.loginService.getToken() != null) {
@@ -120,9 +107,7 @@ export class MarketComponent implements OnInit {
 
         if (this.currentUser.idRol != 1) {
           this.addOrderService.addOrderDetail(product);
-          debugger;
           document.getElementById(`btn-${product.id_producto}`)!.innerHTML = "Quitar del carrito <img _ngcontent-jdp-c138=\'\' src=\'assets/images/carrito.png\' class=\'iconoCarrito\'>";
-          debugger;
           if (arrayType === 'htmlRightProducts') {
             this.htmlRightProducts[i].isInMarket = 1;
           }
@@ -148,6 +133,6 @@ export class MarketComponent implements OnInit {
     }
 
   }
-
+  
 }
 

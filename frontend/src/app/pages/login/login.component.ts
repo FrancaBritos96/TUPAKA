@@ -24,16 +24,13 @@ export class LoginComponent implements OnInit {
   })
 
   login() {
-    debugger;
     let user = new User;
     user.email = this.formLogin.value.email;
     user.password = this.formLogin.value.password;
     this.loginService.login(user).subscribe(data => {
 
       if (data.mensaje == "¡LOGIN CORRECTO!") {
-        debugger;
         this.loginService.setToken(data.token);
-        debugger;
         this.alertsService.confirmMessage("Inicio de sesión exitoso")
           .then(() => { window.location.href = '/' });
       }

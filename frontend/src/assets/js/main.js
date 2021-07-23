@@ -1,90 +1,85 @@
-;(function () {
+; (function () {
 
-	
-	
+
+
 	'use strict';
 
 	var isMobile = {
-		Android: function() {
+		Android: function () {
 			return navigator.userAgent.match(/Android/i);
 		},
-			BlackBerry: function() {
+		BlackBerry: function () {
 			return navigator.userAgent.match(/BlackBerry/i);
 		},
-			iOS: function() {
+		iOS: function () {
 			return navigator.userAgent.match(/iPhone|iPad|iPod/i);
 		},
-			Opera: function() {
+		Opera: function () {
 			return navigator.userAgent.match(/Opera Mini/i);
 		},
-			Windows: function() {
+		Windows: function () {
 			return navigator.userAgent.match(/IEMobile/i);
 		},
-			any: function() {
+		any: function () {
 			return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
 		}
 	};
 
 
 
-	var parallax = function() {
-		if ( !isMobile.any()) {
+	var parallax = function () {
+		if (!isMobile.any()) {
 			$(window).stellar();
 		}
 	};
 
-	var mobileMenuOutsideClick = function() {
+	var mobileMenuOutsideClick = function () {
 
 		$(document).click(function (e) {
-	    var container = $("#gtco-offcanvas, .js-gtco-nav-toggle");
-	    if (!container.is(e.target) && container.has(e.target).length === 0) {
-	    	if ( $('body').hasClass('offcanvas') ) {
-    			$('body').removeClass('offcanvas');
-    			$('.js-gtco-nav-toggle').removeClass('active');
-	    	}
-	    }
+			var container = $("#gtco-offcanvas, .js-gtco-nav-toggle");
+			if (!container.is(e.target) && container.has(e.target).length === 0) {
+				if ($('body').hasClass('offcanvas')) {
+					$('body').removeClass('offcanvas');
+					$('.js-gtco-nav-toggle').removeClass('active');
+				}
+			}
 		});
 
 	};
 
-	
-
-	var header = function() {
-		$(window).scroll(function(){
+	var header = function () {
+		$(window).scroll(function () {
 			var st = $(window).scrollTop();
 			if (st > 50) {
 				document.getElementById("navBar").className = "gtco-nav scrolled";
-			} 
-	
+			}
 			if (st < 50 && localStorage.getItem("scrolledNavBar") === "false") {
 				document.getElementById("navBar").className = "gtco-nav";
 			}
 		});
-   
+
 	};
 
-	var navigation = function() {
-
-		$('body').on('click', '#gtco-offcanvas ul a:not([class="external"]), .main-nav a:not([class="external"])', function(event){
+	var navigation = function () {
+		$('body').on('click', '#gtco-offcanvas ul a:not([class="external"]), .main-nav a:not([class="external"])', function (event) {
 			var section = $(this).data('nav-section');
-				if ( $('[data-section="' + section + '"]').length ) {
-			    	$('html, body').animate({
-			        	scrollTop: $('[data-section="' + section + '"]').offset().top - 55
-			    	}, 500, 'easeInOutExpo');
-			   }
+			if ($('[data-section="' + section + '"]').length) {
+				$('html, body').animate({
+					scrollTop: $('[data-section="' + section + '"]').offset().top - 55
+				}, 500, 'easeInOutExpo');
+			}
 
-			   if ($('body').hasClass('offcanvas')) {
-			   	$('body').removeClass('offcanvas');
-			   	$('.js-gtco-nav-toggle').removeClass('active');
-			   }
-		   event.preventDefault();
-		   return false;
+			if ($('body').hasClass('offcanvas')) {
+				$('body').removeClass('offcanvas');
+				$('.js-gtco-nav-toggle').removeClass('active');
+			}
+			event.preventDefault();
+			return false;
 		});
 
 	};
 
-
-	var offcanvasMenu = function() {
+	var offcanvasMenu = function () {
 
 		$('body').prepend('<div id="gtco-offcanvas" />');
 		$('body').prepend('<a href="#" class="js-gtco-nav-toggle gtco-nav-toggle"><i></i></a>');
@@ -99,76 +94,76 @@
 			.removeClass('has-dropdown');
 
 		// Hover dropdown menu on mobile
-		$('.offcanvas-has-dropdown').mouseenter(function(){
+		$('.offcanvas-has-dropdown').mouseenter(function () {
 			var $this = $(this);
 
 			$this
 				.addClass('active')
 				.find('ul')
-				.slideDown(500, 'easeOutExpo');				
-		}).mouseleave(function(){
+				.slideDown(500, 'easeOutExpo');
+		}).mouseleave(function () {
 
 			var $this = $(this);
 			$this
 				.removeClass('active')
 				.find('ul')
-				.slideUp(500, 'easeOutExpo');				
+				.slideUp(500, 'easeOutExpo');
 		});
 
 
-		$(window).resize(function(){
+		$(window).resize(function () {
 
-			if ( $('body').hasClass('offcanvas') ) {
+			if ($('body').hasClass('offcanvas')) {
 
-    			$('body').removeClass('offcanvas');
-    			$('.js-gtco-nav-toggle').removeClass('active');
-				
-	    	}
+				$('body').removeClass('offcanvas');
+				$('.js-gtco-nav-toggle').removeClass('active');
+
+			}
 		});
 	};
 
 
 	// Reflect scrolling in navigation
-	var navActive = function(section) {
+	var navActive = function (section) {
 
 		var $el = $('.main-nav > ul');
 		$el.find('li').removeClass('active');
-		$el.each(function(){
-			$(this).find('a[data-nav-section="'+section+'"]').closest('li').addClass('active');
+		$el.each(function () {
+			$(this).find('a[data-nav-section="' + section + '"]').closest('li').addClass('active');
 		});
 
 	};
 
-	var navigationSection = function() {
+	var navigationSection = function () {
 
 		var $section = $('section[data-section]');
-		
-		$section.waypoint(function(direction) {
-		  	
-		  	if (direction === 'down') {
-		    	navActive($(this.element).data('section'));
-		  	}
+
+		$section.waypoint(function (direction) {
+
+			if (direction === 'down') {
+				navActive($(this.element).data('section'));
+			}
 		}, {
-	  		offset: '150px'
+			offset: '150px'
 		});
 
-		$section.waypoint(function(direction) {
-		  	if (direction === 'up') {
-		    	navActive($(this.element).data('section'));
-		  	}
+		$section.waypoint(function (direction) {
+			if (direction === 'up') {
+				navActive($(this.element).data('section'));
+			}
 		}, {
-		  	offset: function() { return -$(this.element).height() + 155; }
+			offset: function () { return -$(this.element).height() + 155; }
 		});
 
 	};
 
-	var burgerMenu = function() {
+	var burgerMenu = function () {
 
-		$('body').on('click', '.js-gtco-nav-toggle', function(event){
+		$('body').on('click', '.js-gtco-nav-toggle', function (event) {
 			var $this = $(this);
 
 
-			if ( $('body').hasClass('offcanvas') ) {
+			if ($('body').hasClass('offcanvas')) {
 				$('body').removeClass('offcanvas');
 			} else {
 				$('body').addClass('offcanvas');
@@ -181,46 +176,46 @@
 
 
 
-	var contentWayPoint = function() {
+	var contentWayPoint = function () {
 		var i = 0;
-		$('.animate-box').waypoint( function( direction ) {
+		$('.animate-box').waypoint(function (direction) {
 
-			if( direction === 'down' && !$(this.element).hasClass('animated-fast') ) {
-				
+			if (direction === 'down' && !$(this.element).hasClass('animated-fast')) {
+
 				i++;
 
 				$(this.element).addClass('item-animate');
-				setTimeout(function(){
+				setTimeout(function () {
 
-					$('body .animate-box.item-animate').each(function(k){
+					$('body .animate-box.item-animate').each(function (k) {
 						var el = $(this);
-						setTimeout( function () {
+						setTimeout(function () {
 							var effect = el.data('animate-effect');
-							if ( effect === 'fadeIn') {
+							if (effect === 'fadeIn') {
 								el.addClass('fadeIn animated-fast');
-							} else if ( effect === 'fadeInLeft') {
+							} else if (effect === 'fadeInLeft') {
 								el.addClass('fadeInLeft animated-fast');
-							} else if ( effect === 'fadeInRight') {
+							} else if (effect === 'fadeInRight') {
 								el.addClass('fadeInRight animated-fast');
 							} else {
 								el.addClass('fadeInUp animated-fast');
 							}
 
 							el.removeClass('item-animate');
-						},  k * 200, 'easeInOutExpo' );
+						}, k * 200, 'easeInOutExpo');
 					});
-					
+
 				}, 100);
-				
+
 			}
 
-		} , { offset: '85%' } );
+		}, { offset: '85%' });
 	};
 
 
-	var dropdown = function() {
+	var dropdown = function () {
 
-		$('.has-dropdown').mouseenter(function(){
+		$('.has-dropdown').mouseenter(function () {
 
 			var $this = $(this);
 			$this
@@ -228,7 +223,7 @@
 				.css('display', 'block')
 				.addClass('animated-fast fadeInUpMenu');
 
-		}).mouseleave(function(){
+		}).mouseleave(function () {
 			var $this = $(this);
 
 			$this
@@ -240,8 +235,8 @@
 	};
 
 
-	var owlCarousel = function(){
-		
+	var owlCarousel = function () {
+
 		var owl = $('.owl-carousel-carousel');
 		owl.owlCarousel({
 			items: 3,
@@ -251,20 +246,20 @@
 			dots: true,
 			smartSpeed: 800,
 			navText: [
-		      "<i class='ti-arrow-left owl-direction'></i>",
-		      "<i class='ti-arrow-right owl-direction'></i>"
-	     	],
-	     	responsive:{
-	        0:{
-	            items:1
-	        },
-	        600:{
-	            items:2
-	        },
-	        1000:{
-	            items:3
-	        }
-	    	}
+				"<i class='ti-arrow-left owl-direction'></i>",
+				"<i class='ti-arrow-right owl-direction'></i>"
+			],
+			responsive: {
+				0: {
+					items: 1
+				},
+				600: {
+					items: 2
+				},
+				1000: {
+					items: 3
+				}
+			}
 		});
 
 
@@ -278,28 +273,28 @@
 			smartSpeed: 800,
 			autoHeight: true,
 			navText: [
-		      "<i class='ti-arrow-left owl-direction'></i>",
-		      "<i class='ti-arrow-right owl-direction'></i>"
-	     	]
+				"<i class='ti-arrow-left owl-direction'></i>",
+				"<i class='ti-arrow-right owl-direction'></i>"
+			]
 		});
 
 	};
 
 
-	var goToTop = function() {
+	var goToTop = function () {
 
-		$('.js-gotop').on('click', function(event){
-			
+		$('.js-gotop').on('click', function (event) {
+
 			event.preventDefault();
 
 			$('html, body').animate({
 				scrollTop: $('html').offset().top
 			}, 500, 'easeInOutExpo');
-			
+
 			return false;
 		});
 
-		$(window).scroll(function(){
+		$(window).scroll(function () {
 
 			var $win = $(window);
 			if ($win.scrollTop() > 200) {
@@ -309,20 +304,20 @@
 			}
 
 		});
-	
+
 	};
 
 
 	// Loading page
-	var loaderPage = function() {
+	var loaderPage = function () {
 		$(".gtco-loader").fadeOut("slow");
 	};
 
-	
 
 
-	
-	$(function(){
+
+
+	$(function () {
 		parallax();
 		mobileMenuOutsideClick();
 		header();
@@ -340,18 +335,18 @@
 }());
 
 
-$(document).ready(function(){
+$(document).ready(function () {
 
 	/*  Show/Hidden Submenus */
-	$('.nav-btn-submenu').on('click', function(e){
+	$('.nav-btn-submenu').on('click', function (e) {
 		e.preventDefault();
-		var SubMenu=$(this).next('ul');
-		var iconBtn=$(this).children('.fa-chevron-down');
-		if(SubMenu.hasClass('show-nav-lateral-submenu')){
+		var SubMenu = $(this).next('ul');
+		var iconBtn = $(this).children('.fa-chevron-down');
+		if (SubMenu.hasClass('show-nav-lateral-submenu')) {
 			$(this).removeClass('active');
 			iconBtn.removeClass('fa-rotate-180');
 			SubMenu.removeClass('show-nav-lateral-submenu');
-		}else{
+		} else {
 			$(this).addClass('active');
 			iconBtn.addClass('fa-rotate-180');
 			SubMenu.addClass('show-nav-lateral-submenu');
@@ -359,21 +354,21 @@ $(document).ready(function(){
 	});
 
 	/*  Show/Hidden Nav Lateral */
-	$('.show-nav-lateral').on('click', function(e){
+	$('.show-nav-lateral').on('click', function (e) {
 		e.preventDefault();
-		var NavLateral=$('.nav-lateral');
-		var PageConten=$('.page-content');
-		if(NavLateral.hasClass('active')){
+		var NavLateral = $('.nav-lateral');
+		var PageConten = $('.page-content');
+		if (NavLateral.hasClass('active')) {
 			NavLateral.removeClass('active');
 			PageConten.removeClass('active');
-		}else{
+		} else {
 			NavLateral.addClass('active');
 			PageConten.addClass('active');
 		}
 	});
 
 	/*  Exit system buttom */
-	$('.btn-exit-system').on('click', function(e){
+	$('.btn-exit-system').on('click', function (e) {
 		e.preventDefault();
 		Swal.fire({
 			title: 'Are you sure to close the session?',
@@ -386,25 +381,25 @@ $(document).ready(function(){
 			cancelButtonText: 'No, cancel'
 		}).then((result) => {
 			if (result.value) {
-				window.location="index.html";
+				window.location = "index.html";
 			}
 		});
 	});
 });
-(function($){
-    $(window).on("load",function(){
-        $(".nav-lateral-content").mCustomScrollbar({
-        	theme:"light-thin",
-        	scrollbarPosition: "inside",
-        	autoHideScrollbar: true,
-        	scrollButtons: {enable: true}
-        });
-        $(".page-content").mCustomScrollbar({
-        	theme:"dark-thin",
-        	scrollbarPosition: "inside",
-        	autoHideScrollbar: true,
-        	scrollButtons: {enable: true}
-        });
-    });
+(function ($) {
+	$(window).on("load", function () {
+		$(".nav-lateral-content").mCustomScrollbar({
+			theme: "light-thin",
+			scrollbarPosition: "inside",
+			autoHideScrollbar: true,
+			scrollButtons: { enable: true }
+		});
+		$(".page-content").mCustomScrollbar({
+			theme: "dark-thin",
+			scrollbarPosition: "inside",
+			autoHideScrollbar: true,
+			scrollButtons: { enable: true }
+		});
+	});
 })(jQuery);
 
