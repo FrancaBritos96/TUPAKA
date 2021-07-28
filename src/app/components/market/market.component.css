@@ -27,6 +27,7 @@ h1, .h1 {
 
 .parrafoCatalogo {
     font-size: 15px !important;
+	line-height: 1.5;
 }
 
 .tituloCatalogo {
@@ -43,6 +44,7 @@ h1, .h1 {
     vertical-align: bottom !important;
     padding-top: 1.1% !important;
     width: 176px;
+	margin-top: 1.2%;
 }
 
 .container {
