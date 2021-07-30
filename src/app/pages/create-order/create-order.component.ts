@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddOrderService } from 'src/utils/order.service';
 import { NewProductService } from '../products/services/products.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { createOrderService } from './services/create-order.service';
 
 
 export interface orderDetail {
@@ -37,7 +38,7 @@ export class CreateOrderComponent implements OnInit {
   currentPrice: number = 0;
 
   constructor(public fb: FormBuilder, private loginService: LoginService, private alertsService: AlertsService, private addOrderService: AddOrderService,
-    private productService: NewProductService, private sanitizer: DomSanitizer) { }
+    private productService: NewProductService, private sanitizer: DomSanitizer, private createOrderService: createOrderService) { }
 
   async ngOnInit(): Promise<void> {
     localStorage.setItem("scrolledNavBar", "true");
@@ -71,9 +72,9 @@ export class CreateOrderComponent implements OnInit {
         let unsafeImageUrl = URL.createObjectURL(mainImageProductPhoto);
         imagenSrc = this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
       }
-      
+
       let orderDetailToPush = {
-        position: i + 1, producto: this.orderDetails[i].nombre, precio: this.orderDetails[i].precio, cantidad: 1, stock: stock, subtotal: this.orderDetails[i].precio, 
+        position: i + 1, producto: this.orderDetails[i].nombre, precio: this.orderDetails[i].precio, cantidad: 1, stock: stock, subtotal: this.orderDetails[i].precio,
         incluir: 1, imagenSrc: imagenSrc
       }
 
@@ -98,9 +99,28 @@ export class CreateOrderComponent implements OnInit {
   }
 
   async changeSubTotal(event: any, orderDetailIndex: number) {
+    this.ELEMENT_DATA[orderDetailIndex].cantidad = Number(event.value);
     let subTotalCache = this.ELEMENT_DATA[orderDetailIndex].subtotal;
     this.ELEMENT_DATA[orderDetailIndex].subtotal = this.ELEMENT_DATA[orderDetailIndex].precio * Number(event.value);
     await this.setDataSoruce();
     this.currentPrice += (this.ELEMENT_DATA[orderDetailIndex].subtotal - subTotalCache);
+  }
+
+  async payOrder() {
+    debugger;
+    //  displayedColumns: string[] = ['position', 'producto', 'precio', 'cantidad', 'subtotal', 'incluir'];
+    let newOrderResponse = await this.createOrderService.createOrder(this.loginService.getToken()).toPromise();
+    debugger;
+    let newOrderId :any = (Object.values(newOrderResponse))[2];
+    debugger;
+    for (let i = 0; i < this.ELEMENT_DATA.length; i++) {
+      if (this.ELEMENT_DATA[i].incluir == 1) {
+        let orderDetail = {
+          id_pedido: newOrderId, id_producto: this.orderDetails[i].id_producto, cantidad: this.ELEMENT_DATA[i].cantidad };
+          await this.createOrderService.createDetailOrder(this.loginService.getToken(), orderDetail).toPromise();
+      }
+    }
+    let payment = {precio: this.currentPrice}
+    await this.createOrderService.payment(this.loginService.getToken(), payment).toPromise();
   }
 }

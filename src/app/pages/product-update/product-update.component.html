@@ -110,7 +110,7 @@
                                             id="formControlSelect1" [(ngModel)]="selectedCategoryId" name="id_categoria"
                                             (change)="onSelect($event.target)">
                                             <option value="" selected="" disabled="">Seleccione una opción</option>
-                                            <option *ngFor="let category of categories" value={{category.id_categoria}}>
+                                            <option *ngFor="let category of categories" [value]="category.id_categoria">
                                                 {{category.nombre}}
                                             </option>
                                         </select>

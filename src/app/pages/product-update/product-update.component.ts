@@ -44,7 +44,7 @@ export class ProductUpdateComponent implements AfterViewInit {
   async ngAfterViewInit(): Promise<void> {
     await this.getIdProduct();
     this.updateProductForm = new FormGroup({
-      id_categoria: new FormControl('', [Validators.required]),
+      id_categoria: new FormControl(this.currentProduct[0].nombre, [Validators.required]),
       id_tamano: new FormControl('', [Validators.required]),
       nombre: new FormControl(`${this.currentProduct[0].nombre}`, [Validators.required]),
       descripcion: new FormControl(`${this.currentProduct[0].descripcion}`, [Validators.required]),
