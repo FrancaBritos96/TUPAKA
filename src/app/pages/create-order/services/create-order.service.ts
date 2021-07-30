@@ -15,18 +15,15 @@ export class createOrderService {
     constructor(private http: HttpClient) { }
 
     createOrder(token: any): Observable<any> {
-        debugger;
         let body = {};
         return this.http.post('http://localhost:3000/orders/createOrder', body, { headers: new HttpHeaders().set('x-token', `${token}`) });
     }
 
     createDetailOrder(token: any, orderDetail: any): Observable<any> {
-        debugger;
         return this.http.post('http://localhost:3000/orderDetails/createOrderDetail', orderDetail, { headers: new HttpHeaders().set('x-token', `${token}`) });
     }
 
     payment(token: any, payment: any) {
-        debugger;
         return this.http.post('http://localhost:3000/mercadoPago/', payment, { headers: new HttpHeaders().set('x-token', `${token}`) });
     }
 }

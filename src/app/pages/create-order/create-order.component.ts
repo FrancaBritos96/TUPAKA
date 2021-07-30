@@ -107,20 +107,23 @@ export class CreateOrderComponent implements OnInit {
   }
 
   async payOrder() {
-    debugger;
     //  displayedColumns: string[] = ['position', 'producto', 'precio', 'cantidad', 'subtotal', 'incluir'];
     let newOrderResponse = await this.createOrderService.createOrder(this.loginService.getToken()).toPromise();
-    debugger;
-    let newOrderId :any = (Object.values(newOrderResponse))[2];
-    debugger;
+    let newOrderId: any = (Object.values(newOrderResponse))[2];
     for (let i = 0; i < this.ELEMENT_DATA.length; i++) {
       if (this.ELEMENT_DATA[i].incluir == 1) {
         let orderDetail = {
-          id_pedido: newOrderId, id_producto: this.orderDetails[i].id_producto, cantidad: this.ELEMENT_DATA[i].cantidad };
-          await this.createOrderService.createDetailOrder(this.loginService.getToken(), orderDetail).toPromise();
+          id_pedido: newOrderId, id_producto: this.orderDetails[i].id_producto, cantidad: this.ELEMENT_DATA[i].cantidad
+        };
+        await this.createOrderService.createDetailOrder(this.loginService.getToken(), orderDetail).toPromise();
       }
     }
-    let payment = {precio: this.currentPrice}
-    await this.createOrderService.payment(this.loginService.getToken(), payment).toPromise();
+    let payment = { precio: this.currentPrice }
+    let paymentLinkResponse = await this.createOrderService.payment(this.loginService.getToken(), payment).toPromise();
+    let paymentLink: any = (Object.values(paymentLinkResponse))[2];
+    window.open(paymentLink, '_blank');
+    this.alertsService.confirmMessage("El pedido se registró con éxito. Una vez pagado, recibiras el detalle de la compra al correo registrado")
+    .then(() => { localStorage.removeItem("orderDetails");
+     window.location.href = '/' });
   }
 }
