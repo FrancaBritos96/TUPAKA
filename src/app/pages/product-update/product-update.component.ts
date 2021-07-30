@@ -130,15 +130,15 @@ export class ProductUpdateComponent implements AfterViewInit {
   }
 
   async updateProduct() {
-    debugger;
     this.alertsService.questionMessage("¿Desea editar el producto seleccionado?", "Atención", 'Sí', 'Cancelar')
       .then(async (result) => {
         if (result.value) {
           let productResult = await this.productSvc.updateProduct(this.id_product, this.updateProductForm.value, this.loginService.getToken()).toPromise();
           let resultMessage: any = (Object.values(productResult)[1]);
           if (resultMessage == "Producto editado con exito") {
-            debugger;
-            await this.fileUploadService.sendFile(this.filesFormData, this.id_product, this.loginService.getToken()).toPromise();
+            if (this.filesFormData) {
+              await this.fileUploadService.sendFile(this.filesFormData, this.id_product, this.loginService.getToken()).toPromise();
+            }
             this.alertsService.confirmMessage("Producto editado con exito")
               .then((result) => { window.location.href = '/productsList' });
           } else {

@@ -99,40 +99,41 @@ export class MarketComponent implements OnInit {
   }
 
   async addToOder(product: any, arrayType: string, i: number) {
-    let btnText = document.getElementById(`btn-${product.id_producto}`)!.innerText;
-    if (btnText == "Agregar al carrito ") {
-      if (this.loginService.getToken() != null) {
-        let currentUser = await this.loginService.getCurrentUser(this.loginService.getToken()).toPromise();
-        this.currentUser = (Object.values(currentUser))[2];
+    if (product.stock > 0) {
+      let btnText = document.getElementById(`btn-${product.id_producto}`)!.innerText;
+      if (btnText == "Agregar al carrito ") {
+        if (this.loginService.getToken() != null) {
+          let currentUser = await this.loginService.getCurrentUser(this.loginService.getToken()).toPromise();
+          this.currentUser = (Object.values(currentUser))[2];
 
-        if (this.currentUser.idRol != 1) {
-          this.addOrderService.addOrderDetail(product);
-          document.getElementById(`btn-${product.id_producto}`)!.innerHTML = "Quitar del carrito <img _ngcontent-jdp-c138=\'\' src=\'assets/images/carrito.png\' class=\'iconoCarrito\'>";
-          if (arrayType === 'htmlRightProducts') {
-            this.htmlRightProducts[i].isInMarket = 1;
+          if (this.currentUser.idRol != 1) {
+            this.addOrderService.addOrderDetail(product);
+            document.getElementById(`btn-${product.id_producto}`)!.innerHTML = "Quitar del carrito <img _ngcontent-jdp-c138=\'\' src=\'assets/images/carrito.png\' class=\'iconoCarrito\'>";
+            if (arrayType === 'htmlRightProducts') {
+              this.htmlRightProducts[i].isInMarket = 1;
+            }
+            else {
+              this.htmlLeftProducts[i].isInMarket = 1;
+            }
+          } else {
+            this.alertsService.errorMessage('Para cargar un pedido deberás hacerlo desde Home Administrador', 'Oops..');
           }
-          else {
-            this.htmlLeftProducts[i].isInMarket = 1;
-          }
-        } else {
-          this.alertsService.errorMessage('Para cargar un pedido deberás hacerlo desde Home Administrador', 'Oops..');
+        }
+        else {
+          this.alertsService.errorMessage('Para comenzar a comprar debes iniciar sesión', 'Oops..');
+        }
+      } else {
+        this.addOrderService.removeOrderDetail(product);
+        document.getElementById(`btn-${product.id_producto}`)!.innerHTML = "Agregar al carrito <img _ngcontent-jdp-c138=\'\' src=\'assets/images/carrito.png\' class=\'iconoCarrito\'>";
+        if (arrayType === 'htmlRightProducts') {
+          this.htmlRightProducts[i].isInMarket = 0;
+        }
+        else {
+          this.htmlLeftProducts[i].isInMarket = 0;
         }
       }
-      else {
-        this.alertsService.errorMessage('Para comenzar a comprar debes iniciar sesión', 'Oops..');
-      }
-    } else {
-      this.addOrderService.removeOrderDetail(product);
-      document.getElementById(`btn-${product.id_producto}`)!.innerHTML = "Agregar al carrito <img _ngcontent-jdp-c138=\'\' src=\'assets/images/carrito.png\' class=\'iconoCarrito\'>";
-      if (arrayType === 'htmlRightProducts') {
-        this.htmlRightProducts[i].isInMarket = 0;
-      }
-      else {
-        this.htmlLeftProducts[i].isInMarket = 0;
-      }
     }
-
   }
-  
+
 }
 

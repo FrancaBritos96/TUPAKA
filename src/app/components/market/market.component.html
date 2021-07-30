@@ -43,7 +43,7 @@
                                 profundidad
                                 <br /><b class="precio">${{product.precio}}</b> <button [ngClass]="{'quitarCarrito': product.isInMarket === 1}"
                                     class="btnCarrito btn btn-primary" (click)="addToOder(product, 'htmlLeftProducts', i)">
-                                    <a class="hrefCarrito" [id]="'btn-' + product.id_producto">{{product.isInMarketText}} <img src="assets/images/carrito.png"
+                                    <a class="hrefCarrito" [id]="'btn-' + product.id_producto">{{product.stock > 0 ? product.isInMarketText : 'SIN STOCK'}} <img *ngIf="product.stock > 0" src="assets/images/carrito.png"
                                             class="iconoCarrito"></a></button>
                             </p>
 
@@ -88,7 +88,7 @@
                                 profundidad
                                 <br /><b class="precio">${{product.precio}}</b> <button [ngClass]="{'quitarCarrito': product.isInMarket === 1}"
                                     class="btnCarrito btn btn-primary" (click)="addToOder(product, 'htmlRightProducts', i)">
-                                    <a class="hrefCarrito" [id]="'btn-' + product.id_producto">{{product.isInMarketText}} <img src="assets/images/carrito.png"
+                                    <a class="hrefCarrito" [id]="'btn-' + product.id_producto">{{product.stock > 0 ? product.isInMarketText : 'SIN STOCK'}} <img *ngIf="product.stock > 0" src="assets/images/carrito.png"
                                             class="iconoCarrito"></a></button>
                             </p>
                         </div>
